@@ -4,7 +4,7 @@ import com.wakatime.androidclient.api.ApiClient;
 import com.wakatime.androidclient.di.IOScheduler;
 import com.wakatime.androidclient.di.NetworkModule;
 import com.wakatime.androidclient.di.UIScheduler;
-import com.wakatime.androidclient.support.NetworkConnectionWatcher;
+import com.wakatime.androidclient.support.context.NetworkConnectionWatcher;
 
 import javax.inject.Singleton;
 

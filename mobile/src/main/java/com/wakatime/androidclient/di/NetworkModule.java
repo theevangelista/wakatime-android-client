@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso;
 import com.wakatime.androidclient.BuildConfig;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.api.ApiClient;
-import com.wakatime.androidclient.support.NetworkConnectionWatcher;
+import com.wakatime.androidclient.support.context.NetworkConnectionWatcher;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,6 +1,6 @@
 package com.wakatime.androidclient.dashboard.programming;
 
-import com.wakatime.androidclient.support.WithLoader;
+import com.wakatime.androidclient.support.view.WithLoader;
 import com.wakatime.androidclient.dashboard.model.DataObject;
 
 /**

@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.support;
+package com.wakatime.androidclient.support.context;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

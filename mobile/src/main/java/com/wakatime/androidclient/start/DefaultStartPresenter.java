@@ -1,12 +1,12 @@
 package com.wakatime.androidclient.start;
 
 import com.wakatime.androidclient.api.ApiKey;
-import com.wakatime.androidclient.support.HeaderFormatter;
+import com.wakatime.androidclient.support.net.HeaderFormatter;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.api.User;
 import com.wakatime.androidclient.api.ApiClient;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
-import com.wakatime.androidclient.support.NetworkConnectionWatcher;
+import com.wakatime.androidclient.support.context.NetworkConnectionWatcher;
 
 import io.realm.Realm;
 import rx.Scheduler;

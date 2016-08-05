@@ -1,6 +1,6 @@
 package com.wakatime.androidclient.start;
 
-import com.wakatime.androidclient.support.WithLoader;
+import com.wakatime.androidclient.support.view.WithLoader;
 
 import java.util.Map;
 

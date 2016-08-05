@@ -1,6 +1,6 @@
 package com.wakatime.androidclient.dashboard.programming;
 
-import com.wakatime.androidclient.support.WithBinding;
+import com.wakatime.androidclient.support.presenter.WithBinding;
 
 /**
  * @author Joao Pedro Evangelista

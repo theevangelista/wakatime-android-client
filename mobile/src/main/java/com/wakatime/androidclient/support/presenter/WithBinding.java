@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.support;
+package com.wakatime.androidclient.support.presenter;
 
 /**
  * @author Joao Pedro Evangelista

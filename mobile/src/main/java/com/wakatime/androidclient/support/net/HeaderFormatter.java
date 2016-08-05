@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.support;
+package com.wakatime.androidclient.support.net;
 
 import android.util.Base64;
 

@@ -1,7 +1,7 @@
 package com.wakatime.androidclient.dashboard.programming;
 
 import com.wakatime.androidclient.api.ApiClient;
-import com.wakatime.androidclient.support.HeaderFormatter;
+import com.wakatime.androidclient.support.net.HeaderFormatter;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 
 import io.realm.Realm;

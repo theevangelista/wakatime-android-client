@@ -1,6 +1,6 @@
 package com.wakatime.androidclient.start;
 
-import com.wakatime.androidclient.support.WithBinding;
+import com.wakatime.androidclient.support.presenter.WithBinding;
 
 /**
  * @author Joao Pedro Evangelista
