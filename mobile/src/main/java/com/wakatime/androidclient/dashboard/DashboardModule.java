@@ -3,6 +3,8 @@ package com.wakatime.androidclient.dashboard;
 import com.wakatime.androidclient.api.ApiClient;
 import com.wakatime.androidclient.dashboard.programming.DefaultProgrammingPresenter;
 import com.wakatime.androidclient.dashboard.programming.ProgrammingPresenter;
+import com.wakatime.androidclient.dashboard.project.DefaultProjectPresenter;
+import com.wakatime.androidclient.dashboard.project.ProjectPresenter;
 import com.wakatime.androidclient.di.IOScheduler;
 import com.wakatime.androidclient.di.NetworkModule;
 import com.wakatime.androidclient.di.UIScheduler;
@@ -27,5 +29,13 @@ public class DashboardModule {
                                               @IOScheduler Scheduler ioScheduler,
                                               @UIScheduler Scheduler uiScheduler) {
         return new DefaultProgrammingPresenter(realm, apiClient, ioScheduler, uiScheduler);
+    }
+
+    @Provides
+    @Singleton
+    ProjectPresenter projectPresenter(Realm realm, ApiClient apiClient,
+                                      @IOScheduler Scheduler ioScheduler,
+                                      @UIScheduler Scheduler uiScheduler) {
+        return new DefaultProjectPresenter(realm, apiClient, ioScheduler, uiScheduler);
     }
 }

@@ -153,8 +153,8 @@ public class ProgrammingFragment extends Fragment implements ViewModel {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         this.mProgrammingPresenter.onFinish();
         this.mProgrammingPresenter.unbind();
     }
