@@ -99,6 +99,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.4.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    debugCompile 'com.squareup.haha:haha:2.0.3'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     compile 'com.google.dagger:dagger:2.4'
