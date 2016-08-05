@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.androidclient.support.JsonParser;
 import com.wakatime.androidclient.R;
@@ -179,19 +180,18 @@ public class ProgrammingFragment extends Fragment implements ViewModel {
 
         List<PieEntry> dataSet = new ArrayList<>(languages.size());
         for (Language language : languages) {
-            dataSet.add(new PieEntry(language.getPercent(), language.getName(), language));
+            dataSet.add(new PieEntry(language.getPercent(), language.getName()));
         }
-
-        PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_languages));
-        pieDataSet.setValueTextColor(Color.WHITE);
 
         List<Integer> colors = new ArrayList<>(languages.size());
         for (Language language : languages) {
             int color = linguist.decode(language.getName());
             colors.add(color);
         }
+        PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_languages));
+        pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setColors(colors);
-
+        pieDataSet.setValueTextSize(14f);
         mChartLanguages.setData(new PieData(pieDataSet));
     }
 
@@ -208,6 +208,7 @@ public class ProgrammingFragment extends Fragment implements ViewModel {
         }
         PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.title_os));
         pieDataSet.setColors(colors);
+        pieDataSet.setValueTextSize(14f);
         pieDataSet.setValueTextColor(Color.WHITE);
         mChartOS.setData(new PieData(pieDataSet));
     }
@@ -220,9 +221,12 @@ public class ProgrammingFragment extends Fragment implements ViewModel {
         for (Editor editor : data.getEditors()) {
             dataSet.add(new PieEntry(editor.getPercent(), editor.getName()));
         }
-        PieData pieData = new PieData(new PieDataSet(dataSet, getString(R.string.title_editors)));
-        pieData.setValueTextColor(Color.WHITE);
-        mChartEditors.setData(pieData);
+
+        PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_editors));
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieDataSet.setValueTextColor(Color.WHITE);
+        pieDataSet.setValueTextSize(14f);
+        mChartEditors.setData(new PieData(pieDataSet));
     }
 
     private void defaultPieChartConfig(PieChart chart) {
