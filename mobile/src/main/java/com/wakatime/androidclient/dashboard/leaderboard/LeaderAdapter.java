@@ -55,7 +55,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues != null ? mValues.size() : 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

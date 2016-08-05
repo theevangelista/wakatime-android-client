@@ -1,5 +1,6 @@
 package com.wakatime.androidclient.dashboard.leaderboard;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wakatime.androidclient.dashboard.model.Language;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RunningTotal extends RealmObject {
 
     private long dailyAverage;

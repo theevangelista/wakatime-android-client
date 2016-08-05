@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
+import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.List;
 
@@ -65,6 +67,24 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
         ((WakatimeApplication) this.getActivity().getApplication())
                 .useDashboardComponent().inject(this);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey(ROTATION_CACHE)) {
+            this.rotationCache = JsonParser.read(savedInstanceState.getString(ROTATION_CACHE),
+                    new TypeReference<List<Leader>>() {
+                    });
+            this.setData(this.rotationCache);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ROTATION_CACHE, JsonParser.write(this.rotationCache));
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

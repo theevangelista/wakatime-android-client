@@ -1,5 +1,6 @@
 package com.wakatime.androidclient.dashboard.leaderboard;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wakatime.androidclient.api.User;
 
 import io.realm.RealmObject;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Leader extends RealmObject {
 
     @PrimaryKey
