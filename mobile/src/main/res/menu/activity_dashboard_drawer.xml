@@ -11,5 +11,11 @@
             android:icon="@drawable/ic_code_tags_grey600_24dp"
             android:title="@string/drawer_projects" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_logout"
+            android:icon="@drawable/ic_logout_grey600_24dp"
+            android:title="@string/logout" />
+    </group>
 
 </menu>

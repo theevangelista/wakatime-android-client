@@ -27,7 +27,7 @@ import com.wakatime.androidclient.dashboard.model.Language;
 import com.wakatime.androidclient.dashboard.model.OperatingSystem;
 import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.support.Linguist;
-import com.wakatime.androidclient.support.JsonParser;
+import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;

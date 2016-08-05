@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.support;
+package com.wakatime.androidclient.support.context;
 
 import android.view.View;
 import android.widget.TextView;

@@ -25,5 +25,6 @@
     <string name="text_view_credits_wakatime">Powered by  <a href="https://wakatime.com">Wakatime</a></string>
     <string name="text_view_credits_icon">Icon by <a href="https://freepik.com">Freepik</a></string>
     <string name="title_projects">Projects</string>
+    <string name="logout">Logout</string>
 
 </resources>

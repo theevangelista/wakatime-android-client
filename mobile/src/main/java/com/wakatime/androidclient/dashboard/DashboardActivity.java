@@ -1,5 +1,6 @@
 package com.wakatime.androidclient.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,8 @@ import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.environment.EnvironmentFragment;
 import com.wakatime.androidclient.dashboard.project.ProjectFragment;
-import com.wakatime.androidclient.support.NavigationHeaderView;
+import com.wakatime.androidclient.support.context.NavigationHeaderView;
+import com.wakatime.androidclient.user.UserStartActivity;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
         EnvironmentFragment.OnProgrammingFragmentInteractionListener,
         ProjectFragment.OnProjectFragmentInteractionListener {
 
@@ -47,9 +49,13 @@ public class DashboardActivity extends AppCompatActivity
     @Inject
     Realm realm;
 
+    @Inject
+    LogoutHandler mLogoutHandler;
+
     private Fragment programmingFragment;
 
     private Fragment projectFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +137,8 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.drawer_projects) {
             this.projectFragment = ProjectFragment.newInstance();
             changeFragment(this.projectFragment);
+        } else if (id == R.id.drawer_logout) {
+            this.logout();
         } else {
             changeToDefaultFragment();
         }
@@ -159,5 +167,14 @@ public class DashboardActivity extends AppCompatActivity
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_dashboard, fragment)
                 .commit();
+    }
+
+    @Override
+    public void logout() {
+        mLogoutHandler.clearData(() -> {
+            startActivity(new Intent(this, UserStartActivity.class));
+            finish();
+        });
+
     }
 }

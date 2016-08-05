@@ -23,7 +23,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.model.Project;
-import com.wakatime.androidclient.support.JsonParser;
+import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
