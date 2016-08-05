@@ -16,7 +16,9 @@
         android:id="@+id/image_profile"
         android:layout_width="@dimen/profile_image"
         android:layout_height="@dimen/profile_image"
-        android:contentDescription="@string/profile" />
+        android:contentDescription="@string/profile"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@android:drawable/sym_def_app_icon" />
 
     <TextView
         android:id="@+id/text_view_user_name"
@@ -28,6 +30,7 @@
     <TextView
         android:id="@+id/text_view_user_email"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+         />
 
 </LinearLayout>

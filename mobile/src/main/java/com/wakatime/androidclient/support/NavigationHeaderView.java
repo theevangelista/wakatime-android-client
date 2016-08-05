@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
+import timber.log.Timber;
 
 /**
  * @author Joao Pedro Evangelista
@@ -43,8 +44,11 @@ public class NavigationHeaderView {
         User user = realm.where(User.class).findFirst();
         if (user != null) {
             this.mUserNameView.setText(user.getFullName());
+            Timber.d(user.getEmail());
             this.mUserEmailView.setText(user.getEmail());
-            picasso.load(user.getPhoto()).resize(R.dimen.profile_image,R.dimen.profile_image)
+            picasso.load(user.getPhoto())
+                    .centerCrop()
+                    .resizeDimen(R.dimen.profile_image,R.dimen.profile_image)
                     .into(mUserPictureView);
         }
     }

@@ -1,15 +1,14 @@
 package com.wakatime.androidclient.dashboard.programming;
 
 import com.wakatime.androidclient.api.ApiClient;
-import com.wakatime.androidclient.support.net.HeaderFormatter;
+import com.wakatime.androidclient.dashboard.model.DataObject;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
+import com.wakatime.androidclient.support.net.HeaderFormatter;
 
 import io.realm.Realm;
 import rx.Scheduler;
 import rx.Subscription;
 import timber.log.Timber;
-
-import static java.lang.String.format;
 
 /**
  * @author Joao Pedro Evangelista
@@ -46,12 +45,21 @@ public class DefaultProgrammingPresenter implements ProgrammingPresenter {
                 .subscribeOn(ioScheduler)
                 .doOnTerminate(() -> viewModel.hideLoader())
                 .map(Wrapper::getData)
+                .onErrorReturn(throwable -> realm.where(DataObject.class).findFirst())
                 .subscribe(
                         data -> {
                             viewModel.setData(data);
                             viewModel.setRotationCache(data);
-                        },
-                        throwable -> Timber.e(throwable, "Error while fetching data")
+
+                            realm.beginTransaction();
+                            realm.delete(DataObject.class);
+                            realm.commitTransaction();
+
+                            realm.beginTransaction();
+                            realm.insert(data);
+                            realm.commitTransaction();
+
+                        }, throwable -> Timber.e(throwable, "Error while fetching data")
                 );
     }
 

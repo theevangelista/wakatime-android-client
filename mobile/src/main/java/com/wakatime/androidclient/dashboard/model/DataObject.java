@@ -5,14 +5,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Joao Pedro Evangelista
  */
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class DataObject {
+@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true) //ignore properties since realm seems to add some
+public class DataObject extends RealmObject {
 
     private BestDay bestDay;
 
@@ -24,7 +28,7 @@ public class DataObject {
 
     private int daysMinusHoliday;
 
-    private List<Editor> editors;
+    private RealmList<Editor> editors;
 
     private Date end;
 
@@ -42,13 +46,13 @@ public class DataObject {
 
     private boolean isUpToDate;
 
-    private List<Language> languages;
+    private RealmList<Language> languages;
 
     private Date modifiedAt;
 
-    private List<OperatingSystem> operatingSystems;
+    private RealmList<OperatingSystem> operatingSystems;
 
-    private List<Project> projects;
+    private RealmList<Project> projects;
 
     private String range;
 

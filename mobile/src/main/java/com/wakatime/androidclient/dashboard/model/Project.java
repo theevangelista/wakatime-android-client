@@ -1,12 +1,18 @@
 package com.wakatime.androidclient.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.realm.RealmObject;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Joao Pedro Evangelista
  */
 @Data
-public class Project {
+@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true) //ignore properties since realm seems to add some
+public class Project extends RealmObject {
 
     private String digital;
 
