@@ -70,7 +70,7 @@ public class WakatimeApplication extends Application {
         userComponent = DaggerUserComponent.builder()
                 .applicationModule(applicationModule)
                 .networkModule(networkModule)
-                .startModule(new UserModule())
+                .userModule(new UserModule())
                 .build();
     }
 
