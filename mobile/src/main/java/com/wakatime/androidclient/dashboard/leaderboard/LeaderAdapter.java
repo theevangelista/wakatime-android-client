@@ -41,7 +41,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.ViewHolder
         holder.mLeaderLanguages.setText(
                 join(holder.mItem.getRunningTotal().getLanguages(), ", "));
 
-        holder.mLeaderName.setText(holder.mItem.getUser().getFullName());
+        holder.mLeaderName.setText(holder.mItem.getUser().getName());
         holder.mLeaderTime.setText(holder.mItem.getRunningTotal().getHumanReadableTotal());
 
         holder.mView.setOnClickListener(v -> {

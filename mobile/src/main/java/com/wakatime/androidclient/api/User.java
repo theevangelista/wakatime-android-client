@@ -38,7 +38,7 @@ public class User extends RealmObject {
 
     private String lastPlugin;
 
-    private String lastPlugin_name;
+    private String lastPluginName;
 
     private String lastProject;
 
@@ -58,4 +58,8 @@ public class User extends RealmObject {
 
     private String website;
 
+    public String getName() {
+        return fullName == null || fullName.isEmpty() ?
+                displayName : fullName;
+    }
 }

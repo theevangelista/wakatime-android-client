@@ -46,7 +46,7 @@ public class NavigationHeaderView {
     public void load() {
         User user = realm.where(User.class).findFirst();
         if (user != null) {
-            this.mUserNameView.setText(user.getFullName());
+            this.mUserNameView.setText(user.getName());
             Timber.d(user.getEmail());
             this.mUserEmailView.setText(user.getEmail());
             picasso.load(user.getPhoto())
