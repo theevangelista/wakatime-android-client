@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.test.mock.MockApplication;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -16,7 +15,7 @@ import android.widget.FrameLayout;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.programming.ProgrammingFragment;
-import com.wakatime.androidclient.dashboard.programming.ProgrammingFragment_MembersInjector;
+import com.wakatime.androidclient.dashboard.project.ProjectFragment;
 import com.wakatime.androidclient.support.NavigationHeaderView;
 
 import javax.inject.Inject;
@@ -27,7 +26,8 @@ import io.realm.Realm;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ProgrammingFragment.OnProgrammingFragmentInteractionListener {
+        ProgrammingFragment.OnProgrammingFragmentInteractionListener,
+        ProjectFragment.OnProjectFragmentInteractionListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -97,8 +97,8 @@ public class DashboardActivity extends AppCompatActivity
                     .putFragment(outState, ProgrammingFragment.KEY, this.programmingFragment);
         }
         if (projectFragment != null && projectFragment.isAdded()) {
-            //   getSupportFragmentManager()
-            //.putFragment(outState,);
+            getSupportFragmentManager()
+                    .putFragment(outState, ProjectFragment.KEY, this.projectFragment);
         }
     }
 
@@ -129,7 +129,8 @@ public class DashboardActivity extends AppCompatActivity
         if (id == R.id.drawer_environment) {
             changeToDefaultFragment();
         } else if (id == R.id.drawer_projects) {
-            //changeFragment(this.projectFragment);
+            this.projectFragment = ProjectFragment.newInstance();
+            changeFragment(this.projectFragment);
         } else {
             changeToDefaultFragment();
         }
@@ -147,11 +148,11 @@ public class DashboardActivity extends AppCompatActivity
     private void restoreFragments(Bundle bundle) {
         if (bundle == null) return;
 
-            this.programmingFragment = getSupportFragmentManager()
+        this.programmingFragment = getSupportFragmentManager()
                 .getFragment(bundle, ProgrammingFragment.KEY);
 
-
-
+        this.projectFragment = getSupportFragmentManager()
+                .getFragment(bundle, ProjectFragment.KEY);
     }
 
     private void changeFragment(Fragment fragment) {

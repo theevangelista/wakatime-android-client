@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.wakatime.androidclient.support.chart.RandomColor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,11 +52,14 @@ public class Linguist {
     public int decode(String language) {
         Map<String, Object> languageMap = languages.get(language);
         if (languageMap == null) {
-            return Color.parseColor(defaultColor);
+            return RandomColor.generate();
         } else {
             Object color = languageMap.get("color");
-            String hex = color != null ? color.toString() : defaultColor;
-            return Color.parseColor(hex);
+            if (color != null) {
+                return Color.parseColor(color.toString());
+            } else {
+                return RandomColor.generate();
+            }
         }
     }
 
