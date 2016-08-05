@@ -6,7 +6,6 @@ import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 import com.wakatime.androidclient.support.net.HeaderFormatter;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,6 +13,8 @@ import io.realm.Realm;
 import rx.Scheduler;
 import rx.Subscription;
 import timber.log.Timber;
+
+import static com.wakatime.androidclient.util.Collections.copyIterator;
 
 /**
  * @author Joao Pedro Evangelista
@@ -84,17 +85,9 @@ public class DefaultProjectPresenter implements ProjectPresenter {
         this.viewModel = null;
     }
 
-    private <T> List<T> copyIterator(Iterator<T> iterator) {
-        List<T> list = new ArrayList<>();
-        while (iterator.hasNext()) {
-            list.add(iterator.next());
-        }
-        return list;
-    }
-
 
     private List<Project> fetchFromDatabase() {
         Iterator<Project> name = realm.where(Project.class).findAllSorted("name").iterator();
-        return this.copyIterator(name);
+        return copyIterator(name);
     }
 }

@@ -26,5 +26,6 @@
     <string name="text_view_credits_icon">Icon by <a href="https://freepik.com">Freepik</a></string>
     <string name="title_projects">Projects</string>
     <string name="logout">Logout</string>
+    <string name="drawer_leaderboard">Leaderboard</string>
 
 </resources>

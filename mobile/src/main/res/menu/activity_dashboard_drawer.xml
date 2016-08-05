@@ -10,6 +10,10 @@
             android:id="@+id/drawer_projects"
             android:icon="@drawable/ic_code_tags_grey600_24dp"
             android:title="@string/drawer_projects" />
+        <item
+            android:id="@+id/drawer_leaderboard"
+            android:icon="@drawable/ic_trophy_award_grey600_24dp"
+            android:title="@string/drawer_leaderboard" />
     </group>
     <group android:checkableBehavior="single">
         <item

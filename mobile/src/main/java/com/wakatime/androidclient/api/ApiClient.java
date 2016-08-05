@@ -1,5 +1,6 @@
 package com.wakatime.androidclient.api;
 
+import com.wakatime.androidclient.dashboard.leaderboard.LeaderWrapper;
 import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 
@@ -18,4 +19,7 @@ public interface ApiClient {
 
     @GET("users/current/stats/last_7_days")
     Observable<Wrapper<Stats>> fetchLastSevenDays(@Header("Authorization") String authorizationKey);
+
+    @GET("leaders")
+    Observable<LeaderWrapper> fetchLeaders(@Header("Authorization") String authorizationKey);
 }

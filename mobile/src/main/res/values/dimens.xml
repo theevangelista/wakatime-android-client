@@ -9,4 +9,5 @@
     <dimen name="pie_chart_size">350dp</dimen>
     <dimen name="loader_size">450dp</dimen>
     <dimen name="profile_image">64dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

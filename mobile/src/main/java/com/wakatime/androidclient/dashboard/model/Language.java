@@ -27,4 +27,9 @@ public class Language extends RealmObject {
     private String text;
 
     private long totalSeconds;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

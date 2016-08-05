@@ -16,6 +16,8 @@ import android.widget.FrameLayout;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.environment.EnvironmentFragment;
+import com.wakatime.androidclient.dashboard.leaderboard.Leader;
+import com.wakatime.androidclient.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.androidclient.dashboard.project.ProjectFragment;
 import com.wakatime.androidclient.support.context.NavigationHeaderView;
 import com.wakatime.androidclient.user.UserStartActivity;
@@ -28,7 +30,8 @@ import butterknife.ButterKnife;
 public class DashboardActivity extends AppCompatActivity
         implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
         EnvironmentFragment.OnProgrammingFragmentInteractionListener,
-        ProjectFragment.OnProjectFragmentInteractionListener {
+        ProjectFragment.OnProjectFragmentInteractionListener,
+        LeaderboardFragment.OnLeaderListFragmentInteractionListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -51,6 +54,8 @@ public class DashboardActivity extends AppCompatActivity
     private Fragment programmingFragment;
 
     private Fragment projectFragment;
+
+    private Fragment leaderboardFragment;
 
 
     @Override
@@ -102,6 +107,11 @@ public class DashboardActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .putFragment(outState, ProjectFragment.KEY, this.projectFragment);
         }
+
+        if (leaderboardFragment != null && leaderboardFragment.isAdded()) {
+            getSupportFragmentManager()
+                    .putFragment(outState, LeaderboardFragment.KEY, this.leaderboardFragment);
+        }
     }
 
     @Override
@@ -133,6 +143,9 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.drawer_projects) {
             this.projectFragment = ProjectFragment.newInstance();
             changeFragment(this.projectFragment);
+        } else if (id == R.id.drawer_leaderboard) {
+            this.leaderboardFragment = LeaderboardFragment.newInstance();
+            changeFragment(this.leaderboardFragment);
         } else if (id == R.id.drawer_logout) {
             this.logout();
         } else {
@@ -157,6 +170,9 @@ public class DashboardActivity extends AppCompatActivity
 
         this.projectFragment = getSupportFragmentManager()
                 .getFragment(bundle, ProjectFragment.KEY);
+
+        this.leaderboardFragment = getSupportFragmentManager()
+                .getFragment(bundle, LeaderboardFragment.KEY);
     }
 
     private void changeFragment(Fragment fragment) {
@@ -171,6 +187,11 @@ public class DashboardActivity extends AppCompatActivity
             startActivity(new Intent(this, UserStartActivity.class));
             finish();
         });
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Leader leader) {
 
     }
 }
