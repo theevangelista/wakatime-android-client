@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wakatime.androidclient.dashboard.programming.ProgrammingFragment">
+    tools:context="com.wakatime.androidclient.dashboard.environment.EnvironmentFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="16dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
 
         <com.github.ybq.android.spinkit.SpinKitView

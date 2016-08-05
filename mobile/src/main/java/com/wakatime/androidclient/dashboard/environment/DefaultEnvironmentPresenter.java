@@ -1,7 +1,7 @@
-package com.wakatime.androidclient.dashboard.programming;
+package com.wakatime.androidclient.dashboard.environment;
 
 import com.wakatime.androidclient.api.ApiClient;
-import com.wakatime.androidclient.dashboard.model.DataObject;
+import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 import com.wakatime.androidclient.support.net.HeaderFormatter;
 
@@ -13,7 +13,7 @@ import timber.log.Timber;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultProgrammingPresenter implements ProgrammingPresenter {
+public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private final Realm realm;
 
@@ -27,7 +27,7 @@ public class DefaultProgrammingPresenter implements ProgrammingPresenter {
 
     private Subscription tracker;
 
-    public DefaultProgrammingPresenter(Realm realm, ApiClient apiClient,
+    public DefaultEnvironmentPresenter(Realm realm, ApiClient apiClient,
                                        Scheduler ioScheduler,
                                        Scheduler uiScheduler) {
         this.realm = realm;
@@ -45,14 +45,14 @@ public class DefaultProgrammingPresenter implements ProgrammingPresenter {
                 .subscribeOn(ioScheduler)
                 .doOnTerminate(() -> viewModel.hideLoader())
                 .map(Wrapper::getData)
-                .onErrorReturn(throwable -> realm.where(DataObject.class).findFirst())
+                .onErrorReturn(throwable -> realm.where(Stats.class).findFirst())
                 .subscribe(
                         data -> {
                             viewModel.setData(data);
                             viewModel.setRotationCache(data);
 
                             realm.beginTransaction();
-                            realm.delete(DataObject.class);
+                            realm.delete(Stats.class);
                             realm.commitTransaction();
 
                             realm.beginTransaction();

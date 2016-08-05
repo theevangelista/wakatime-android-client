@@ -1,8 +1,8 @@
 package com.wakatime.androidclient.dashboard.project;
 
 import com.wakatime.androidclient.api.ApiClient;
-import com.wakatime.androidclient.dashboard.model.DataObject;
 import com.wakatime.androidclient.dashboard.model.Project;
+import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 import com.wakatime.androidclient.support.net.HeaderFormatter;
 
@@ -48,7 +48,7 @@ public class DefaultProjectPresenter implements ProjectPresenter {
                 .observeOn(uiScheduler)
                 .doOnTerminate(() -> viewModel.hideLoader())
                 .map(Wrapper::getData)
-                .map(DataObject::getProjects)
+                .map(Stats::getProjects)
                 .map(projects -> copyIterator(projects.iterator()))
                 .onErrorReturn(error -> fetchFromDatabase())
                 .subscribe(projects -> {

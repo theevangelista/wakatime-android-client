@@ -3,7 +3,6 @@ package com.wakatime.androidclient.dashboard.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
-import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -16,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true) //ignore properties since realm seems to add some
-public class DataObject extends RealmObject {
+public class Stats extends RealmObject {
 
     private BestDay bestDay;
 

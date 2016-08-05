@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
-import com.wakatime.androidclient.dashboard.programming.ProgrammingFragment;
+import com.wakatime.androidclient.dashboard.environment.EnvironmentFragment;
 import com.wakatime.androidclient.dashboard.project.ProjectFragment;
 import com.wakatime.androidclient.support.NavigationHeaderView;
 
@@ -26,7 +26,7 @@ import io.realm.Realm;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ProgrammingFragment.OnProgrammingFragmentInteractionListener,
+        EnvironmentFragment.OnProgrammingFragmentInteractionListener,
         ProjectFragment.OnProjectFragmentInteractionListener {
 
     @BindView(R.id.toolbar)
@@ -94,7 +94,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         if (programmingFragment != null && programmingFragment.isAdded()) {
             getSupportFragmentManager()
-                    .putFragment(outState, ProgrammingFragment.KEY, this.programmingFragment);
+                    .putFragment(outState, EnvironmentFragment.KEY, this.programmingFragment);
         }
         if (projectFragment != null && projectFragment.isAdded()) {
             getSupportFragmentManager()
@@ -141,7 +141,7 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void changeToDefaultFragment() {
-        this.programmingFragment = ProgrammingFragment.newInstance();
+        this.programmingFragment = EnvironmentFragment.newInstance();
         changeFragment(this.programmingFragment);
     }
 
@@ -149,7 +149,7 @@ public class DashboardActivity extends AppCompatActivity
         if (bundle == null) return;
 
         this.programmingFragment = getSupportFragmentManager()
-                .getFragment(bundle, ProgrammingFragment.KEY);
+                .getFragment(bundle, EnvironmentFragment.KEY);
 
         this.projectFragment = getSupportFragmentManager()
                 .getFragment(bundle, ProjectFragment.KEY);

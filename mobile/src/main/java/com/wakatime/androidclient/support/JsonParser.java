@@ -3,7 +3,6 @@ package com.wakatime.androidclient.support;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wakatime.androidclient.dashboard.model.DataObject;
 
 import java.io.IOException;
 
