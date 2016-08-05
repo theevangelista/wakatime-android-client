@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp">
@@ -9,16 +10,42 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text_view_leader_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/first_line_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_leader_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryText"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="@string/badge"
+                android:tint="@color/trophy"
+                app:srcCompat="@drawable/trophy_award" />
+
+            <TextView
+                android:id="@+id/text_view_leader_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/text_view_leader_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_leader_name"
+            android:layout_below="@id/first_line_container"
+            android:layout_marginTop="16dp"
             android:textColor="@color/colorSecondaryText" />
 
         <TextView
@@ -28,6 +55,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/text_view_leader_time"
+            android:layout_marginTop="16dp"
             android:textColor="@color/colorAccent" />
 
     </RelativeLayout>

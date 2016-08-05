@@ -27,5 +27,6 @@
     <string name="title_projects">Projects</string>
     <string name="logout">Logout</string>
     <string name="drawer_leaderboard">Leaderboard</string>
+    <string name="badge">badge</string>
 
 </resources>

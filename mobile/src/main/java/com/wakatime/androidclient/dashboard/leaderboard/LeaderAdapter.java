@@ -43,7 +43,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.ViewHolder
 
         holder.mLeaderName.setText(holder.mItem.getUser().getName());
         holder.mLeaderTime.setText(holder.mItem.getRunningTotal().getHumanReadableTotal());
-
+        holder.mLeaderRank.setText(String.valueOf(holder.mItem.getRank()));
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {
                 // Notify the active callbacks interface (the activity, if the
@@ -72,6 +72,9 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.ViewHolder
 
         @BindView(R.id.text_view_leader_time)
         TextView mLeaderTime;
+
+        @BindView(R.id.text_view_leader_rank)
+        TextView mLeaderRank;
 
         ViewHolder(View view) {
             super(view);
