@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -22,6 +23,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.model.Project;
+import com.wakatime.androidclient.support.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,8 @@ import static android.support.v4.content.ContextCompat.getColor;
 public class ProjectFragment extends Fragment implements ViewModel {
 
     public static final String KEY = "project-fragment";
+
+    private static final String ROTATION_CACHE = "rotation-cache";
 
     @BindView(R.id.recycler_projects)
     RecyclerView mRecyclerProjects;
@@ -76,8 +80,29 @@ public class ProjectFragment extends Fragment implements ViewModel {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (!(context instanceof OnProjectFragmentInteractionListener)) {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnProjectFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey(ROTATION_CACHE)) {
+            this.rotationCache = JsonParser.read(savedInstanceState.getString(ROTATION_CACHE),
+                    new TypeReference<List<Project>>() {
+                    });
+            this.setProjects(this.rotationCache);
+        }
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_project, container, false);
         ButterKnife.bind(this, view);
@@ -88,16 +113,16 @@ public class ProjectFragment extends Fragment implements ViewModel {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.onInit();
+        if (savedInstanceState == null || !savedInstanceState.containsKey(ROTATION_CACHE)) {
+            mPresenter.onInit();
+        }
     }
 
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (!(context instanceof OnProjectFragmentInteractionListener)) {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnProjectFragmentInteractionListener");
-        }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ROTATION_CACHE, JsonParser.write(this.rotationCache));
     }
 
     @Override
