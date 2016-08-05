@@ -24,7 +24,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 public class DashboardActivity extends AppCompatActivity
         implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
@@ -45,9 +44,6 @@ public class DashboardActivity extends AppCompatActivity
 
     @Inject
     NavigationHeaderView navigationHeaderView;
-
-    @Inject
-    Realm realm;
 
     @Inject
     LogoutHandler mLogoutHandler;
@@ -78,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity
 
 
         navView.setNavigationItemSelectedListener(this);
-        navigationHeaderView.on(navView.getHeaderView(0)).load(realm);
+        navigationHeaderView.on(navView.getHeaderView(0)).load();
         // Called new fragment when there is no other to saved
         if (savedInstanceState == null) {
             changeToDefaultFragment();

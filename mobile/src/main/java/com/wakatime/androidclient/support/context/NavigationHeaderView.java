@@ -22,6 +22,8 @@ public class NavigationHeaderView {
 
     private final Picasso picasso;
 
+    private final Realm realm;
+
     private TextView mUserEmailView;
 
     private TextView mUserNameView;
@@ -29,8 +31,9 @@ public class NavigationHeaderView {
     private CircleImageView mUserPictureView;
 
     @Inject
-    public NavigationHeaderView(Picasso picasso) {
+    public NavigationHeaderView(Picasso picasso, Realm realm) {
         this.picasso = picasso;
+        this.realm = realm;
     }
 
     public NavigationHeaderView on(View view) {
@@ -40,7 +43,7 @@ public class NavigationHeaderView {
         return this;
     }
 
-    public void load(Realm realm) {
+    public void load() {
         User user = realm.where(User.class).findFirst();
         if (user != null) {
             this.mUserNameView.setText(user.getFullName());
