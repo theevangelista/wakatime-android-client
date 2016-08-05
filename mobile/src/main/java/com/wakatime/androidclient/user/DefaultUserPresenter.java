@@ -1,12 +1,12 @@
-package com.wakatime.androidclient.start;
+package com.wakatime.androidclient.user;
 
-import com.wakatime.androidclient.api.ApiKey;
-import com.wakatime.androidclient.support.net.HeaderFormatter;
 import com.wakatime.androidclient.R;
-import com.wakatime.androidclient.api.User;
 import com.wakatime.androidclient.api.ApiClient;
+import com.wakatime.androidclient.api.ApiKey;
+import com.wakatime.androidclient.api.User;
 import com.wakatime.androidclient.dashboard.model.Wrapper;
 import com.wakatime.androidclient.support.context.NetworkConnectionWatcher;
+import com.wakatime.androidclient.support.net.HeaderFormatter;
 
 import io.realm.Realm;
 import rx.Scheduler;
@@ -16,22 +16,17 @@ import static java.util.Collections.singletonMap;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultStartPresenter implements StartPresenter {
-
-    private ViewModel view;
+class DefaultUserPresenter implements UserPresenter {
 
     private final Realm realm;
-
     private final ApiClient apiClient;
-
     private final NetworkConnectionWatcher watcher;
-
     private final rx.Scheduler uiScheduler;
-
     private final rx.Scheduler ioScheduler;
+    private ViewModel view;
 
-    public DefaultStartPresenter(Realm realm, ApiClient apiClient, NetworkConnectionWatcher watcher,
-                                 Scheduler ioScheduler, Scheduler uiScheduler) {
+    DefaultUserPresenter(Realm realm, ApiClient apiClient, NetworkConnectionWatcher watcher,
+                         Scheduler ioScheduler, Scheduler uiScheduler) {
         this.realm = realm;
         this.apiClient = apiClient;
         this.watcher = watcher;

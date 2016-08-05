@@ -1,11 +1,11 @@
-package com.wakatime.androidclient.start;
+package com.wakatime.androidclient.user;
 
 import com.wakatime.androidclient.support.presenter.WithBinding;
 
 /**
  * @author Joao Pedro Evangelista
  */
-public interface StartPresenter extends WithBinding<ViewModel> {
+public interface UserPresenter extends WithBinding<ViewModel> {
 
     void saveUserData(String key);
 

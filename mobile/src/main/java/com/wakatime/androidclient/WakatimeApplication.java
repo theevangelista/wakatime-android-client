@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.squareup.leakcanary.LeakCanary;
 import com.wakatime.androidclient.dashboard.DaggerDashboardComponent;
 import com.wakatime.androidclient.dashboard.DashboardComponent;
 import com.wakatime.androidclient.dashboard.DashboardModule;
@@ -15,15 +16,16 @@ import com.wakatime.androidclient.di.DaggerApplicationComponent;
 import com.wakatime.androidclient.di.DaggerNetworkComponent;
 import com.wakatime.androidclient.di.NetworkComponent;
 import com.wakatime.androidclient.di.NetworkModule;
-import com.wakatime.androidclient.start.ApiKeyComponent;
-import com.wakatime.androidclient.start.StartModule;
-import com.wakatime.androidclient.start.DaggerApiKeyComponent;
+import com.wakatime.androidclient.user.DaggerUserComponent;
+import com.wakatime.androidclient.user.UserComponent;
+import com.wakatime.androidclient.user.UserModule;
 
 import timber.log.Timber;
 
 /**
  * @author Joao Pedro Evangelista
  */
+@SuppressWarnings("deprecation")
 public class WakatimeApplication extends Application {
 
     private ApplicationModule applicationModule = new ApplicationModule(this);
@@ -32,7 +34,7 @@ public class WakatimeApplication extends Application {
 
     private ApplicationComponent applicationComponent;
 
-    private ApiKeyComponent apiKeyComponent;
+    private UserComponent userComponent;
 
     private NetworkComponent networkComponent;
 
@@ -41,6 +43,7 @@ public class WakatimeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         AndroidThreeTen.init(this);
         Stetho.initializeWithDefaults(this);
         Timber.plant(new Timber.DebugTree());
@@ -64,10 +67,10 @@ public class WakatimeApplication extends Application {
     }
 
     private void registerApiKeyComponent() {
-        apiKeyComponent = DaggerApiKeyComponent.builder()
+        userComponent = DaggerUserComponent.builder()
                 .applicationModule(applicationModule)
                 .networkModule(networkModule)
-                .startModule(new StartModule())
+                .startModule(new UserModule())
                 .build();
     }
 
@@ -90,8 +93,8 @@ public class WakatimeApplication extends Application {
         return applicationComponent;
     }
 
-    public ApiKeyComponent useApiKeyComponent() {
-        return apiKeyComponent;
+    public UserComponent useApiKeyComponent() {
+        return userComponent;
     }
 
     public NetworkComponent useNetworkComponent() {

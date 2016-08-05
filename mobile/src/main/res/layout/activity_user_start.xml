@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.wakatime.androidclient.start.StartActivity">
+    tools:context="com.wakatime.androidclient.user.UserStartActivity">
 
     <com.github.ybq.android.spinkit.SpinKitView
 
@@ -52,13 +52,12 @@
 
         <Button
             android:id="@+id/btn_continue"
-            android:background="@color/colorPrimary"
-            android:textColorHint="@android:color/white"
-            android:padding="8dp"
-            app:elevation="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/start_set_api_key" />
+            android:background="@color/colorPrimary"
+            android:hint="@string/start_set_api_key"
+            android:padding="8dp"
+            android:textColorHint="@android:color/white" />
     </LinearLayout>
 
 
@@ -73,8 +72,8 @@
         android:id="@+id/text_view_credits_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:text="@string/text_view_credits_icon"/>
 
 </RelativeLayout>

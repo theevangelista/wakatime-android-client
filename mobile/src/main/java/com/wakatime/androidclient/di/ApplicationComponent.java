@@ -1,7 +1,5 @@
 package com.wakatime.androidclient.di;
 
-import com.wakatime.androidclient.start.StartActivity;
-
 import javax.inject.Singleton;
 
 import dagger.Component;

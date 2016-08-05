@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.start;
+package com.wakatime.androidclient.user;
 
 import com.wakatime.androidclient.api.ApiClient;
 import com.wakatime.androidclient.di.IOScheduler;
@@ -17,14 +17,14 @@ import rx.Scheduler;
  * @author Joao Pedro Evangelista
  */
 @Module(includes = NetworkModule.class)
-public class StartModule {
+public class UserModule {
 
     @Provides
     @Singleton
-    StartPresenter apiKeyPresenter(Realm realm, ApiClient apiClient,
-                                   NetworkConnectionWatcher watcher,
-                                   @IOScheduler Scheduler ioScheduler,
-                                   @UIScheduler Scheduler uiScheduler) {
-        return new DefaultStartPresenter(realm, apiClient, watcher, ioScheduler, uiScheduler);
+    UserPresenter apiKeyPresenter(Realm realm, ApiClient apiClient,
+                                  NetworkConnectionWatcher watcher,
+                                  @IOScheduler Scheduler ioScheduler,
+                                  @UIScheduler Scheduler uiScheduler) {
+        return new DefaultUserPresenter(realm, apiClient, watcher, ioScheduler, uiScheduler);
     }
 }

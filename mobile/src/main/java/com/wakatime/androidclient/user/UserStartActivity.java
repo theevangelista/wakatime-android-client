@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.start;
+package com.wakatime.androidclient.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StartActivity extends AppCompatActivity implements ViewModel {
+public class UserStartActivity extends AppCompatActivity implements ViewModel {
 
     @BindView(R.id.edit_text_api_key)
     TextInputEditText mEditTextApiKey;
@@ -52,12 +52,12 @@ public class StartActivity extends AppCompatActivity implements ViewModel {
     TextView mCreditsWakatime;
 
     @Inject
-    StartPresenter mPresenter;
+    UserPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_user_start);
         ButterKnife.bind(this);
         ((WakatimeApplication) this.getApplication()).useApiKeyComponent().inject(this);
         mCreditsIcon.setMovementMethod(LinkMovementMethod.getInstance());

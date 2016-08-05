@@ -1,4 +1,4 @@
-package com.wakatime.androidclient.start;
+package com.wakatime.androidclient.user;
 
 import com.wakatime.androidclient.support.view.WithLoader;
 
