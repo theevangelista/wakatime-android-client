@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,9 +33,6 @@ public class StartActivity extends AppCompatActivity implements ViewModel {
     @BindView(R.id.input_layout_api_key)
     TextInputLayout mInputLayoutApiKey;
 
-    @Inject
-    StartPresenter mPresenter;
-
     @BindView(R.id.loader_user)
     SpinKitView mLoaderUser;
 
@@ -47,6 +45,14 @@ public class StartActivity extends AppCompatActivity implements ViewModel {
     @BindView(R.id.container_key)
     LinearLayout mContainerKey;
 
+    @BindView(R.id.text_view_credits_icon)
+    TextView mCreditsIcon;
+
+    @BindView(R.id.text_view_credits_wakatime)
+    TextView mCreditsWakatime;
+
+    @Inject
+    StartPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,8 @@ public class StartActivity extends AppCompatActivity implements ViewModel {
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
         ((WakatimeApplication) this.getApplication()).useApiKeyComponent().inject(this);
+        mCreditsIcon.setMovementMethod(LinkMovementMethod.getInstance());
+        mCreditsWakatime.setMovementMethod(LinkMovementMethod.getInstance());
         mPresenter.bind(this);
         mPresenter.checkIfKeyPresent();
     }

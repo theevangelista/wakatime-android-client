@@ -52,9 +52,29 @@
 
         <Button
             android:id="@+id/btn_continue"
-            style="@style/ButtonApiKey"
+            android:background="@color/colorPrimary"
+            android:textColorHint="@android:color/white"
+            android:padding="8dp"
+            app:elevation="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/start_set_api_key" />
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/text_view_credits_wakatime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_view_credits_icon"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_view_credits_wakatime"/>
+    <TextView
+        android:id="@+id/text_view_credits_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/text_view_credits_icon"/>
+
 </RelativeLayout>
