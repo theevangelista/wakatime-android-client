@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ButtonApiKey" parent="Base.Widget.AppCompat.Button">
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+</resources>

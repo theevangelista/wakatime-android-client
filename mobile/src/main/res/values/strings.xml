@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Wakatime</string>
+    <string name="start_set_api_key">Set API Key and continue</string>
+    <string name="api_key">API key</string>
+    <string name="errors_key_out_of_bounds">Key is not in the required size</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="welcome">Welcome to Wakatime, please insert your API Key into the field below to continue.</string>
+    <string name="api">https://wakatime.com/api/v1/</string>
+    <string name="title_logged_time">Logged time in last 7 days</string>
+    <string name="title_editors">Editors</string>
+    <string name="title_languages">Languages</string>
+    <string name="title_os">O. System</string>
+    <string name="drawer_environment">Environment</string>
+    <string name="drawer_projects">Projects</string>
+    <string name="user_fetch_error">There was an error fetching your data</string>
+    <string name="profile">profile</string>
+
+</resources>
