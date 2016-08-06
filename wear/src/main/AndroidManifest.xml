@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wakatime.androidclient">
+    package="com.wakatime.android">
 
     <uses-feature android:name="android.hardware.type.watch" />
     <application

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wakatime.androidclient.dashboard.project.ProjectFragment">
+    tools:context="com.wakatime.android.dashboard.project.ProjectFragment">
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/loader_projects"

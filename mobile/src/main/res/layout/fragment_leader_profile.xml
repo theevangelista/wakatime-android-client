@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment">
+    tools:context="com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment">
 
     <android.support.constraint.ConstraintLayout
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    tools:context="com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment">
+        tools:context="com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
