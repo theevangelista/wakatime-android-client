@@ -7,6 +7,7 @@
     <dimen name="nav_header_height">170dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="pie_chart_size">350dp</dimen>
+    <dimen name="bar_chart_size">400dp</dimen>
     <dimen name="loader_size">450dp</dimen>
     <dimen name="profile_image">64dp</dimen>
     <dimen name="text_margin">16dp</dimen>
