@@ -3,6 +3,7 @@ package com.wakatime.android.dashboard.environment;
 import com.wakatime.android.api.ApiClient;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
+import com.wakatime.android.support.NetworkConnectionWatcher;
 import com.wakatime.android.support.net.HeaderFormatter;
 
 import io.realm.Realm;
@@ -23,44 +24,53 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private final Scheduler ioScheduler;
 
+    private final NetworkConnectionWatcher watcher;
+
     private ViewModel viewModel;
 
     private Subscription tracker;
 
     public DefaultEnvironmentPresenter(Realm realm, ApiClient apiClient,
                                        Scheduler ioScheduler,
-                                       Scheduler uiScheduler) {
+                                       Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.apiClient = apiClient;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
+        this.watcher = watcher;
     }
 
 
     @Override
     public void onInit() {
         viewModel.showLoader();
-        this.tracker = this.apiClient.fetchLastSevenDays(HeaderFormatter.get(realm))
-                .observeOn(uiScheduler)
-                .subscribeOn(ioScheduler)
-                .doOnTerminate(() -> viewModel.hideLoader())
-                .map(Wrapper::getData)
-                .onErrorReturn(throwable -> realm.where(Stats.class).findFirst())
-                .subscribe(
-                        data -> {
-                            viewModel.setData(data);
-                            viewModel.setRotationCache(data);
+        if (watcher.isNetworkAvailable()) {
+            this.tracker = this.apiClient.fetchLastSevenDays(HeaderFormatter.get(realm))
+                    .observeOn(uiScheduler)
+                    .subscribeOn(ioScheduler)
+                    .doOnTerminate(() -> viewModel.hideLoader())
+                    .map(Wrapper::getData)
+                    .onErrorReturn(throwable -> fetchFromDatabase())
+                    .subscribe(
+                            data -> {
+                                viewModel.setData(data);
+                                viewModel.setRotationCache(data);
 
-                            realm.beginTransaction();
-                            realm.delete(Stats.class);
-                            realm.commitTransaction();
+                                realm.beginTransaction();
+                                realm.delete(Stats.class);
+                                realm.commitTransaction();
 
-                            realm.beginTransaction();
-                            realm.insert(data);
-                            realm.commitTransaction();
+                                realm.beginTransaction();
+                                realm.insert(data);
+                                realm.commitTransaction();
 
-                        }, throwable -> Timber.e(throwable, "Error while fetching data")
-                );
+                            }, throwable -> Timber.e(throwable, "Error while fetching data")
+                    );
+        } else {
+            viewModel.setData(fetchFromDatabase());
+            viewModel.hideLoader();
+        }
+
     }
 
     @Override
@@ -79,5 +89,9 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
     @Override
     public void unbind() {
         this.viewModel = null;
+    }
+
+    private Stats fetchFromDatabase() {
+        return realm.where(Stats.class).findFirst();
     }
 }

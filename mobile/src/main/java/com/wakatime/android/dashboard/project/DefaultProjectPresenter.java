@@ -4,6 +4,7 @@ import com.wakatime.android.api.ApiClient;
 import com.wakatime.android.dashboard.model.Project;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
+import com.wakatime.android.support.NetworkConnectionWatcher;
 import com.wakatime.android.support.net.HeaderFormatter;
 
 import java.util.Iterator;
@@ -29,41 +30,51 @@ public class DefaultProjectPresenter implements ProjectPresenter {
 
     private final Scheduler uiScheduler;
 
+    private final NetworkConnectionWatcher watcher;
+
     private ViewModel viewModel;
 
     private Subscription trackingSubscription;
 
     public DefaultProjectPresenter(Realm realm, ApiClient apiClient,
-                                   Scheduler ioScheduler, Scheduler uiScheduler) {
+                                   Scheduler ioScheduler, Scheduler uiScheduler,
+                                   NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.apiClient = apiClient;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
+        this.watcher = watcher;
     }
 
     @Override
     public void onInit() {
         viewModel.showLoader();
-        this.trackingSubscription = apiClient.fetchLastSevenDays(HeaderFormatter.get(realm))
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .doOnTerminate(() -> viewModel.hideLoader())
-                .map(Wrapper::getData)
-                .map(Stats::getProjects)
-                .map(projects -> copyIterator(projects.iterator()))
-                .onErrorReturn(error -> fetchFromDatabase())
-                .subscribe(projects -> {
-                    viewModel.setProjects(projects);
-                    viewModel.setRotationCache(projects);
+        if (watcher.isNetworkAvailable()) {
+            this.trackingSubscription = apiClient.fetchLastSevenDays(HeaderFormatter.get(realm))
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .doOnTerminate(() -> viewModel.hideLoader())
+                    .map(Wrapper::getData)
+                    .map(Stats::getProjects)
+                    .map(projects -> copyIterator(projects.iterator()))
+                    .onErrorReturn(error -> fetchFromDatabase())
+                    .subscribe(projects -> {
+                        viewModel.setProjects(projects);
+                        viewModel.setRotationCache(projects);
 
-                    realm.beginTransaction();
-                    realm.delete(Project.class);
-                    realm.commitTransaction();
+                        realm.beginTransaction();
+                        realm.delete(Project.class);
+                        realm.commitTransaction();
 
-                    realm.beginTransaction();
-                    realm.insert(projects);
-                    realm.commitTransaction();
-                }, error -> Timber.e("Error fetching projects", error));
+                        realm.beginTransaction();
+                        realm.insert(projects);
+                        realm.commitTransaction();
+                    }, error -> Timber.e("Error fetching projects", error));
+        } else {
+            viewModel.setProjects(fetchFromDatabase());
+            viewModel.hideLoader();
+        }
+
 
     }
 

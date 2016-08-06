@@ -10,6 +10,7 @@ import com.wakatime.android.dashboard.project.ProjectPresenter;
 import com.wakatime.android.di.IOScheduler;
 import com.wakatime.android.di.NetworkModule;
 import com.wakatime.android.di.UIScheduler;
+import com.wakatime.android.support.NetworkConnectionWatcher;
 
 import javax.inject.Singleton;
 
@@ -29,23 +30,26 @@ public class DashboardModule {
     @Singleton
     EnvironmentPresenter programmingPresenter(Realm realm, ApiClient apiClient,
                                               @IOScheduler Scheduler ioScheduler,
-                                              @UIScheduler Scheduler uiScheduler) {
-        return new DefaultEnvironmentPresenter(realm, apiClient, ioScheduler, uiScheduler);
+                                              @UIScheduler Scheduler uiScheduler,
+                                              NetworkConnectionWatcher watcher) {
+        return new DefaultEnvironmentPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
     @Singleton
     ProjectPresenter projectPresenter(Realm realm, ApiClient apiClient,
                                       @IOScheduler Scheduler ioScheduler,
-                                      @UIScheduler Scheduler uiScheduler) {
-        return new DefaultProjectPresenter(realm, apiClient, ioScheduler, uiScheduler);
+                                      @UIScheduler Scheduler uiScheduler,
+                                      NetworkConnectionWatcher watcher) {
+        return new DefaultProjectPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
     @Singleton
     LeaderboardPresenter leaderboardPresenter(Realm realm, ApiClient apiClient,
                                               @IOScheduler Scheduler ioScheduler,
-                                              @UIScheduler Scheduler uiScheduler) {
-        return new DefaultLeaderboardPresenter(realm, apiClient, ioScheduler, uiScheduler);
+                                              @UIScheduler Scheduler uiScheduler,
+                                              NetworkConnectionWatcher watcher) {
+        return new DefaultLeaderboardPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
     }
 }

@@ -1,6 +1,7 @@
 package com.wakatime.android.dashboard.leaderboard;
 
 import com.wakatime.android.api.ApiClient;
+import com.wakatime.android.support.NetworkConnectionWatcher;
 import com.wakatime.android.support.net.HeaderFormatter;
 
 import java.util.List;
@@ -25,16 +26,19 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
 
     private final Scheduler uiScheduler;
 
+    private final NetworkConnectionWatcher watcher;
+
     private ViewModel viewModel;
 
     private Subscription trackingSubscription;
 
     public DefaultLeaderboardPresenter(Realm realm, ApiClient apiClient,
-                                       Scheduler ioScheduler, Scheduler uiScheduler) {
+                                       Scheduler ioScheduler, Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.apiClient = apiClient;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
+        this.watcher = watcher;
     }
 
 
@@ -51,22 +55,27 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
     @Override
     public void onInit() {
         viewModel.showLoader();
-        this.trackingSubscription = this.apiClient.fetchLeaders(HeaderFormatter.get(realm))
-                .observeOn(uiScheduler)
-                .subscribeOn(ioScheduler)
-                .doOnTerminate(() -> viewModel.hideLoader())
+        if (watcher.isNetworkAvailable()) {
+            this.trackingSubscription = this.apiClient.fetchLeaders(HeaderFormatter.get(realm))
+                    .observeOn(uiScheduler)
+                    .subscribeOn(ioScheduler)
+                    .doOnTerminate(() -> viewModel.hideLoader())
 
-                .map(LeaderWrapper::getData)
-                .map(leaders -> leaders.subList(0, 21))
-                .onErrorReturn(error -> {
-                    Timber.e(error, "Error fetching most recent data, resuming with database");
-                    return fetchFromDatabase();
-                })
-                .subscribe(leaders -> {
-                    viewModel.setData(leaders);
-                    viewModel.setRotationCache(leaders);
-                    saveOnDatabase(leaders);
-                }, error -> Timber.e(error, "Error fetching leaders"));
+                    .map(LeaderWrapper::getData)
+                    .map(leaders -> leaders.subList(0, 21))
+                    .onErrorReturn(error -> {
+                        Timber.e(error, "Error fetching most recent data, resuming with database");
+                        return fetchFromDatabase();
+                    })
+                    .subscribe(leaders -> {
+                        viewModel.setData(leaders);
+                        viewModel.setRotationCache(leaders);
+                        saveOnDatabase(leaders);
+                    }, error -> Timber.e(error, "Error fetching leaders"));
+        } else {
+            viewModel.setData(fetchFromDatabase());
+            viewModel.hideLoader();
+        }
     }
 
     private void saveOnDatabase(List<Leader> leaders) {
