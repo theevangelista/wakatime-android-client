@@ -2,6 +2,7 @@ package com.wakatime.android.dashboard.project;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -176,7 +177,7 @@ public class ProjectFragment extends Fragment implements ViewModel {
         this.mChartProjects.setHoleColor(Color.WHITE);
         this.mChartProjects.setTransparentCircleColor(Color.WHITE);
         this.mChartProjects.setTransparentCircleAlpha(110);
-
+        this.mChartProjects.setDragDecelerationFrictionCoef(0.95f);
         this.mChartProjects.setHoleRadius(58f);
         this.mChartProjects.setTransparentCircleRadius(61f);
         this.mChartProjects.setDescription("");
@@ -188,6 +189,8 @@ public class ProjectFragment extends Fragment implements ViewModel {
         this.mChartProjects.setCenterTextColor(getColor(getActivity(), R.color.colorSecondaryText));
         this.mChartProjects.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
+        enableNestingScrollForAP21();
+
         List<PieEntry> entries = new ArrayList<>(chardData.size());
         for (Project project : chardData) {
             entries.add(new PieEntry(project.getPercent(), project.getName()));
@@ -197,6 +200,12 @@ public class ProjectFragment extends Fragment implements ViewModel {
         pieDataSet.setValueTextSize(14f);
         pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
         this.mChartProjects.setData(new PieData(pieDataSet));
+    }
+
+    private void enableNestingScrollForAP21() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.mChartProjects.setNestedScrollingEnabled(true);
+        }
     }
 
     /**

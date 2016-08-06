@@ -240,7 +240,7 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         chart.setHoleColor(Color.WHITE);
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);
-
+        chart.setDragDecelerationFrictionCoef(0.95f);
         chart.setHoleRadius(58f);
         chart.setTransparentCircleRadius(61f);
         chart.setDescription("");
@@ -250,6 +250,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
         chart.setCenterTextSize(18f);
         chart.setCenterTextColor(ContextCompat.getColor(getActivity(), R.color.colorSecondaryText));
+        chart.setRotationAngle(0);
+        chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
 
         chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
