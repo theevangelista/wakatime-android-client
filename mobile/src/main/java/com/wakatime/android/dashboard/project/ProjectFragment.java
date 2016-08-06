@@ -20,6 +20,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.android.R;
@@ -55,12 +56,14 @@ public class ProjectFragment extends Fragment implements ViewModel {
     @BindView(R.id.loader_projects)
     SpinKitView mLoaderProjects;
 
-    @Inject
-    ProjectPresenter mPresenter;
     @BindView(R.id.chart_projects)
     PieChart mChartProjects;
+
     @BindView(R.id.nested_projects)
     NestedScrollView mNestedProjects;
+
+    @Inject
+    ProjectPresenter mPresenter;
 
     private List<Project> rotationCache;
 
@@ -199,7 +202,11 @@ public class ProjectFragment extends Fragment implements ViewModel {
         pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setValueTextSize(14f);
         pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        this.mChartProjects.setData(new PieData(pieDataSet));
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter());
+        this.mChartProjects.setData(pieData);
     }
 
     private void enableNestingScrollForAP21() {

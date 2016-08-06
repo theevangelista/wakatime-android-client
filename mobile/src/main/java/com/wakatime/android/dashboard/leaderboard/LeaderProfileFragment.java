@@ -128,16 +128,18 @@ public class LeaderProfileFragment extends Fragment {
         List<PieEntry> entries = new ArrayList<>(languages.size());
         List<Integer> colors = new ArrayList<>(languages.size());
         for (Language language : languages) {
-            entries.add(new PieEntry(toMinutes(language.getTotalSeconds()), language.getName()));
+            entries.add(new PieEntry(language.getTotalSeconds(), language.getName()));
             colors.add(linguist.decode(language.getName()));
         }
         PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.languages));
 
         pieDataSet.setColors(colors);
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> String.valueOf(toMinutes((long) value)));
         pieData.setValueTextSize(16f);
         pieData.setValueTextColor(Color.WHITE);
-
         mChartLeaderLanguages.setData(pieData);
     }
 

@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.android.R;
@@ -196,9 +197,13 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         }
         PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_languages));
         pieDataSet.setValueTextColor(Color.WHITE);
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
         pieDataSet.setColors(colors);
         pieDataSet.setValueTextSize(14f);
-        mChartLanguages.setData(new PieData(pieDataSet));
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter());
+        mChartLanguages.setData(pieData);
     }
 
     private void setOSChart(Stats data) {
@@ -214,9 +219,13 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         }
         PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.title_os));
         pieDataSet.setColors(colors);
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
         pieDataSet.setValueTextSize(14f);
         pieDataSet.setValueTextColor(Color.WHITE);
-        mChartOS.setData(new PieData(pieDataSet));
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter());
+        mChartOS.setData(pieData);
     }
 
     private void setEditorData(Stats data) {
@@ -232,7 +241,11 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setValueTextSize(14f);
-        mChartEditors.setData(new PieData(pieDataSet));
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter());
+        mChartEditors.setData(pieData);
     }
 
     private void defaultPieChartConfig(PieChart chart) {
@@ -247,7 +260,6 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         chart.setUsePercentValues(true);
         chart.setEntryLabelColor(Color.WHITE);
         chart.setDrawCenterText(true);
-
         chart.setCenterTextSize(18f);
         chart.setCenterTextColor(ContextCompat.getColor(getActivity(), R.color.colorSecondaryText));
         chart.setRotationAngle(0);
