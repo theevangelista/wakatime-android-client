@@ -1,9 +1,14 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment">
+
+    <android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
     tools:context="com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment">
 
 
@@ -40,8 +45,8 @@
         android:id="@+id/leader_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="176dp"
-        android:layout_marginStart="176dp"
+        android:layout_marginLeft="170dp"
+        android:layout_marginStart="170dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/colorSecondaryText"
         android:textSize="16sp"
@@ -63,13 +68,16 @@
         app:layout_constraintRight_toRightOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/trophy" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:layout_width="wrap_content"
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart_leader_languages"
+            android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_margin="16dp"
+            android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintRight_toRightOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/leader_name" />
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -17,6 +17,7 @@ import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.environment.EnvironmentFragment;
 import com.wakatime.androidclient.dashboard.leaderboard.Leader;
+import com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.androidclient.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.androidclient.dashboard.project.ProjectFragment;
 import com.wakatime.androidclient.support.context.NavigationHeaderView;
@@ -192,6 +193,9 @@ public class DashboardActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Leader leader) {
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_dashboard, LeaderProfileFragment.newInstance(leader), leader.getUser().getName())
+                .addToBackStack(leader.getUser().getName())
+                .commit();
     }
 }

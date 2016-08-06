@@ -1,6 +1,7 @@
 package com.wakatime.androidclient.dashboard;
 
 import com.wakatime.androidclient.dashboard.environment.EnvironmentFragment;
+import com.wakatime.androidclient.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.androidclient.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.androidclient.dashboard.project.ProjectFragment;
 
@@ -20,4 +21,6 @@ public interface DashboardComponent {
     void inject(ProjectFragment projectFragment);
 
     void inject(LeaderboardFragment leaderboardFragment);
+
+    void inject(LeaderProfileFragment leaderProfileFragment);
 }

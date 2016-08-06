@@ -14,6 +14,7 @@
     <string name="title_logged_time">Logged time in last 7 days</string>
     <string name="title_editors">Editors</string>
     <string name="title_languages">Languages</string>
+    <string name="languages">Languages</string>
     <string name="title_os">O. System</string>
     <string name="drawer_environment">Environment</string>
     <string name="drawer_projects">Projects</string>
@@ -28,5 +29,6 @@
     <string name="logout">Logout</string>
     <string name="drawer_leaderboard">Leaderboard</string>
     <string name="badge">badge</string>
+    <string name="values_in_minutes">Values in minutes</string>
 
 </resources>
