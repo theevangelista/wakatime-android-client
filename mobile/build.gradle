@@ -83,7 +83,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
     compile 'com.android.support:cardview-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
@@ -124,3 +123,4 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 }
+apply plugin: 'com.google.gms.google-services'
