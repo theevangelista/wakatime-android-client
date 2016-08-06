@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.wakatime.androidclient.dashboard.model.Language;
 import com.wakatime.androidclient.dashboard.model.OperatingSystem;
 import com.wakatime.androidclient.dashboard.model.Stats;
 import com.wakatime.androidclient.dashboard.support.Linguist;
+import com.wakatime.androidclient.support.context.Animations;
 import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.ArrayList;
@@ -145,6 +147,11 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(LIST_STATE, JsonParser.write(rotationCache));
+    }
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return Animations.createMoveAnimation(enter);
     }
 
     @Override

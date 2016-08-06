@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -20,6 +21,7 @@ import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
 import com.wakatime.androidclient.dashboard.model.Language;
 import com.wakatime.androidclient.dashboard.support.Linguist;
+import com.wakatime.androidclient.support.context.Animations;
 import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.ArrayList;
@@ -90,6 +92,10 @@ public class LeaderProfileFragment extends Fragment {
         renderData();
     }
 
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return Animations.createMoveAnimation(enter);
+    }
 
     private void renderData() {
         final Leader leader = JsonParser.read(

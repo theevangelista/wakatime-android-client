@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.wakatime.androidclient.R;
 import com.wakatime.androidclient.WakatimeApplication;
+import com.wakatime.androidclient.support.context.Animations;
 import com.wakatime.androidclient.support.context.JsonParser;
 
 import java.util.List;
@@ -112,6 +114,11 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
             throw new RuntimeException(context.toString()
                     + " must implement OnLeaderListFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return Animations.createMoveAnimation(enter);
     }
 
     @Override

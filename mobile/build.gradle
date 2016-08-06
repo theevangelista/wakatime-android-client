@@ -108,6 +108,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
+    compile 'com.labo.kaji:fragmentanimations:0.1.1'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'org.robolectric:robolectric:3.1-rc1'
