@@ -22,6 +22,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.model.Editor;
@@ -80,6 +82,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     private Linguist linguist;
 
+    private Tracker mTracker;
+
     public EnvironmentFragment() {
         // Required empty public constructor
     }
@@ -97,8 +101,9 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((WakatimeApplication) this.getActivity().getApplication())
-                .useDashboardComponent().inject(this);
+        WakatimeApplication application = (WakatimeApplication) this.getActivity().getApplication();
+        application.useDashboardComponent().inject(this);
+        mTracker = application.getTracker();
     }
 
     @Override
@@ -142,6 +147,13 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
             this.mEnvironmentPresenter.onInit();
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Dashboard-Environment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

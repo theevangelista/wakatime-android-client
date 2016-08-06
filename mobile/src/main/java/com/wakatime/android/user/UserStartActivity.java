@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.DashboardActivity;
@@ -54,6 +56,8 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
     @Inject
     UserPresenter mPresenter;
 
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,14 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
         mCreditsWakatime.setMovementMethod(LinkMovementMethod.getInstance());
         mPresenter.bind(this);
         mPresenter.checkIfKeyPresent();
+        mTracker = ((WakatimeApplication) getApplication()).getTracker();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("UserStart");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -74,6 +86,10 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
 
     @Override
     public void sendUserToDashboard() {
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Enter")
+                .setAction("ValidKey").build());
+
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         startActivity(dashboardIntent);
         finish(); // avoid user going back here
@@ -83,6 +99,10 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
     public void setErrors(Map<String, Integer> errors) {
         if (!errors.isEmpty()) {
             mInputLayoutApiKey.setError(getString(errors.get("key_out_of_bounds")));
+
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Enter")
+                    .setAction("InvalidKey").build());
         }
     }
 

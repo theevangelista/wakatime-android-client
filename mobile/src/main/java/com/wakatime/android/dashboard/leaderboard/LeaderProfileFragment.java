@@ -16,6 +16,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
@@ -42,12 +44,16 @@ import static android.support.v4.content.ContextCompat.getColor;
 public class LeaderProfileFragment extends Fragment {
 
     private static final String ARG_LEADER = "arg-leader";
+
     @BindView(R.id.leader_profile_image)
     CircleImageView mLeaderProfileImage;
+
     @BindView(R.id.leader_rank)
     TextView mLeaderRank;
+
     @BindView(R.id.leader_name)
     TextView mLeaderName;
+
     @BindView(R.id.chart_leader_languages)
     PieChart mChartLeaderLanguages;
 
@@ -55,6 +61,8 @@ public class LeaderProfileFragment extends Fragment {
     Picasso picasso;
 
     private Linguist linguist;
+
+    private Tracker mTracker;
 
     public LeaderProfileFragment() {
         // Required empty public constructor
@@ -72,8 +80,9 @@ public class LeaderProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((WakatimeApplication) this.getActivity().getApplication())
-                .useDashboardComponent().inject(this);
+        WakatimeApplication application = (WakatimeApplication) this.getActivity().getApplication();
+        application.useDashboardComponent().inject(this);
+        this.mTracker = application.getTracker();
         this.linguist = Linguist.init(getActivity());
     }
 
@@ -90,6 +99,13 @@ public class LeaderProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         renderData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Leaderboard-LeaderProfile");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

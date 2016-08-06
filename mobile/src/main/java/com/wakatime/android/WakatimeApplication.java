@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.squareup.leakcanary.LeakCanary;
 import com.wakatime.android.dashboard.DaggerDashboardComponent;
@@ -27,6 +29,8 @@ import timber.log.Timber;
  */
 @SuppressWarnings("deprecation")
 public class WakatimeApplication extends Application {
+
+    private Tracker mTracker;
 
     private ApplicationModule applicationModule = new ApplicationModule(this);
 
@@ -103,5 +107,13 @@ public class WakatimeApplication extends Application {
 
     public DashboardComponent useDashboardComponent() {
         return dashboardComponent;
+    }
+
+    public synchronized Tracker getTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return mTracker;
     }
 }

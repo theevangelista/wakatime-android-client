@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.support.JsonParser;
@@ -49,6 +51,8 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
 
     private List<Leader> rotationCache;
 
+    private Tracker mTracker;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,8 +70,9 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((WakatimeApplication) this.getActivity().getApplication())
-                .useDashboardComponent().inject(this);
+        WakatimeApplication application = (WakatimeApplication) this.getActivity().getApplication();
+        application.useDashboardComponent().inject(this);
+        mTracker = application.getTracker();
     }
 
     @Override
@@ -103,6 +108,13 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
         if (savedInstanceState == null || !savedInstanceState.containsKey(ROTATION_CACHE)) {
             this.mPresenter.onInit();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Dashboard-Leaderboard");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
