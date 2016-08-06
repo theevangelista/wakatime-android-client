@@ -188,7 +188,7 @@ public class ProjectFragment extends Fragment implements ViewModel {
         PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.title_projects));
         pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setValueTextSize(14f);
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
         this.mChartProjects.setData(new PieData(pieDataSet));
     }
 
