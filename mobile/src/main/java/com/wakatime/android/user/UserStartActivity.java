@@ -64,11 +64,12 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
         setContentView(R.layout.activity_user_start);
         ButterKnife.bind(this);
         ((WakatimeApplication) this.getApplication()).useApiKeyComponent().inject(this);
+        mTracker = ((WakatimeApplication) getApplication()).getTracker();
         mCreditsIcon.setMovementMethod(LinkMovementMethod.getInstance());
         mCreditsWakatime.setMovementMethod(LinkMovementMethod.getInstance());
         mPresenter.bind(this);
         mPresenter.checkIfKeyPresent();
-        mTracker = ((WakatimeApplication) getApplication()).getTracker();
+
     }
 
     @Override
