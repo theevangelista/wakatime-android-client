@@ -2,7 +2,9 @@ package com.wakatime.android.dashboard.leaderboard;
 
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -133,13 +135,15 @@ public class LeaderProfileFragment extends Fragment {
     private void renderChart(Leader leader) {
         mChartLeaderLanguages.setHighlightPerTapEnabled(true);
         mChartLeaderLanguages.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-        mChartLeaderLanguages.setDescription(getString(R.string.values_in_minutes));
-        mChartLeaderLanguages.setDescriptionColor(getColor(this.getActivity(), R.color.colorSecondaryText));
-        mChartLeaderLanguages.setDescriptionTextSize(13f);
-        mChartLeaderLanguages.setCenterTextColor(getColor(this.getActivity(), R.color.colorSecondaryText));
-        mChartLeaderLanguages.setCenterText(leader.getRunningTotal().getHumanReadableTotal());
-        mChartLeaderLanguages.setCenterTextSize(16f);
+        setDescription();
+        setCenter(leader);
+        setTypeface();
+        PieData pieData = getData(leader);
+        mChartLeaderLanguages.setData(pieData);
+    }
 
+    @NonNull
+    private PieData getData(Leader leader) {
         RealmList<Language> languages = leader.getRunningTotal().getLanguages();
         List<PieEntry> entries = new ArrayList<>(languages.size());
         List<Integer> colors = new ArrayList<>(languages.size());
@@ -156,7 +160,26 @@ public class LeaderProfileFragment extends Fragment {
         pieData.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> String.valueOf(toMinutes((long) value)));
         pieData.setValueTextSize(16f);
         pieData.setValueTextColor(Color.WHITE);
-        mChartLeaderLanguages.setData(pieData);
+        return pieData;
+    }
+
+    private void setDescription() {
+        mChartLeaderLanguages.setDescription(getString(R.string.values_in_minutes));
+        mChartLeaderLanguages.setDescriptionColor(getColor(this.getActivity(), R.color.colorSecondaryText));
+        mChartLeaderLanguages.setDescriptionTextSize(13f);
+    }
+
+    private void setCenter(Leader leader) {
+        mChartLeaderLanguages.setCenterTextColor(getColor(this.getActivity(), R.color.colorSecondaryText));
+        mChartLeaderLanguages.setCenterText(leader.getRunningTotal().getHumanReadableTotal());
+        mChartLeaderLanguages.setCenterTextSize(16f);
+    }
+
+    private void setTypeface() {
+        Typeface lato = Typeface.createFromAsset(getContext().getAssets(), "fonts/Lato-Regular.ttf");
+        mChartLeaderLanguages.setCenterTextTypeface(lato);
+        mChartLeaderLanguages.setEntryLabelTypeface(lato);
+        mChartLeaderLanguages.setDescriptionTypeface(lato);
     }
 
     private float toMinutes(long totalSeconds) {

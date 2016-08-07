@@ -105,6 +105,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
     compile 'com.labo.kaji:fragmentanimations:0.1.1'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'org.robolectric:robolectric:3.1-rc1'

@@ -23,6 +23,7 @@ import com.wakatime.android.user.UserComponent;
 import com.wakatime.android.user.UserModule;
 
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * @author Joao Pedro Evangelista
@@ -55,6 +56,11 @@ public class WakatimeApplication extends Application {
         this.registerApiKeyComponent();
         this.registerNetworkComponent();
         this.registerDashboardComponent();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Lato-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
 

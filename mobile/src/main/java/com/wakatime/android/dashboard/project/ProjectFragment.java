@@ -2,6 +2,7 @@ package com.wakatime.android.dashboard.project;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -186,7 +187,7 @@ public class ProjectFragment extends Fragment implements ViewModel {
     }
 
     private void setChartData(List<Project> chardData) {
-
+        Typeface lato = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/Lato-Regular.ttf");
         this.mChartProjects.setDrawHoleEnabled(true);
         this.mChartProjects.setHoleColor(Color.WHITE);
         this.mChartProjects.setTransparentCircleColor(Color.WHITE);
@@ -200,6 +201,8 @@ public class ProjectFragment extends Fragment implements ViewModel {
         this.mChartProjects.setDrawCenterText(true);
         this.mChartProjects.setCenterText(getString(R.string.title_projects));
         this.mChartProjects.setCenterTextSize(18f);
+        this.mChartProjects.setEntryLabelTypeface(lato);
+        this.mChartProjects.setCenterTextTypeface(lato);
         this.mChartProjects.setCenterTextColor(getColor(getActivity(), R.color.colorSecondaryText));
         this.mChartProjects.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 

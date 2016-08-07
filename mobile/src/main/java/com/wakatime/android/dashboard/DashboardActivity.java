@@ -1,5 +1,6 @@
 package com.wakatime.android.dashboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DashboardActivity extends AppCompatActivity
         implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
@@ -58,6 +60,10 @@ public class DashboardActivity extends AppCompatActivity
 
     private Fragment leaderboardFragment;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

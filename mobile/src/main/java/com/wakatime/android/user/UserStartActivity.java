@@ -1,5 +1,6 @@
 package com.wakatime.android.user;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UserStartActivity extends AppCompatActivity implements ViewModel {
 
@@ -57,6 +59,11 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
     UserPresenter mPresenter;
 
     private Tracker mTracker;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

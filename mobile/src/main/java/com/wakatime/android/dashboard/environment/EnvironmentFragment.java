@@ -2,6 +2,7 @@ package com.wakatime.android.dashboard.environment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -277,7 +278,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         chart.setRotationAngle(0);
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
-
+        chart.setCenterTextTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Lato-Regular.ttf"));
+        chart.setEntryLabelTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Lato-Regular.ttf"));
         chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
     }
 
