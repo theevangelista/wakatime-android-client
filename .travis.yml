@@ -4,6 +4,7 @@ language: android
 android:
   components:
     - tools
+    - tools
     - platform-tools
     - build-platform-24.0.1
     - android-23
