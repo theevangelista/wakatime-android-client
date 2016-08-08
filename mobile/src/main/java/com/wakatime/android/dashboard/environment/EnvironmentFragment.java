@@ -31,12 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnProgrammingFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EnvironmentFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to show the overall status of the programming environment the user uses
+ * such as the languages percentages, editors and OSes
+ *
+ * @author Joao Pedro Evangelista
  */
 public class EnvironmentFragment extends Fragment implements ViewModel {
 
