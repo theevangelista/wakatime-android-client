@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.squareup.picasso.Picasso;
 import com.wakatime.android.BuildConfig;
 import com.wakatime.android.R;
-import com.wakatime.android.api.ApiClient;
+import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.support.NetworkConnectionWatcher;
 
 import java.util.concurrent.TimeUnit;
@@ -87,7 +87,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    ApiClient apiClient(Retrofit retrofit) {
-        return retrofit.create(ApiClient.class);
+    WakatimeClient apiClient(Retrofit retrofit) {
+        return retrofit.create(WakatimeClient.class);
     }
 }

@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ApiKey extends RealmObject {
+public class Key extends RealmObject {
 
     @PrimaryKey
     private String id;

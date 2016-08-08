@@ -1,6 +1,6 @@
 package com.wakatime.android.dashboard.environment;
 
-import com.wakatime.android.api.ApiClient;
+import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
 import com.wakatime.android.support.NetworkConnectionWatcher;
@@ -18,7 +18,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private final Realm realm;
 
-    private final ApiClient apiClient;
+    private final WakatimeClient wakatimeClient;
 
     private final Scheduler uiScheduler;
 
@@ -30,11 +30,11 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private Subscription tracker;
 
-    public DefaultEnvironmentPresenter(Realm realm, ApiClient apiClient,
+    public DefaultEnvironmentPresenter(Realm realm, WakatimeClient wakatimeClient,
                                        Scheduler ioScheduler,
                                        Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
         this.realm = realm;
-        this.apiClient = apiClient;
+        this.wakatimeClient = wakatimeClient;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
         this.watcher = watcher;
@@ -45,7 +45,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
     public void onInit() {
         viewModel.showLoader();
         if (watcher.isNetworkAvailable()) {
-            this.tracker = this.apiClient.fetchLastSevenDays(HeaderFormatter.get(realm))
+            this.tracker = this.wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
                     .observeOn(uiScheduler)
                     .subscribeOn(ioScheduler)
                     .doOnTerminate(() -> viewModel.hideLoader())

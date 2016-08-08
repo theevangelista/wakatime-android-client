@@ -13,7 +13,7 @@ import rx.Observable;
  * @author Joao Pedro Evangelista
  */
 
-public interface ApiClient {
+public interface WakatimeClient {
 
     @GET("users/current")
     Observable<Wrapper<User>> fetchUser(@Header("Authorization") String authorizationKey);

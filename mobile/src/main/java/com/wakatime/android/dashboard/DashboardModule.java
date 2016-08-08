@@ -1,6 +1,6 @@
 package com.wakatime.android.dashboard;
 
-import com.wakatime.android.api.ApiClient;
+import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.dashboard.environment.DefaultEnvironmentPresenter;
 import com.wakatime.android.dashboard.environment.EnvironmentPresenter;
 import com.wakatime.android.dashboard.leaderboard.DefaultLeaderboardPresenter;
@@ -30,37 +30,37 @@ public class DashboardModule {
 
     @Provides
     @Singleton
-    EnvironmentPresenter programmingPresenter(Realm realm, ApiClient apiClient,
+    EnvironmentPresenter programmingPresenter(Realm realm, WakatimeClient wakatimeClient,
                                               @IOScheduler Scheduler ioScheduler,
                                               @UIScheduler Scheduler uiScheduler,
                                               NetworkConnectionWatcher watcher) {
-        return new DefaultEnvironmentPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
+        return new DefaultEnvironmentPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
     @Singleton
-    ProjectPresenter projectPresenter(Realm realm, ApiClient apiClient,
+    ProjectPresenter projectPresenter(Realm realm, WakatimeClient wakatimeClient,
                                       @IOScheduler Scheduler ioScheduler,
                                       @UIScheduler Scheduler uiScheduler,
                                       NetworkConnectionWatcher watcher) {
-        return new DefaultProjectPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
+        return new DefaultProjectPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
     @Singleton
-    LeaderboardPresenter leaderboardPresenter(Realm realm, ApiClient apiClient,
+    LeaderboardPresenter leaderboardPresenter(Realm realm, WakatimeClient wakatimeClient,
                                               @IOScheduler Scheduler ioScheduler,
                                               @UIScheduler Scheduler uiScheduler,
                                               NetworkConnectionWatcher watcher) {
-        return new DefaultLeaderboardPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
+        return new DefaultLeaderboardPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
     @Singleton
-    SingleProjectPresenter singleProjectPresenter(Realm realm, ApiClient apiClient,
+    SingleProjectPresenter singleProjectPresenter(Realm realm, WakatimeClient wakatimeClient,
                                                   @IOScheduler Scheduler ioScheduler,
                                                   @UIScheduler Scheduler uiScheduler,
                                                   NetworkConnectionWatcher watcher) {
-        return new DefaultSingleProjectPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
+        return new DefaultSingleProjectPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 }

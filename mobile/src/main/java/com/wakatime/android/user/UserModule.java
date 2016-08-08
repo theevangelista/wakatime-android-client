@@ -1,6 +1,6 @@
 package com.wakatime.android.user;
 
-import com.wakatime.android.api.ApiClient;
+import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.di.IOScheduler;
 import com.wakatime.android.di.NetworkModule;
 import com.wakatime.android.di.UIScheduler;
@@ -21,10 +21,10 @@ public class UserModule {
 
     @Provides
     @Singleton
-    UserPresenter apiKeyPresenter(Realm realm, ApiClient apiClient,
+    UserPresenter apiKeyPresenter(Realm realm, WakatimeClient wakatimeClient,
                                   NetworkConnectionWatcher watcher,
                                   @IOScheduler Scheduler ioScheduler,
                                   @UIScheduler Scheduler uiScheduler) {
-        return new DefaultUserPresenter(realm, apiClient, watcher, ioScheduler, uiScheduler);
+        return new DefaultUserPresenter(realm, wakatimeClient, watcher, ioScheduler, uiScheduler);
     }
 }

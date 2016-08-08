@@ -2,7 +2,7 @@ package com.wakatime.android.support.net;
 
 import android.util.Base64;
 
-import com.wakatime.android.api.ApiKey;
+import com.wakatime.android.api.Key;
 
 import io.realm.Realm;
 
@@ -14,7 +14,7 @@ import static java.lang.String.format;
 public class HeaderFormatter {
 
     public static String get(Realm realm) {
-        String key = realm.where(ApiKey.class).findFirst().getKey();
+        String key = realm.where(Key.class).findFirst().getKey();
         byte[] encoded = Base64.encode(key.getBytes(), Base64.DEFAULT);
         String strEncoded = new String(encoded);
         return strEncoded.replaceAll("\\r|\\t|\\n", "");
