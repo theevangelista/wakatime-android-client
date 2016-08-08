@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -48,7 +53,7 @@ import static android.support.v4.content.ContextCompat.getColor;
  *
  * @author Joao Pedro Evangelista
  */
-public class ProjectFragment extends Fragment implements ViewModel {
+public class ProjectFragment extends Fragment implements ViewModel, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     public static final String KEY = "project-fragment";
 
@@ -75,6 +80,7 @@ public class ProjectFragment extends Fragment implements ViewModel {
     private List<Project> rotationCache;
 
     private Tracker mTracker;
+    private ProjectAdapter mAdapter;
 
 
     public ProjectFragment() {
@@ -130,6 +136,7 @@ public class ProjectFragment extends Fragment implements ViewModel {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
         if (savedInstanceState == null || !savedInstanceState.containsKey(ROTATION_CACHE)) {
             mPresenter.onInit();
         }
@@ -146,6 +153,18 @@ public class ProjectFragment extends Fragment implements ViewModel {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ROTATION_CACHE, JsonParser.write(this.rotationCache));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+
+        final MenuItem searchAction = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchAction);
+
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
     }
 
     @Override
@@ -169,9 +188,9 @@ public class ProjectFragment extends Fragment implements ViewModel {
     public void setProjects(List<Project> projects) {
         setChartData(projects);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        ProjectAdapter adapter = new ProjectAdapter(getActivity(), projects);
+        mAdapter = new ProjectAdapter(getActivity(), projects);
         mRecyclerProjects.setLayoutManager(layoutManager);
-        mRecyclerProjects.setAdapter(adapter);
+        mRecyclerProjects.setAdapter(mAdapter);
     }
 
     @Override
@@ -245,6 +264,33 @@ public class ProjectFragment extends Fragment implements ViewModel {
         });
 
         snackbar.show();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return filter(query);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return filter(newText);
+    }
+
+    private boolean filter(String query) {
+        if (mAdapter != null) {
+            List<Project> projects = mAdapter.filter(query);
+            mAdapter.animateTo(projects);
+            mRecyclerProjects.scrollToPosition(0);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onClose() {
+        filter("");
+        return false;
     }
 
     /**
