@@ -50,7 +50,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
                     .subscribeOn(ioScheduler)
                     .doOnTerminate(() -> viewModel.hideLoader())
                     .map(Wrapper::getData)
-                    .onErrorReturn(throwable -> fetchFromDatabase())
+                    .doOnError(viewModel::notifyError)
                     .subscribe(
                             data -> {
                                 viewModel.setData(data);

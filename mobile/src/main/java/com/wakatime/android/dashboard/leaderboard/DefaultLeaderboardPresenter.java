@@ -60,13 +60,9 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
                     .observeOn(uiScheduler)
                     .subscribeOn(ioScheduler)
                     .doOnTerminate(() -> viewModel.hideLoader())
-
                     .map(LeaderWrapper::getData)
                     .map(leaders -> leaders.subList(0, 21))
-                    .onErrorReturn(error -> {
-                        Timber.e(error, "Error fetching most recent data, resuming with database");
-                        return fetchFromDatabase();
-                    })
+                    .doOnError(viewModel::notifyError)
                     .subscribe(leaders -> {
                         viewModel.setData(leaders);
                         viewModel.setRotationCache(leaders);
@@ -89,6 +85,8 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
 
     @Override
     public void onFinish() {
-
+        if (this.trackingSubscription != null && !this.trackingSubscription.isUnsubscribed()) {
+            this.trackingSubscription.unsubscribe();
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,12 +66,16 @@ public class ProjectFragment extends Fragment implements ViewModel {
     @BindView(R.id.nested_projects)
     NestedScrollView mNestedProjects;
 
+    @BindView(R.id.container)
+    View mContainer;
+
     @Inject
     ProjectPresenter mPresenter;
 
     private List<Project> rotationCache;
 
     private Tracker mTracker;
+
 
     public ProjectFragment() {
         // Required empty public constructor
@@ -227,6 +232,19 @@ public class ProjectFragment extends Fragment implements ViewModel {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.mChartProjects.setNestedScrollingEnabled(true);
         }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        Snackbar snackbar = Snackbar.make(mContainer,
+                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(R.string.retry, view -> {
+            mPresenter.onInit();
+            snackbar.dismiss();
+        });
+
+        snackbar.show();
     }
 
     /**

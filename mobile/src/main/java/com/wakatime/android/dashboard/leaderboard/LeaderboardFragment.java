@@ -3,6 +3,7 @@ package com.wakatime.android.dashboard.leaderboard;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,9 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
 
     @BindView(R.id.loader_leaders)
     SpinKitView mLoaderLeaders;
+
+    @BindView(R.id.container)
+    View mContainer;
 
     @Inject
     LeaderboardPresenter mPresenter;
@@ -167,6 +171,19 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @Override
     public void setRotationCache(List<Leader> leaders) {
         this.rotationCache = leaders;
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        Snackbar snackbar = Snackbar.make(mContainer,
+                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(R.string.retry, view -> {
+            mPresenter.onInit();
+            snackbar.dismiss();
+        });
+
+        snackbar.show();
     }
 
     /**

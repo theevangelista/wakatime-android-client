@@ -57,7 +57,7 @@ public class DefaultProjectPresenter implements ProjectPresenter {
                     .map(Wrapper::getData)
                     .map(Stats::getProjects)
                     .map(projects -> copyIterator(projects.iterator()))
-                    .onErrorReturn(error -> fetchFromDatabase())
+                    .doOnError(viewModel::notifyError)
                     .subscribe(projects -> {
                         viewModel.setProjects(projects);
                         viewModel.setRotationCache(projects);

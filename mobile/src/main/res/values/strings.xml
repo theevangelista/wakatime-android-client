@@ -35,5 +35,7 @@
     <string name="unknown_version">Unknown Version</string>
     <string name="licenses">Licenses</string>
     <string name="os_license">Open Source Licenses</string>
+    <string name="could_not_fetch">Could not fetch data</string>
+    <string name="retry">Retry</string>
 
 </resources>

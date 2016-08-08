@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -75,6 +76,9 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     @BindView(R.id.chart_os)
     PieChart mChartOS;
+
+    @BindView(R.id.container)
+    View mContainer;
 
     @Inject
     EnvironmentPresenter mEnvironmentPresenter;
@@ -191,6 +195,19 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     @Override
     public void setRotationCache(Stats data) {
         this.rotationCache = data;
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        Snackbar snackbar = Snackbar.make(mContainer,
+                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(R.string.retry, view -> {
+            mEnvironmentPresenter.onInit();
+            snackbar.dismiss();
+        });
+
+        snackbar.show();
     }
 
     private void setLanguageData(Stats data) {
