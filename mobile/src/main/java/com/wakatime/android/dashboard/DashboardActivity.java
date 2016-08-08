@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.wakatime.android.AboutActivity;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.environment.EnvironmentFragment;
@@ -155,6 +156,8 @@ public class DashboardActivity extends AppCompatActivity
             changeFragment(this.leaderboardFragment);
         } else if (id == R.id.drawer_logout) {
             this.logout();
+        } else if (id == R.id.drawer_about) {
+            startActivity(new Intent(this, AboutActivity.class));
         } else {
             changeToDefaultFragment();
         }

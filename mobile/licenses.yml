@@ -1,0 +1,244 @@
+- artifact: com.squareup.retrofit2:adapter-rxjava:+
+  name: 'Adapter: RxJava'
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:animated-vector-drawable:+
+  name: animated-vector-drawable
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:appcompat-v7:+
+  name: appcompat-v7
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.jakewharton:butterknife:+
+  name: Butterknife
+  copyrightHolder: Jake Wharton
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/JakeWharton/butterknife/
+- artifact: com.jakewharton:butterknife-annotations:+
+  name: Butterknife Annotations
+  copyrightHolder: Jake Wharton
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/JakeWharton/butterknife/
+- artifact: uk.co.chrisjenx:calligraphy:+
+  name: Calligraphy
+  copyrightHolder: chrisjenx
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/chrisjenx/Calligraphy
+- artifact: com.android.support:cardview-v7:+
+  name: cardview-v7
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: de.hdodenhof:circleimageview:+
+  name: CircleImageView
+  copyrightHolder: hdodenhof
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/hdodenhof/CircleImageView
+- artifact: commons-cli:commons-cli:+
+  name: Commons CLI
+  copyrightHolder: The Apache Foundation
+  license: The Apache Software License, Version 2.0
+  url: http://commons.apache.org/cli/
+- artifact: com.android.support.constraint:constraint-layout:+
+  name: constraint-layout
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support.constraint:constraint-layout-solver:+
+  name: constraint-layout-solver
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.squareup.retrofit2:converter-jackson:+
+  name: 'Converter: Jackson'
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.dagger:dagger:+
+  name: Dagger
+  copyrightHolder: Google & Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:design:+
+  name: design
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.google.code.findbugs:jsr305:+
+  name: FindBugs-jsr305
+  copyrightHolder: FindBugs
+  license: The Apache Software License, Version 2.0
+  url: http://findbugs.sourceforge.net/
+- artifact: com.labo.kaji:fragmentanimations:+
+  name: fragmentanimations
+  copyrightHolder: Keita Kajiwara
+  license: The Apache Software License, Version 2.0
+- artifact: com.fasterxml.jackson.core:jackson-annotations:+
+  name: Jackson-annotations
+  copyrightHolder: FasterXML
+  license: The Apache Software License, Version 2.0
+  url: http://github.com/FasterXML/jackson
+- artifact: com.fasterxml.jackson.core:jackson-core:+
+  name: Jackson-core
+  copyrightHolder: FasterXML
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/FasterXML/jackson-core
+- artifact: com.fasterxml.jackson.core:jackson-databind:+
+  name: jackson-databind
+  copyrightHolder: FasterXML
+  license: The Apache Software License, Version 2.0
+  url: http://github.com/FasterXML/jackson
+- artifact: javax.inject:javax.inject:+
+  name: javax.inject
+  copyrightHolder: Java
+  license: The Apache Software License, Version 2.0
+  url: http://code.google.com/p/atinject/
+- artifact: com.android.support:multidex:+
+  name: multidex
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.squareup.leakcanary:leakcanary-android-no-op:+
+  name: No op LeakCanary for Android
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+  url: http://github.com/square/leakcanary/
+- artifact: com.squareup.okhttp3:okhttp:+
+  name: OkHttp
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.squareup.okhttp3:logging-interceptor:+
+  name: OkHttp Logging Interceptor
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.squareup.okio:okio:+
+  name: Okio
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.github.PhilJay:MPAndroidChart:+
+  name: PhilJay/MPAndroidChart
+  copyrightHolder: Philipp Jahoda
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/PhilJay/MPAndroidChart
+- artifact: com.squareup.picasso:picasso:+
+  name: Picasso
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:preference-v7:+
+  name: preference-v7
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: io.realm:realm-android-library:+
+  name: realm-android-library
+  copyrightHolder: Realm
+  license: The Apache Software License, Version 2.0
+  url: http://realm.io
+- artifact: io.realm:realm-annotations:+
+  name: realm-annotations
+  copyrightHolder: Realm
+  license: The Apache Software License, Version 2.0
+  url: http://realm.io
+- artifact: com.android.support:recyclerview-v7:+
+  name: recyclerview-v7
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.getkeepsafe.relinker:relinker:+
+  name: ReLinker
+  copyrightHolder: getkeepsafe
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/KeepSafe/ReLinker
+- artifact: com.squareup.retrofit2:retrofit:+
+  name: Retrofit
+  copyrightHolder: Square Inc.
+  license: The Apache Software License, Version 2.0
+- artifact: io.reactivex:rxandroid:+
+  name: RxAndroid
+  copyrightHolder: Reactivex
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/ReactiveX/RxAndroid
+- artifact: io.reactivex:rxjava:+
+  name: rxjava
+  copyrightHolder: Reactivex
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/ReactiveX/RxJava
+- artifact: com.facebook.stetho:stetho:+
+  name: Stetho
+  copyrightHolder: Facebook
+  license: BSD License
+  url: https://github.com/facebook/stetho
+- artifact: com.facebook.stetho:stetho-okhttp3:+
+  name: Stetho OkHttp 3 module
+  copyrightHolder: Facebook
+  license: BSD License
+  url: https://github.com/facebook/stetho
+- artifact: com.android.support:support-annotations:+
+  name: support-annotations
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:support-v4:+
+  name: support-v4
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: com.android.support:support-vector-drawable:+
+  name: support-vector-drawable
+  copyrightHolder: The Android Open Source Project
+  license: The Apache Software License, Version 2.0
+- artifact: org.threeten:threetenbp:+
+  name: ThreeTen backport
+  copyrightHolder: threeten
+  license: BSD 3-clause
+  url: https://www.threeten.org/threetenbp
+- artifact: com.jakewharton.threetenabp:threetenabp:+
+  name: ThreeTenAbp
+  copyrightHolder: Jake Wharton
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/JakeWharton/ThreeTenABP/
+- artifact: com.jakewharton.timber:timber:+
+  name: Timber
+  copyrightHolder: Jake Wharton
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/JakeWharton/timber
+- artifact: com.github.ybq:Android-SpinKit:+
+  name: ybq/Android-SpinKit
+  copyrightHolder: ybq
+  license: The Apache Software License, Version 2.0
+  url: https://github.com/ybq/Android-SpinKit
+- artifact: com.google.firebase:firebase-analytics:+
+  name: firebase-analytics
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.firebase:firebase-analytics-impl:+
+  name: firebase-analytics-impl
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.firebase:firebase-common:+
+  name: firebase-common
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.firebase:firebase-core:+
+  name: firebase-core
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.firebase:firebase-iid:+
+  name: firebase-iid
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.android.gms:play-services-analytics:+
+  name: play-services-analytics
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.android.gms:play-services-analytics-impl:+
+  name: play-services-analytics-impl
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.android.gms:play-services-base:+
+  name: play-services-base
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.android.gms:play-services-basement:+
+  name: play-services-basement
+  copyrightHolder: Google
+  skip: true
+- artifact: com.google.android.gms:play-services-tasks:+
+  name: play-services-tasks
+  copyrightHolder: Google
+  skip: true
+- artifact: com.github.marcoscgdev.EasyLicensesDialog:appcompatversion:+
+  name: marcoscgdev/EasyLicensesDialog
+  copyrightHolder: Marcos Calvo García
+  license: MIT License
+  url: https://github.com/marcoscgdev/EasyLicensesDialog

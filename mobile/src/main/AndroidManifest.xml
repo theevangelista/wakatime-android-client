@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.wakatime.android.WakatimeApplication"
+        android:name=".WakatimeApplication"
         android:allowBackup="true"
         android:allowClearUserData="true"
         android:fullBackupContent="true"
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.wakatime.android.user.UserStartActivity">
+        <activity android:name=".user.UserStartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wakatime.android.dashboard.DashboardActivity"
+            android:name=".dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName=".dashboard.DashboardActivity" />
     </application>
 
 </manifest>

@@ -30,5 +30,10 @@
     <string name="drawer_leaderboard">Leaderboard</string>
     <string name="badge">badge</string>
     <string name="values_in_minutes">Values in minutes</string>
+    <string name="about">About</string>
+    <string name="version">Version %s</string>
+    <string name="unknown_version">Unknown Version</string>
+    <string name="licenses">Licenses</string>
+    <string name="os_license">Open Source Licenses</string>
 
 </resources>
