@@ -22,6 +22,7 @@ import com.wakatime.android.dashboard.leaderboard.Leader;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.android.dashboard.project.ProjectFragment;
+import com.wakatime.android.dashboard.project.SingleProjectFragment;
 import com.wakatime.android.support.view.NavigationHeaderView;
 import com.wakatime.android.user.UserStartActivity;
 
@@ -35,7 +36,8 @@ public class DashboardActivity extends AppCompatActivity
         implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
         EnvironmentFragment.OnProgrammingFragmentInteractionListener,
         ProjectFragment.OnProjectFragmentInteractionListener,
-        LeaderboardFragment.OnLeaderListFragmentInteractionListener {
+        LeaderboardFragment.OnLeaderListFragmentInteractionListener,
+        SingleProjectFragment.OnSingleProjectInteractionListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

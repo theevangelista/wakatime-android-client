@@ -38,5 +38,7 @@
     <string name="could_not_fetch">Could not fetch data</string>
     <string name="retry">Retry</string>
     <string name="action_search">Search</string>
+    <string name="avg_daily">Daily Average</string>
+    <string name="total_time">Total</string>
 
 </resources>

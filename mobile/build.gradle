@@ -95,6 +95,9 @@ dependencies {
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.4.1'
     //noinspection GradleDependency
     testCompile 'junit:junit:4.12'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
+        transitive = true;
+    }
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
@@ -138,8 +141,5 @@ dependencies {
     debugCompile 'com.squareup.haha:haha:2.0.3'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
-        transitive = true;
-    }
 }
 apply plugin: 'com.google.gms.google-services'

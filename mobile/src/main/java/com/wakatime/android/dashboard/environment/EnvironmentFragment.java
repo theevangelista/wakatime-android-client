@@ -1,13 +1,10 @@
 package com.wakatime.android.dashboard.environment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +13,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
-import com.wakatime.android.dashboard.model.Editor;
-import com.wakatime.android.dashboard.model.Language;
-import com.wakatime.android.dashboard.model.OperatingSystem;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.support.Linguist;
 import com.wakatime.android.support.JsonParser;
 import com.wakatime.android.support.view.Animations;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.wakatime.android.util.Charts;
 
 import javax.inject.Inject;
 
@@ -212,92 +198,21 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     private void setLanguageData(Stats data) {
         defaultPieChartConfig(mChartLanguages);
-        mChartLanguages.setCenterText(getString(R.string.title_languages));
-        List<Language> languages = data.getLanguages();
-
-        List<PieEntry> dataSet = new ArrayList<>(languages.size());
-        for (Language language : languages) {
-            dataSet.add(new PieEntry(language.getPercent(), language.getName()));
-        }
-
-        List<Integer> colors = new ArrayList<>(languages.size());
-        for (Language language : languages) {
-            int color = linguist.decode(language.getName());
-            colors.add(color);
-        }
-        PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_languages));
-        pieDataSet.setValueTextColor(Color.WHITE);
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-        pieDataSet.setColors(colors);
-        pieDataSet.setValueTextSize(14f);
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
-        mChartLanguages.setData(pieData);
+        Charts.defaultLanguageChart(data.getLanguages(), mChartLanguages, linguist);
     }
 
     private void setOSChart(Stats data) {
         defaultPieChartConfig(mChartOS);
-        mChartOS.setCenterText(getString(R.string.title_os));
-
-        List<OperatingSystem> operatingSystems = data.getOperatingSystems();
-        List<PieEntry> entries = new ArrayList<>(operatingSystems.size());
-        List<Integer> colors = new ArrayList<>(operatingSystems.size());
-        for (OperatingSystem operatingSystem : operatingSystems) {
-            entries.add(new PieEntry(operatingSystem.getPercent(), operatingSystem.getName()));
-            colors.add(linguist.decodeOS(operatingSystem.getName()));
-        }
-        PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.title_os));
-        pieDataSet.setColors(colors);
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-        pieDataSet.setValueTextSize(14f);
-        pieDataSet.setValueTextColor(Color.WHITE);
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
-        mChartOS.setData(pieData);
+        Charts.defaultOSChart(data.getOperatingSystems(), mChartOS, linguist);
     }
 
     private void setEditorData(Stats data) {
         defaultPieChartConfig(mChartEditors);
-        mChartEditors.setCenterText(getString(R.string.title_editors));
-        List<PieEntry> dataSet = new ArrayList<>(data.getEditors().size());
-        //noinspection Convert2streamapi
-        for (Editor editor : data.getEditors()) {
-            dataSet.add(new PieEntry(editor.getPercent(), editor.getName()));
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(dataSet, getString(R.string.title_editors));
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-        pieDataSet.setValueTextColor(Color.WHITE);
-        pieDataSet.setValueTextSize(14f);
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
-        mChartEditors.setData(pieData);
+        Charts.defaultEditorsChart(data.getEditors(), mChartEditors);
     }
 
     private void defaultPieChartConfig(PieChart chart) {
-        chart.setDrawHoleEnabled(true);
-        chart.setHoleColor(Color.WHITE);
-        chart.setTransparentCircleColor(Color.WHITE);
-        chart.setTransparentCircleAlpha(110);
-        chart.setDragDecelerationFrictionCoef(0.95f);
-        chart.setHoleRadius(58f);
-        chart.setTransparentCircleRadius(61f);
-        chart.setDescription("");
-        chart.setUsePercentValues(true);
-        chart.setEntryLabelColor(Color.WHITE);
-        chart.setDrawCenterText(true);
-        chart.setCenterTextSize(18f);
-        chart.setCenterTextColor(ContextCompat.getColor(getActivity(), R.color.colorSecondaryText));
-        chart.setRotationAngle(0);
-        chart.setRotationEnabled(true);
-        chart.setHighlightPerTapEnabled(true);
-        chart.setCenterTextTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Lato-Regular.ttf"));
-        chart.setEntryLabelTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Lato-Regular.ttf"));
-        chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        Charts.setDefaultPieChartConfig(chart);
     }
 
 

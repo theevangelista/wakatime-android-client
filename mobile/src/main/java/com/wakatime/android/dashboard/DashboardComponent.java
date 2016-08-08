@@ -4,6 +4,7 @@ import com.wakatime.android.dashboard.environment.EnvironmentFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.android.dashboard.project.ProjectFragment;
+import com.wakatime.android.dashboard.project.SingleProjectFragment;
 
 import javax.inject.Singleton;
 
@@ -23,4 +24,7 @@ public interface DashboardComponent {
     void inject(LeaderboardFragment leaderboardFragment);
 
     void inject(LeaderProfileFragment leaderProfileFragment);
+
+    void inject(SingleProjectFragment singleProjectFragment);
+
 }

@@ -6,7 +6,9 @@ import com.wakatime.android.dashboard.environment.EnvironmentPresenter;
 import com.wakatime.android.dashboard.leaderboard.DefaultLeaderboardPresenter;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardPresenter;
 import com.wakatime.android.dashboard.project.DefaultProjectPresenter;
+import com.wakatime.android.dashboard.project.DefaultSingleProjectPresenter;
 import com.wakatime.android.dashboard.project.ProjectPresenter;
+import com.wakatime.android.dashboard.project.SingleProjectPresenter;
 import com.wakatime.android.di.IOScheduler;
 import com.wakatime.android.di.NetworkModule;
 import com.wakatime.android.di.UIScheduler;
@@ -51,5 +53,14 @@ public class DashboardModule {
                                               @UIScheduler Scheduler uiScheduler,
                                               NetworkConnectionWatcher watcher) {
         return new DefaultLeaderboardPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
+    }
+
+    @Provides
+    @Singleton
+    SingleProjectPresenter singleProjectPresenter(Realm realm, ApiClient apiClient,
+                                                  @IOScheduler Scheduler ioScheduler,
+                                                  @UIScheduler Scheduler uiScheduler,
+                                                  NetworkConnectionWatcher watcher) {
+        return new DefaultSingleProjectPresenter(realm, apiClient, ioScheduler, uiScheduler, watcher);
     }
 }
