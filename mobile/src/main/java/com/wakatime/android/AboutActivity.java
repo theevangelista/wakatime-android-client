@@ -22,6 +22,7 @@ public class AboutActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_license)
     Button mBtnLicense;
+    private EasyLicensesDialog easyLicensesDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class AboutActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        easyLicensesDialog = new EasyLicensesDialog(this);
         setVersion();
     }
 
@@ -52,9 +54,16 @@ public class AboutActivity extends AppCompatActivity {
         finish(); // remove from backstack and go back to dashboard below it
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (easyLicensesDialog != null) {
+            easyLicensesDialog = null; // remove reference since it leaks
+        }
+    }
+
     @OnClick(R.id.btn_license)
     void openLicenseDialog(View button) {
-        EasyLicensesDialog easyLicensesDialog = new EasyLicensesDialog(this);
         easyLicensesDialog.setTitle(getString(R.string.licenses));
         easyLicensesDialog.setCancelable(true);
         easyLicensesDialog.show();
