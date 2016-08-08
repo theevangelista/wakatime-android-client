@@ -146,6 +146,7 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mPresenter.onFinish();
         this.mPresenter.unbind();
     }
 
@@ -176,7 +177,7 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @Override
     public void notifyError(Throwable error) {
         Snackbar snackbar = Snackbar.make(mContainer,
-                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+                R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
             mPresenter.onInit();

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,51 +42,32 @@ public class SingleProjectFragment extends Fragment implements SingleProjectView
     private static final String PROJECT_NAME_ARG = "project-name";
     private static final String ROTATION_KEY = "ROTATION-KEY";
 
-
     @Inject
     SingleProjectPresenter mPresenter;
 
     @BindView(R.id.text_view_project_name)
     TextView mTextViewProjectName;
 
-    @BindView(R.id.title_avg_daily)
-    TextView mTitleAvgDaily;
-
     @BindView(R.id.text_view_avg_daily)
     TextView mTextViewAvgDaily;
-
-    @BindView(R.id.card_avg_daily)
-    CardView mCardAvgDaily;
-
-    @BindView(R.id.title_total_time)
-    TextView mTitleTotalTime;
 
     @BindView(R.id.text_view_total_time)
     TextView mTextViewTotalTime;
 
-    @BindView(R.id.card_total_time)
-    CardView mCardTotalTime;
-
     @BindView(R.id.chart_languages)
     PieChart mChartLanguages;
-
-    @BindView(R.id.card_languages)
-    CardView mCardLanguages;
 
     @BindView(R.id.chart_editors)
     PieChart mChartEditors;
 
-    @BindView(R.id.card_editors)
-    CardView mCardEditors;
-
     @BindView(R.id.chart_os)
     PieChart mChartOs;
 
-    @BindView(R.id.card_os)
-    CardView mCardOs;
-
     @BindView(R.id.container)
     ScrollView mContainer;
+
+    @BindView(R.id.constraint_layout)
+    View mDataLayout;
 
     @BindView(R.id.loader_single_project)
     SpinKitView mLoaderSingleProject;
@@ -205,7 +185,7 @@ public class SingleProjectFragment extends Fragment implements SingleProjectView
     @Override
     public void notifyError(Throwable error) {
         Snackbar snackbar = Snackbar.make(mContainer,
-                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+                R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
             mPresenter.onInit(mProjectName);
@@ -219,41 +199,13 @@ public class SingleProjectFragment extends Fragment implements SingleProjectView
     @Override
     public void hideLoader() {
         mLoaderSingleProject.setVisibility(View.GONE);
-
-        mTextViewProjectName.setVisibility(View.VISIBLE);
-        mTitleAvgDaily.setVisibility(View.VISIBLE);
-        mTextViewAvgDaily.setVisibility(View.VISIBLE);
-        mCardAvgDaily.setVisibility(View.VISIBLE);
-        mTitleTotalTime.setVisibility(View.VISIBLE);
-        mTextViewTotalTime.setVisibility(View.VISIBLE);
-        mCardTotalTime.setVisibility(View.VISIBLE);
-        mChartLanguages.setVisibility(View.VISIBLE);
-        mCardLanguages.setVisibility(View.VISIBLE);
-        mChartEditors.setVisibility(View.VISIBLE);
-        mCardEditors.setVisibility(View.VISIBLE);
-        mChartOs.setVisibility(View.VISIBLE);
-        mCardOs.setVisibility(View.VISIBLE);
-        mContainer.setVisibility(View.VISIBLE);
+        mDataLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showLoader() {
         mLoaderSingleProject.setVisibility(View.VISIBLE);
-
-        mTextViewProjectName.setVisibility(View.GONE);
-        mTitleAvgDaily.setVisibility(View.GONE);
-        mTextViewAvgDaily.setVisibility(View.GONE);
-        mCardAvgDaily.setVisibility(View.GONE);
-        mTitleTotalTime.setVisibility(View.GONE);
-        mTextViewTotalTime.setVisibility(View.GONE);
-        mCardTotalTime.setVisibility(View.GONE);
-        mChartLanguages.setVisibility(View.GONE);
-        mCardLanguages.setVisibility(View.GONE);
-        mChartEditors.setVisibility(View.GONE);
-        mCardEditors.setVisibility(View.GONE);
-        mChartOs.setVisibility(View.GONE);
-        mCardOs.setVisibility(View.GONE);
-        mContainer.setVisibility(View.GONE);
+        mDataLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

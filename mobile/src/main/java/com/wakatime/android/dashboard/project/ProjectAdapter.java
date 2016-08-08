@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wakatime.android.R;
 import com.wakatime.android.dashboard.model.Project;
+import com.wakatime.android.dashboard.project.ProjectFragment.OnProjectFragmentInteractionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
      * Holds data because projects collection gets modified by the query
      */
     private List<Project> projectsCache;
+    private OnProjectFragmentInteractionListener mListener;
 
-    public ProjectAdapter(Context context, List<Project> projects) {
+    public ProjectAdapter(Context context, List<Project> projects, OnProjectFragmentInteractionListener listener) {
         this.inflater = LayoutInflater.from(context);
         this.projects = projects;
         this.projectsCache = new ArrayList<>(projects);
+        this.mListener = listener;
     }
 
     @Override
@@ -48,6 +51,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         if (projects == null) return;
 
         Project project = projects.get(position);
+        holder.item = project;
+        holder.itemView.setOnClickListener(view -> {
+            if (mListener != null) {
+                mListener.showProjectPage(project);
+            }
+        });
         holder.mTextViewProjectName.setText(project.getName());
         holder.mTextViewProjectTime.setText(project.getText());
 
@@ -133,6 +142,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        final View itemView;
+        Project item;
         @BindView(R.id.text_view_project_name)
         TextView mTextViewProjectName;
 
@@ -142,6 +153,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
         ViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }
     }

@@ -58,25 +58,19 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     public static final String KEY = "project-fragment";
 
     private static final String ROTATION_CACHE = "rotation-cache";
-
     @BindView(R.id.recycler_projects)
     RecyclerView mRecyclerProjects;
-
     @BindView(R.id.loader_projects)
     SpinKitView mLoaderProjects;
-
     @BindView(R.id.chart_projects)
     PieChart mChartProjects;
-
     @BindView(R.id.nested_projects)
     NestedScrollView mNestedProjects;
-
     @BindView(R.id.container)
     View mContainer;
-
     @Inject
     ProjectPresenter mPresenter;
-
+    private OnProjectFragmentInteractionListener mListener;
     private List<Project> rotationCache;
 
     private Tracker mTracker;
@@ -105,7 +99,9 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (!(context instanceof OnProjectFragmentInteractionListener)) {
+        if (context instanceof OnProjectFragmentInteractionListener) {
+            this.mListener = ((OnProjectFragmentInteractionListener) context);
+        } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnProjectFragmentInteractionListener");
         }
@@ -120,9 +116,7 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
                     });
             this.setProjects(this.rotationCache);
         }
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -180,6 +174,12 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener = null;
+    }
+
+    @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         return Animations.createMoveAnimation(enter);
     }
@@ -188,7 +188,7 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     public void setProjects(List<Project> projects) {
         setChartData(projects);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new ProjectAdapter(getActivity(), projects);
+        mAdapter = new ProjectAdapter(getActivity(), projects, mListener);
         mRecyclerProjects.setLayoutManager(layoutManager);
         mRecyclerProjects.setAdapter(mAdapter);
     }
@@ -256,7 +256,7 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     @Override
     public void notifyError(Throwable error) {
         Snackbar snackbar = Snackbar.make(mContainer,
-                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+                R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
             mPresenter.onInit();
@@ -305,5 +305,6 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
      */
     public interface OnProjectFragmentInteractionListener {
 
+        void showProjectPage(Project project);
     }
 }

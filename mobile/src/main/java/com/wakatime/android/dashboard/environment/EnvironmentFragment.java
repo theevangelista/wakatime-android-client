@@ -186,7 +186,7 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     @Override
     public void notifyError(Throwable error) {
         Snackbar snackbar = Snackbar.make(mContainer,
-                R.string.could_not_fetch, Snackbar.LENGTH_INDEFINITE);
+                R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
             mEnvironmentPresenter.onInit();

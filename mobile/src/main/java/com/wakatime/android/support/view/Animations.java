@@ -8,7 +8,7 @@ import com.labo.kaji.fragmentanimations.MoveAnimation;
 
 public final class Animations {
 
-    private static final int DURATION = 500;
+    private static final int DURATION = 300;
 
     private Animations() {
 

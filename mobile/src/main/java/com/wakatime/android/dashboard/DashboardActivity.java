@@ -21,6 +21,7 @@ import com.wakatime.android.dashboard.environment.EnvironmentFragment;
 import com.wakatime.android.dashboard.leaderboard.Leader;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
+import com.wakatime.android.dashboard.model.Project;
 import com.wakatime.android.dashboard.project.ProjectFragment;
 import com.wakatime.android.dashboard.project.SingleProjectFragment;
 import com.wakatime.android.support.view.NavigationHeaderView;
@@ -207,6 +208,14 @@ public class DashboardActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_dashboard, LeaderProfileFragment.newInstance(leader), leader.getUser().getName())
                 .addToBackStack(leader.getUser().getName())
+                .commit();
+    }
+
+    @Override
+    public void showProjectPage(Project project) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_dashboard, SingleProjectFragment.newInstance(project.getName()), project.getName())
+                .addToBackStack(project.getName())
                 .commit();
     }
 }
