@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -18,10 +19,12 @@ import com.wakatime.android.di.DaggerApplicationComponent;
 import com.wakatime.android.di.DaggerNetworkComponent;
 import com.wakatime.android.di.NetworkComponent;
 import com.wakatime.android.di.NetworkModule;
+import com.wakatime.android.support.log.CrashlyticsTree;
 import com.wakatime.android.user.DaggerUserComponent;
 import com.wakatime.android.user.UserComponent;
 import com.wakatime.android.user.UserModule;
 
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -48,10 +51,11 @@ public class WakatimeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         LeakCanary.install(this);
         AndroidThreeTen.init(this);
         Stetho.initializeWithDefaults(this);
-        Timber.plant(new Timber.DebugTree());
+        installTimber();
         this.registerApplicationComponent();
         this.registerApiKeyComponent();
         this.registerNetworkComponent();
@@ -61,6 +65,14 @@ public class WakatimeApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+    }
+
+    private void installTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new CrashlyticsTree());
+        }
     }
 
 

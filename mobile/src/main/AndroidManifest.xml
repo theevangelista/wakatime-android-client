@@ -29,6 +29,10 @@
             android:name=".AboutActivity"
             android:label="@string/about"
             android:parentActivityName=".dashboard.DashboardActivity" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="c1b0913c1ea618ffe2a1d02eb09dce0f01195da3" />
     </application>
 
 </manifest>
