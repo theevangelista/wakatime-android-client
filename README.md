@@ -2,7 +2,11 @@
 # Tick
 Android Wakatime Client
 
-[![board](https://img.shields.io/badge/trello-board-0079BF.svg?style=flat)](https://trello.com/b/7A3M8jr3/tick-wakatime-client) 
+[![board](https://img.shields.io/badge/trello-board-0079BF.svg?style=flat-square)](https://trello.com/b/7A3M8jr3/tick-wakatime-client)
+[![Build Status](https://img.shields.io/travis/joaoevangelista/wakatime-android-client.svg?style=flat-square)](https://travis-ci.org/joaoevangelista/wakatime-android-client)
+[![Dependency Status](https://www.versioneye.com/user/projects/57a8868b8f4689004d3719dd/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a8868b8f4689004d3719dd)
+[![Android Target](https://img.shields.io/badge/Target-Nougat-brightgreen.svg?style=flat-square)](https://developer.android.com/preview/setup-sdk.html#get-sdk)
+
 
 Building
 ---
