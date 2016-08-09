@@ -2,6 +2,8 @@
 # Tick
 Android Wakatime Client
 
+[![board](https://img.shields.io/badge/trello-board-0079BF.svg?style=flat)](https://trello.com/b/7A3M8jr3/tick-wakatime-client) 
+
 Building
 ---
 
