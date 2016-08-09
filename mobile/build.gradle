@@ -80,7 +80,8 @@ dependencies {
     wearApp project(':wear')
     provided group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
     apt group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
-
+    compile 'com.google.android.gms:play-services-wearable:9.4.0'
+    compile 'com.google.android.support:wearable:1.4.0'
 
 
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'

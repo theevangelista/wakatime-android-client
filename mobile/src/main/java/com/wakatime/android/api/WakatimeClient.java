@@ -3,6 +3,7 @@ package com.wakatime.android.api;
 import com.wakatime.android.dashboard.leaderboard.LeaderWrapper;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
+import com.wakatime.android.duration.DurationWrapper;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -28,4 +29,11 @@ public interface WakatimeClient {
 
     @GET("leaders")
     Observable<LeaderWrapper> fetchLeaders(@Header("Authorization") String authorizationKey);
+
+    /**
+     * @param authKey authentication key
+     * @param queryDate date in format YYYY-MM-DD
+     */
+    @GET("users/current/durations")
+    Observable<DurationWrapper> fetchDurations(@Header("Authorization") String authKey, @Query("date") String  queryDate);
 }

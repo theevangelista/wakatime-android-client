@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AndroidClient</string>
+    <string name="app_name">Tick</string>
+    <string name="logged_time_today">Logged time today</string>
 </resources>
