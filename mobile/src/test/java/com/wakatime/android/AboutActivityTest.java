@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
@@ -20,7 +20,7 @@ import static org.assertj.android.api.Assertions.assertThat;
 @Config(sdk = 23, constants = BuildConfig.class,
         application = WakatimeApplication.class,
         shadows = ShadowMultiDex.class)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class AboutActivityTest {
 
     private AboutActivity mTarget;
