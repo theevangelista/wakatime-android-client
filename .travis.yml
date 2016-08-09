@@ -6,14 +6,11 @@ android:
     - tools
     - platform-tools
     - build-platform-24.0.1
-    - android-23
+    - android-24
     - extra-android-support
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-google-google_play_services
-  licenses:
-    - 'android-.*'
-    - 'android-sdk-license-.+'
 jdk:
   - oraclejdk8
 notifications:
@@ -26,11 +23,6 @@ cache:
     - $HOME/.gradle/wrapper/
 
 before_script:
-  - mkdir -p "$ANDROID_SDK/licenses" || true
-  - touch "$ANDROID_SDK/licenses/android-sdk-license"
-  - touch "$ANDROID_SDK/licenses/android-sdk-preview-license"
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_SDK/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_SDK/licenses/android-sdk-preview-license"
   - 'chmod +x gradlew'
 script:
   - './gradlew test' # Run unit tests
