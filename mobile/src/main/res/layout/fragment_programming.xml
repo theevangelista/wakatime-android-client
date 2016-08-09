@@ -17,7 +17,7 @@
             android:id="@+id/loader_programming"
             style="@style/SpinKitView.Large.DoubleBounce"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/loader_size"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
 
             android:layout_gravity="center"

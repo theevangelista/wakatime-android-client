@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="colorPrimary">#00BCD4</color>
-    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorPrimary">#00BCD4</color> <!-- 500 cyan -->
+    <color name="colorPrimaryDark">#0097A7</color> <!-- 700 cyan -->
     <color name="colorPrimaryLight">#B2EBF2</color>
-    <color name="colorAccent">#FF5722</color>
+    <color name="colorAccent">#FFC107</color>   <!-- 500 amber -->
+    <color name="colorDarkAccent">#FFA000</color>  <!-- 700 amber -->
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
-    <color name="trophy">#FFC107</color>
+    <color name="trophy">#FFD54F</color>  <!-- 300 amber -->
 </resources>
