@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A recycler adapter that implements a simple logic to filter the contents of a list given
@@ -81,7 +82,7 @@ public abstract class SearchableRecyclerAdapter<VH extends RecyclerView.ViewHold
     }
 
     protected List<T> filter(String query, Comparable<T> comparable) {
-        String lowerQuery = query.toLowerCase();
+        String lowerQuery = query.toLowerCase(Locale.US);
         if (wasModified() && query.isEmpty()) {
             // add back the items when the query is empty
             return mValuesCache;

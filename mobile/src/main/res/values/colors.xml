@@ -8,8 +8,6 @@
     <color name="colorDarkAccent">#FFA000</color>  <!-- 700 amber -->
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
-
     <color name="trophy">#FFD54F</color>  <!-- 300 amber -->
 </resources>

@@ -9,6 +9,7 @@ import com.wakatime.android.support.chart.RandomColor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -21,7 +22,6 @@ import timber.log.Timber;
 public class Linguist {
 
     private final Map<String, Map<String, Object>> languages;
-    private final String defaultColor = "#03A9F4";
 
     private Linguist(Map<String, Map<String, Object>> languages) {
         this.languages = languages;
@@ -65,7 +65,7 @@ public class Linguist {
 
     public int decodeOS(String os) {
         String color;
-        switch (os.toLowerCase()) {
+        switch (os.toLowerCase(Locale.US)) {
             case "windows": color ="#00bcf2";
                 break;
             case "mac": color = "#8e8e93";
