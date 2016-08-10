@@ -40,5 +40,7 @@
     <string name="action_search">Search</string>
     <string name="avg_daily">Daily Average</string>
     <string name="total_time">Total</string>
+	<string name="help">Help</string>
+	<string name="api_key_help">You can find your api key on <a href="https://wakatime.com/settings/account">Wakatime account settings</a></string>
 
 </resources>

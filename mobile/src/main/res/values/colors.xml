@@ -9,5 +9,6 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="divider">#BDBDBD</color>
+	<color name="white">#FFFFFF</color>
     <color name="trophy">#FFD54F</color>  <!-- 300 amber -->
 </resources>

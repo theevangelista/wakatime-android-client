@@ -1,7 +1,9 @@
 package com.wakatime.android.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.sephiroth.android.library.tooltip.Tooltip;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UserStartActivity extends AppCompatActivity implements ViewModel {
@@ -124,6 +127,27 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
     @OnClick(R.id.btn_continue)
     public void onClick() {
         mPresenter.saveUserData(this.mEditTextApiKey.getText().toString());
+    }
+
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    @OnClick(R.id.btn_help)
+    void onHelpClick(View button) {
+        Tooltip.make(this, new Tooltip.Builder(101)
+            .anchor(button, Tooltip.Gravity.LEFT)
+            .closePolicy(new Tooltip.ClosePolicy()
+                .outsidePolicy(true, false), 10000)
+            .activateDelay(800)
+            .showDelay(300)
+            // beware this is using deprecated method by API 24
+            // but lower API level don't have the new method
+            .text(this.getResources(), R.string.api_key_help)
+            .maxWidth(800)
+            .withArrow(true)
+            .withOverlay(true)
+            .typeface(Typeface.createFromAsset(this.getAssets(), "fonts/Lato-Regular.ttf"))
+            .build()
+        ).show();
     }
 
     @Override
