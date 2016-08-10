@@ -15,6 +15,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.cookpad.android.licensetools'
+apply from: '../buildSrc/check.gradle'
 
 android {
     compileSdkVersion 24

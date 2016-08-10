@@ -1,0 +1,72 @@
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/codequality/checkstyle/checkstyle.xml")
+    // Where my checkstyle config is...
+    configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/codequality/checkstyle/suppressions.xml").absolutePath
+    // Where is my suppressions file for checkstyle is...
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File("${project.rootDir}/codequality/findbugs/findbugs-filter.xml")
+    classes = files("${project.rootDir}/app/build/classes")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+        }
+        html {
+            destination "$project.buildDir/reports/findbugs/findbugs.html"
+        }
+    }
+
+    classpath = files()
+}
+task pmd(type: Pmd) {
+    ruleSetFiles = files("${project.rootDir}/codequality/pmd/pmd-ruleset.xml")
+    ignoreFailures = false
+    ruleSets = []
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination "$project.buildDir/reports/pmd/pmd.xml"
+        }
+        html {
+            destination "$project.buildDir/reports/pmd/pmd.html"
+        }
+    }
+}
+
+android {
+    lintOptions {
+        abortOnError true
+        xmlReport false
+        htmlReport true
+        lintConfig file("${project.rootDir}/codequality/lint/lint.xml")
+        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+    }
+}
+
+check.dependsOn 'checkstyle', 'lint', 'pmd'
