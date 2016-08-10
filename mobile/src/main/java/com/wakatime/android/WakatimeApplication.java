@@ -132,6 +132,7 @@ public class WakatimeApplication extends Application {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
+        mTracker.enableAdvertisingIdCollection(true);
         return mTracker;
     }
 }
