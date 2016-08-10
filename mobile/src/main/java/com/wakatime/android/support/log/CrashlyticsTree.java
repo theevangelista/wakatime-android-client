@@ -19,8 +19,6 @@ public class CrashlyticsTree extends Timber.Tree {
     protected void log(int priority, String tag, String message, Throwable t) {
         if (priority == Log.ERROR) {
             Crashlytics.log(priority, tag, formatMessage(message, t));
-        } else {
-            Log.println(priority, tag, formatMessage(message, t));
         }
     }
 }
