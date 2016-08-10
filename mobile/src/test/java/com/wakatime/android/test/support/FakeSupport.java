@@ -16,6 +16,7 @@ import io.realm.RealmList;
  * @author Joao Pedro Evangelista
  */
 
+@SuppressWarnings("WeakerAccess")
 public class FakeSupport {
 
     public static String fakeAuthKey() {
