@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.marcoscg.easylicensesdialog.EasyLicensesDialog;
 
 import butterknife.BindView;
@@ -22,7 +24,10 @@ public class AboutActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_license)
     Button mBtnLicense;
+
     private EasyLicensesDialog easyLicensesDialog;
+
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class AboutActivity extends AppCompatActivity {
 
         easyLicensesDialog = new EasyLicensesDialog(this);
         setVersion();
+
+        mTracker = ((WakatimeApplication) this.getApplication()).getTracker();
     }
 
     private void setVersion() {
@@ -52,6 +59,13 @@ public class AboutActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish(); // remove from backstack and go back to dashboard below it
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("About");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
