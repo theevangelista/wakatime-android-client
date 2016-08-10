@@ -119,7 +119,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
-    compile 'com.labo.kaji:fragmentanimations:0.1.1'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.github.marcoscgdev.EasyLicensesDialog:appcompatversion:1.0.4'
     testCompile 'junit:junit:4.12'

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ import com.wakatime.android.dashboard.model.OperatingSystem;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.support.Linguist;
 import com.wakatime.android.support.JsonParser;
-import com.wakatime.android.support.view.Animations;
 import com.wakatime.android.util.Charts;
 
 import java.util.List;
@@ -164,10 +162,6 @@ public class SingleProjectFragment extends Fragment implements SingleProjectView
         outState.putString(ROTATION_KEY, JsonParser.write(mCache));
     }
 
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return Animations.createMoveAnimation(enter);
-    }
 
     @Override
     public void onDetach() {

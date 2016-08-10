@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -26,7 +25,6 @@ import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.model.Language;
 import com.wakatime.android.dashboard.support.Linguist;
 import com.wakatime.android.support.JsonParser;
-import com.wakatime.android.support.view.Animations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,10 +108,6 @@ public class LeaderProfileFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return Animations.createMoveAnimation(enter);
-    }
 
     private void renderData() {
         final Leader leader = JsonParser.read(

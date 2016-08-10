@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.support.Linguist;
 import com.wakatime.android.support.JsonParser;
-import com.wakatime.android.support.view.Animations;
 import com.wakatime.android.util.Charts;
 
 import javax.inject.Inject;
@@ -151,10 +149,6 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         outState.putString(LIST_STATE, JsonParser.write(rotationCache));
     }
 
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return Animations.createMoveAnimation(enter);
-    }
 
     @Override
     public void onDetach() {

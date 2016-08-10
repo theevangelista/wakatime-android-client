@@ -19,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.mikephil.charting.animation.Easing;
@@ -36,7 +35,6 @@ import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.model.Project;
 import com.wakatime.android.support.JsonParser;
-import com.wakatime.android.support.view.Animations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,10 +177,6 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
         mListener = null;
     }
 
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return Animations.createMoveAnimation(enter);
-    }
 
     @Override
     public void setProjects(List<Project> projects) {
