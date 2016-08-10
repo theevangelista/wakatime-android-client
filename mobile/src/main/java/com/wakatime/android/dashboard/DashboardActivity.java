@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.AboutActivity;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
@@ -58,6 +60,8 @@ public class DashboardActivity extends AppCompatActivity
     @Inject
     LogoutHandler mLogoutHandler;
 
+    private Tracker mTracker;
+
     private Fragment programmingFragment;
 
     private Fragment projectFragment;
@@ -88,13 +92,22 @@ public class DashboardActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         navView.setNavigationItemSelectedListener(this);
         navigationHeaderView.on(navView.getHeaderView(0)).load();
         // Called new fragment when there is no other to saved
         if (savedInstanceState == null) {
             changeToDefaultFragment();
         }
+
+        mTracker = ((WakatimeApplication) getApplication()).getTracker();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Dashboard");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
