@@ -19,7 +19,7 @@ Just run gradle tasks you are used to.
 
 Releases
 ---
-You can grab the latest version of application on the release section of this repository.
+You can grab the latest version of application on the [release section](https://github.com/joaoevangelista/wakatime-android-client/releases) of this repository.
 
 
 Screenshots
