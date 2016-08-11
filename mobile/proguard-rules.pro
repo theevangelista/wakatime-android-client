@@ -15,3 +15,60 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn java.beans.** # missing nio file
+-dontwarn rx.internal.** # missing sun.Unsfe
+## Square Picasso specific rules ##
+## https://square.github.io/picasso/ ##
+
+-dontwarn com.squareup.okhttp.**
+# Okio
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
+-dontwarn java.lang.invoke.* # retrolambda
+
+# Proguard configuration for Jackson 2.x (fasterxml package instead of codehaus package)
+
+-keepnames class com.fasterxml.jackson.** { *; }
+
+-keep class com.fasterxml.jackson.databind.ObjectMapper {
+    public <methods>;
+    public <fields>;
+    protected <methods>;
+}
+-keep class com.fasterxml.jackson.databind.ObjectWriter {
+    public ** writeValueAsString(**);
+}
+-dontwarn org.w3c.** # Jackson 2.8 DOMSerializer
+
+# Proguard Configuration for Realm (http://realm.io)
+# For detailed discussion see: https://groups.google.com/forum/#!topic/realm-java/umqKCc50JGU
+# Additionally you need to keep your Realm Model classes as well
+# For example:
+# -keep class com.yourcompany.realm.** { *; }
+
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class *
+-dontwarn javax.**
+-dontwarn io.realm.**
+
+# Dagger ProGuard rules.
+# https://github.com/square/dagger
+
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
+
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
+

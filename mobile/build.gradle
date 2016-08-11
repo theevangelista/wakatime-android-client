@@ -29,12 +29,13 @@ android {
         versionName "1.0.0"
         multiDexEnabled true
 
+        resConfigs 'en'
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
-            minifyEnabled false
-            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
