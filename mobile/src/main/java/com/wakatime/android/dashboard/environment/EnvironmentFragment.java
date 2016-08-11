@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ import butterknife.ButterKnife;
  *
  * @author Joao Pedro Evangelista
  */
-public class EnvironmentFragment extends Fragment implements ViewModel {
+public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY = "programming-fragment";
 
@@ -51,6 +52,9 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     @BindView(R.id.loader_programming)
     SpinKitView mLoaderProgramming;
+
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeContainer;
 
     @BindView(R.id.container_charts)
     RelativeLayout mContainerCharts;
@@ -139,6 +143,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.linguist = Linguist.init(getActivity());
+        mSwipeContainer.setOnRefreshListener(this);
+        mSwipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorDarkAccent);
         // we don't have any data loaded, so lets do it nor the key,
         // cause we can have anything more on the bundle
         if (savedInstanceState == null ||
@@ -194,6 +200,11 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         String fmtTime = humanTime(time);
         this.timeCache = fmtTime;
         this.mTextViewTodayTime.setText(fmtTime);
+    }
+
+    @Override
+    public void completeRefresh() {
+        this.mSwipeContainer.setRefreshing(false);
     }
 
     private String humanTime(String time) {
@@ -252,6 +263,11 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     public void showLoader() {
         this.mLoaderProgramming.setVisibility(View.VISIBLE);
         this.mContainerCharts.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRefresh() {
+        this.mEnvironmentPresenter.onRefresh();
     }
 
     /**

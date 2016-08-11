@@ -1,155 +1,159 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:app="http://schemas.android.com/apk/res-auto"
-			xmlns:tools="http://schemas.android.com/tools"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			tools:context="com.wakatime.android.dashboard.environment.EnvironmentFragment">
+<android.support.v4.widget.SwipeRefreshLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/swipe_container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="com.wakatime.android.dashboard.environment.EnvironmentFragment">
 
-	<RelativeLayout
-		android:id="@+id/container"
+	<ScrollView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="16dp">
-
-
-		<com.github.ybq.android.spinkit.SpinKitView
-
-			android:id="@+id/loader_programming"
-			style="@style/SpinKitView.Large.DoubleBounce"
-			android:layout_width="wrap_content"
-			android:layout_height="@dimen/loader_size"
-			android:layout_centerInParent="true"
-
-			android:layout_gravity="center"
-			android:visibility="gone"
-			app:SpinKit_Color="@color/colorAccent"/>
+		android:layout_height="match_parent">
 
 		<RelativeLayout
-			android:id="@+id/container_charts"
+			android:id="@+id/container"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:padding="16dp">
 
 
-			<android.support.v7.widget.CardView
-				android:id="@+id/card_today_time"
+			<com.github.ybq.android.spinkit.SpinKitView
+
+				android:id="@+id/loader_programming"
+				style="@style/SpinKitView.Large.DoubleBounce"
+				android:layout_width="wrap_content"
+				android:layout_height="@dimen/loader_size"
+				android:layout_centerInParent="true"
+
+				android:layout_gravity="center"
+				android:visibility="gone"
+				app:SpinKit_Color="@color/colorAccent"/>
+
+			<RelativeLayout
+				android:id="@+id/container_charts"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-				<RelativeLayout
+				<android.support.v7.widget.CardView
+					android:id="@+id/card_today_time"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<RelativeLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="16dp">
+
+						<TextView
+							android:id="@+id/title_today_time"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:text="@string/title_today_time"/>
+
+						<TextView
+
+							android:id="@+id/text_view_today_time"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_below="@id/title_today_time"
+							android:layout_gravity="center"
+							android:layout_marginTop="8dp"
+							android:text="@string/computing"
+							android:textSize="32sp"/>
+					</RelativeLayout>
+				</android.support.v7.widget.CardView>
+
+				<android.support.v7.widget.CardView
+					android:id="@+id/card_logged_time"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:padding="16dp">
+					android:layout_below="@id/card_today_time"
+					android:layout_marginTop="16dp">
 
-					<TextView
-						android:id="@+id/title_today_time"
+					<RelativeLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:text="@string/title_today_time"/>
+						android:padding="16dp">
 
-					<TextView
+						<TextView
+							android:id="@+id/title_logged_time"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:text="@string/title_logged_time"/>
 
-						android:id="@+id/text_view_today_time"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_below="@id/title_today_time"
-						android:layout_gravity="center"
-						android:layout_marginTop="8dp"
-						android:text="@string/computing"
-						android:textSize="32sp"/>
-				</RelativeLayout>
-			</android.support.v7.widget.CardView>
+						<TextView
 
-			<android.support.v7.widget.CardView
-				android:id="@+id/card_logged_time"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/card_today_time"
-				android:layout_marginTop="16dp">
+							android:id="@+id/text_view_logged_time"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_below="@id/title_logged_time"
+							android:layout_gravity="center"
+							android:layout_marginTop="8dp"
+							android:textSize="32sp"/>
+					</RelativeLayout>
+				</android.support.v7.widget.CardView>
 
-				<RelativeLayout
+				<android.support.v7.widget.CardView
+					android:id="@+id/card_languages"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:padding="16dp">
+					android:layout_below="@id/card_logged_time"
+					android:layout_marginTop="16dp">
 
-					<TextView
-						android:id="@+id/title_logged_time"
+					<RelativeLayout
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="@string/title_logged_time"/>
+						android:layout_height="@dimen/pie_chart_size"
+						android:padding="16dp">
 
-					<TextView
+						<com.github.mikephil.charting.charts.PieChart
+							android:id="@+id/chart_languages"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
+					</RelativeLayout>
+				</android.support.v7.widget.CardView>
 
-						android:id="@+id/text_view_logged_time"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_below="@id/title_logged_time"
-						android:layout_gravity="center"
-						android:layout_marginTop="8dp"
-						android:textSize="32sp"/>
-				</RelativeLayout>
-			</android.support.v7.widget.CardView>
-
-			<android.support.v7.widget.CardView
-				android:id="@+id/card_languages"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/card_logged_time"
-				android:layout_marginTop="16dp">
-
-				<RelativeLayout
+				<android.support.v7.widget.CardView
+					android:id="@+id/card_editors"
 					android:layout_width="match_parent"
-					android:layout_height="@dimen/pie_chart_size"
-					android:padding="16dp">
+					android:layout_height="wrap_content"
+					android:layout_below="@id/card_languages"
+					android:layout_marginTop="16dp">
 
-					<com.github.mikephil.charting.charts.PieChart
-						android:id="@+id/chart_languages"
+					<RelativeLayout
 						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
-				</RelativeLayout>
-			</android.support.v7.widget.CardView>
+						android:layout_height="@dimen/pie_chart_size"
+						android:padding="16dp">
 
+						<com.github.mikephil.charting.charts.PieChart
+							android:id="@+id/chart_editors"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
 
-			<android.support.v7.widget.CardView
-				android:id="@+id/card_editors"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/card_languages"
-				android:layout_marginTop="16dp">
+					</RelativeLayout>
+				</android.support.v7.widget.CardView>
 
-				<RelativeLayout
+				<android.support.v7.widget.CardView
+					android:id="@+id/card_os"
 					android:layout_width="match_parent"
-					android:layout_height="@dimen/pie_chart_size"
-					android:padding="16dp">
+					android:layout_height="wrap_content"
+					android:layout_below="@id/card_editors"
+					android:layout_marginTop="16dp">
 
-					<com.github.mikephil.charting.charts.PieChart
-						android:id="@+id/chart_editors"
+					<RelativeLayout
 						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
+						android:layout_height="@dimen/pie_chart_size"
+						android:padding="16dp">
 
-				</RelativeLayout>
-			</android.support.v7.widget.CardView>
+						<com.github.mikephil.charting.charts.PieChart
+							android:id="@+id/chart_os"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
 
+					</RelativeLayout>
+				</android.support.v7.widget.CardView>
 
-			<android.support.v7.widget.CardView
-				android:id="@+id/card_os"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/card_editors"
-				android:layout_marginTop="16dp">
-
-				<RelativeLayout
-					android:layout_width="match_parent"
-					android:layout_height="@dimen/pie_chart_size"
-					android:padding="16dp">
-
-					<com.github.mikephil.charting.charts.PieChart
-						android:id="@+id/chart_os"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
-
-				</RelativeLayout>
-			</android.support.v7.widget.CardView>
-
+			</RelativeLayout>
 		</RelativeLayout>
-	</RelativeLayout>
-</ScrollView>
+	</ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

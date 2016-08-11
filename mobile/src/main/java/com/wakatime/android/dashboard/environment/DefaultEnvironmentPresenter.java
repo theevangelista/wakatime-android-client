@@ -17,6 +17,7 @@ import java.util.List;
 import io.realm.Realm;
 import rx.Scheduler;
 import rx.Subscription;
+import rx.functions.Action0;
 import timber.log.Timber;
 
 /**
@@ -54,13 +55,61 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
     @Override
     public void onInit() {
         viewModel.showLoader();
+        fetchData(() -> viewModel.hideLoader());
+    }
+
+    @Override
+    public void onFinish() {
+        if (this.tracker != null && !this.tracker.isUnsubscribed()) {
+            this.tracker.unsubscribe();
+        }
+        if (this.durationTracker != null && !this.durationTracker.isUnsubscribed()) {
+            this.durationTracker.unsubscribe();
+        }
+
+    }
+
+    @Override
+    public void onRefresh() {
+        fetchData(() -> viewModel.completeRefresh());
+    }
+
+
+    @Override
+    public void bind(ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    @Override
+    public void unbind() {
+        this.viewModel = null;
+    }
+
+    private Stats fetchFromDatabase() {
+        return realm.where(Stats.class).findFirst();
+    }
+
+    private long sumDurations(List<Duration> durations) {
+        long time = 0;
+        for (Duration duration : durations) {
+            time += duration.getDuration();
+        }
+        return time;
+    }
+
+    private String formatTime(long time) {
+        return LocalTime.ofSecondOfDay(time).format(DateTimeFormatter.ofPattern("HH:mm"));
+
+    }
+
+    private void fetchData(Action0 termination) {
         if (watcher.isNetworkAvailable()) {
             this.tracker = this.wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
                 .observeOn(uiScheduler)
                 .subscribeOn(ioScheduler)
                 .map(Wrapper::getData)
                 .doOnError(viewModel::notifyError)
-                .doOnTerminate(() -> viewModel.hideLoader())
+                .doOnTerminate(termination)
                 .subscribe(
                     data -> {
                         viewModel.setData(data);
@@ -90,47 +139,8 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
                     Timber.w(error, "Error parsing time"));
         } else {
             viewModel.setData(fetchFromDatabase());
-            viewModel.hideLoader();
+            termination.call();
         }
-
-    }
-
-    @Override
-    public void onFinish() {
-        if (this.tracker != null && !this.tracker.isUnsubscribed()) {
-            this.tracker.unsubscribe();
-        }
-        if (this.durationTracker != null && !this.durationTracker.isUnsubscribed()) {
-            this.durationTracker.unsubscribe();
-        }
-
-    }
-
-
-    @Override
-    public void bind(ViewModel viewModel) {
-        this.viewModel = viewModel;
-    }
-
-    @Override
-    public void unbind() {
-        this.viewModel = null;
-    }
-
-    private Stats fetchFromDatabase() {
-        return realm.where(Stats.class).findFirst();
-    }
-
-    private long sumDurations(List<Duration> durations) {
-        long time = 0;
-        for (Duration duration : durations) {
-            time += duration.getDuration();
-        }
-        return time;
-    }
-
-    private String formatTime(long time) {
-        return LocalTime.ofSecondOfDay(time).format(DateTimeFormatter.ofPattern("HH:mm"));
 
     }
 }
