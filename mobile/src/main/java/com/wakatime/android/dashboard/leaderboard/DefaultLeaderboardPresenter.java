@@ -9,6 +9,7 @@ import java.util.List;
 import io.realm.Realm;
 import rx.Scheduler;
 import rx.Subscription;
+import rx.functions.Action0;
 import timber.log.Timber;
 
 import static com.wakatime.android.util.Collections.copyIterator;
@@ -55,22 +56,38 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
     @Override
     public void onInit() {
         viewModel.showLoader();
+        this.fetchData(() -> viewModel.hideLoader());
+    }
+
+    @Override
+    public void onFinish() {
+        if (this.trackingSubscription != null && !this.trackingSubscription.isUnsubscribed()) {
+            this.trackingSubscription.unsubscribe();
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        this.fetchData(() -> viewModel.completeRefresh());
+    }
+
+    private void fetchData(Action0 terminator) {
         if (watcher.isNetworkAvailable()) {
             this.trackingSubscription = this.wakatimeClient.fetchLeaders(HeaderFormatter.get(realm))
-                    .observeOn(uiScheduler)
-                    .subscribeOn(ioScheduler)
-                    .doOnTerminate(() -> viewModel.hideLoader())
-                    .map(LeaderWrapper::getData)
-                    .map(leaders -> leaders.subList(0, 21))
-                    .doOnError(viewModel::notifyError)
-                    .subscribe(leaders -> {
-                        viewModel.setData(leaders);
-                        viewModel.setRotationCache(leaders);
-                        saveOnDatabase(leaders);
-                    }, error -> Timber.e(error, "Error fetching leaders"));
+                .observeOn(uiScheduler)
+                .subscribeOn(ioScheduler)
+                .doOnTerminate(terminator)
+                .map(LeaderWrapper::getData)
+                .map(leaders -> leaders.subList(0, 21))
+                .doOnError(viewModel::notifyError)
+                .subscribe(leaders -> {
+                    viewModel.setData(leaders);
+                    viewModel.setRotationCache(leaders);
+                    saveOnDatabase(leaders);
+                }, error -> Timber.e(error, "Error fetching leaders"));
         } else {
             viewModel.setData(fetchFromDatabase());
-            viewModel.hideLoader();
+            terminator.call();
         }
     }
 
@@ -81,12 +98,5 @@ public class DefaultLeaderboardPresenter implements LeaderboardPresenter {
 
     private List<Leader> fetchFromDatabase() {
         return copyIterator(realm.where(Leader.class).findAll().iterator());
-    }
-
-    @Override
-    public void onFinish() {
-        if (this.trackingSubscription != null && !this.trackingSubscription.isUnsubscribed()) {
-            this.trackingSubscription.unsubscribe();
-        }
     }
 }

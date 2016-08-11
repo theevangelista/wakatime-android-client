@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
  * Activities containing this fragment MUST implement the {@link OnLeaderListFragmentInteractionListener}
  * interface.
  */
-public class LeaderboardFragment extends Fragment implements ViewModel {
+public class LeaderboardFragment extends Fragment implements ViewModel, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY = "leader-fragment";
     private static final String ROTATION_CACHE = "rotation-cache";
@@ -43,8 +44,8 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @BindView(R.id.loader_leaders)
     SpinKitView mLoaderLeaders;
 
-    @BindView(R.id.container)
-    View mContainer;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mRefreshLayout;
 
     @Inject
     LeaderboardPresenter mPresenter;
@@ -107,6 +108,10 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorDarkAccent);
+
         if (savedInstanceState == null || !savedInstanceState.containsKey(ROTATION_CACHE)) {
             this.mPresenter.onInit();
         }
@@ -169,8 +174,13 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
     }
 
     @Override
+    public void completeRefresh() {
+        this.mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void notifyError(Throwable error) {
-        Snackbar snackbar = Snackbar.make(mContainer,
+        Snackbar snackbar = Snackbar.make(mRefreshLayout,
                 R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
@@ -179,6 +189,11 @@ public class LeaderboardFragment extends Fragment implements ViewModel {
         });
 
         snackbar.show();
+    }
+
+    @Override
+    public void onRefresh() {
+        this.mPresenter.onRefresh();
     }
 
     /**

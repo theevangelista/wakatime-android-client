@@ -13,4 +13,6 @@ interface ViewModel extends WithLoader, ErrorHandler {
     void setData(List<Leader> leaders);
 
     void setRotationCache(List<Leader> leaders);
+
+    void completeRefresh();
 }

@@ -10,4 +10,6 @@ public interface LeaderboardPresenter extends WithBinding<ViewModel> {
     void onInit();
 
     void onFinish();
+
+    void onRefresh();
 }
