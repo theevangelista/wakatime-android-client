@@ -9,4 +9,6 @@ import lombok.Data;
 public class Wrapper<T> {
 
     private T data;
+
+    private String message;
 }
