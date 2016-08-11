@@ -1,10 +1,18 @@
 package com.wakatime.android.dashboard.environment;
 
 import com.wakatime.android.api.WakatimeClient;
+import com.wakatime.android.dashboard.model.Duration;
+import com.wakatime.android.dashboard.model.DurationWrapper;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
 import com.wakatime.android.support.NetworkConnectionWatcher;
 import com.wakatime.android.support.net.HeaderFormatter;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
+import java.util.List;
 
 import io.realm.Realm;
 import rx.Scheduler;
@@ -30,6 +38,8 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private Subscription tracker;
 
+    private Subscription durationTracker;
+
     public DefaultEnvironmentPresenter(Realm realm, WakatimeClient wakatimeClient,
                                        Scheduler ioScheduler,
                                        Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
@@ -46,26 +56,37 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
         viewModel.showLoader();
         if (watcher.isNetworkAvailable()) {
             this.tracker = this.wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
-                    .observeOn(uiScheduler)
-                    .subscribeOn(ioScheduler)
-                    .doOnTerminate(() -> viewModel.hideLoader())
-                    .map(Wrapper::getData)
-                    .doOnError(viewModel::notifyError)
-                    .subscribe(
-                            data -> {
-                                viewModel.setData(data);
-                                viewModel.setRotationCache(data);
+                .observeOn(uiScheduler)
+                .subscribeOn(ioScheduler)
+                .map(Wrapper::getData)
+                .doOnError(viewModel::notifyError)
+                .subscribe(
+                    data -> {
+                        viewModel.setData(data);
+                        viewModel.setRotationCache(data);
 
-                                realm.beginTransaction();
-                                realm.delete(Stats.class);
-                                realm.commitTransaction();
+                        realm.beginTransaction();
+                        realm.delete(Stats.class);
+                        realm.commitTransaction();
 
-                                realm.beginTransaction();
-                                realm.insert(data);
-                                realm.commitTransaction();
+                        realm.beginTransaction();
+                        realm.insert(data);
+                        realm.commitTransaction();
 
-                            }, throwable -> Timber.e(throwable, "Error while fetching data")
-                    );
+                    }, throwable -> Timber.e(throwable, "Error while fetching data")
+                );
+
+            this.durationTracker = this.wakatimeClient.fetchDurations(HeaderFormatter.get(realm),
+                LocalDate.now().format(DateTimeFormatter.ISO_DATE))
+                .observeOn(uiScheduler)
+                .subscribeOn(ioScheduler)
+                .map(DurationWrapper::getData)
+                .map(this::sumDurations)
+                .map(this::formatTime)
+                .doOnTerminate(() -> viewModel.hideLoader())
+                .onErrorReturn(error -> "Not available")
+                .subscribe(time -> viewModel.setTodayTime(time), error ->
+                    Timber.e(error, "Error parsing time"));
         } else {
             viewModel.setData(fetchFromDatabase());
             viewModel.hideLoader();
@@ -78,6 +99,10 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
         if (this.tracker != null && !this.tracker.isUnsubscribed()) {
             this.tracker.unsubscribe();
         }
+        if (this.durationTracker != null && !this.durationTracker.isUnsubscribed()) {
+            this.durationTracker.unsubscribe();
+        }
+
     }
 
 
@@ -93,5 +118,17 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private Stats fetchFromDatabase() {
         return realm.where(Stats.class).findFirst();
+    }
+
+    private long sumDurations(List<Duration> durations) {
+        long time = 0;
+        for (Duration duration : durations) {
+            time += duration.getDuration();
+        }
+        return time;
+    }
+
+    private String formatTime(long time) {
+        return LocalTime.ofSecondOfDay(time).format(DateTimeFormatter.ofPattern("HH:MM:ss"));
     }
 }

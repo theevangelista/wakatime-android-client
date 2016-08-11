@@ -12,4 +12,6 @@ interface ViewModel extends WithLoader, ErrorHandler {
     void setData(Stats data);
 
     void setRotationCache(Stats data);
+
+    void setTodayTime(String time);
 }

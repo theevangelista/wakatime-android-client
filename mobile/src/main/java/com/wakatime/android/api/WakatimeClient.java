@@ -1,6 +1,7 @@
 package com.wakatime.android.api;
 
 import com.wakatime.android.dashboard.leaderboard.LeaderWrapper;
+import com.wakatime.android.dashboard.model.DurationWrapper;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
 
@@ -28,4 +29,8 @@ public interface WakatimeClient {
 
     @GET("leaders")
     Observable<LeaderWrapper> fetchLeaders(@Header("Authorization") String authorizationKey);
+
+    @GET("users/current/durations")
+    Observable<DurationWrapper> fetchDurations(@Header("Authorization") String authorizationKey,
+                                               @Query("date") String date);
 }

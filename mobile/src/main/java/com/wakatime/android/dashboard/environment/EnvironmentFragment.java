@@ -40,9 +40,14 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     private static final String LIST_STATE = "list-state";
 
+    private static final String TIME_STATE = "time-state";
+
 
     @BindView(R.id.text_view_logged_time)
     TextView mTextViewLoggedTime;
+
+    @BindView(R.id.text_view_today_time)
+    TextView mTextViewTodayTime;
 
     @BindView(R.id.loader_programming)
     SpinKitView mLoaderProgramming;
@@ -66,6 +71,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     EnvironmentPresenter mEnvironmentPresenter;
 
     private Stats rotationCache;
+
+    private String timeCache;
 
     private Linguist linguist;
 
@@ -111,6 +118,10 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
                     });
             this.setData(this.rotationCache);
         }
+        if (savedInstanceState != null && savedInstanceState.containsKey(TIME_STATE)) {
+            this.timeCache = savedInstanceState.getString(TIME_STATE);
+            this.setTodayTime(timeCache);
+        }
 
     }
 
@@ -130,7 +141,9 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         this.linguist = Linguist.init(getActivity());
         // we don't have any data loaded, so lets do it nor the key,
         // cause we can have anything more on the bundle
-        if (savedInstanceState == null || !savedInstanceState.containsKey(LIST_STATE)) {
+        if (savedInstanceState == null ||
+            !savedInstanceState.containsKey(LIST_STATE) ||
+            !savedInstanceState.containsKey(TIME_STATE)) {
             this.mEnvironmentPresenter.onInit();
         }
 
@@ -147,6 +160,7 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(LIST_STATE, JsonParser.write(rotationCache));
+        outState.putString(TIME_STATE, this.timeCache);
     }
 
 
@@ -173,6 +187,12 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
     @Override
     public void setRotationCache(Stats data) {
         this.rotationCache = data;
+    }
+
+    @Override
+    public void setTodayTime(String time) {
+        this.timeCache = time;
+        this.mTextViewTodayTime.setText(time);
     }
 
     @Override
