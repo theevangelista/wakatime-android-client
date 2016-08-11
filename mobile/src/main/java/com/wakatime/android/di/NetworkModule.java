@@ -41,21 +41,19 @@ public class NetworkModule {
     @Singleton
     ObjectMapper objectMapper() {
         return new ObjectMapper()
-                .setPropertyNamingStrategy(new PropertyNamingStrategy.SnakeCaseStrategy());
+            .setPropertyNamingStrategy(new PropertyNamingStrategy.SnakeCaseStrategy());
     }
 
     @Provides
     @Singleton
     OkHttpClient okHttpClient(Cache cache) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .cache(cache)
-                .addInterceptor(new HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY));
+            .readTimeout(15, TimeUnit.SECONDS)
+            .cache(cache)
+            .addInterceptor(new HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BODY));
         if (BuildConfig.DEBUG) {
             builder.addNetworkInterceptor(new StethoInterceptor());
-        } else {
-            builder.readTimeout(3500, TimeUnit.MILLISECONDS)
-                    .writeTimeout(3500, TimeUnit.MILLISECONDS);
         }
 
 
@@ -66,11 +64,11 @@ public class NetworkModule {
     @Singleton
     Retrofit retrofit(Application application, ObjectMapper mapper, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(application.getString(R.string.api))
-                .client(okHttpClient)
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
+            .baseUrl(application.getString(R.string.api))
+            .client(okHttpClient)
+            .addConverterFactory(JacksonConverterFactory.create(mapper))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .build();
     }
 
     @Provides

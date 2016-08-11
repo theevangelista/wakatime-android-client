@@ -84,9 +84,10 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
                 .map(DurationWrapper::getData)
                 .map(this::sumDurations)
                 .map(this::formatTime)
+                .doOnError(err -> Timber.w(err, "Error during processing durations"))
                 .onErrorReturn(error -> "Not available")
                 .subscribe(time -> viewModel.setTodayTime(time), error ->
-                    Timber.e(error, "Error parsing time"));
+                    Timber.w(error, "Error parsing time"));
         } else {
             viewModel.setData(fetchFromDatabase());
             viewModel.hideLoader();
@@ -129,6 +130,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
     }
 
     private String formatTime(long time) {
-        return LocalTime.ofSecondOfDay(time).format(DateTimeFormatter.ofPattern("HH:MM:ss"));
+        return LocalTime.ofSecondOfDay(time).format(DateTimeFormatter.ofPattern("HH:mm"));
+
     }
 }

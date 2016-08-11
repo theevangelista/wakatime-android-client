@@ -1,5 +1,7 @@
 package com.wakatime.android.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 import lombok.Data;
@@ -14,7 +16,8 @@ public class Duration {
 
     private float duration;
 
-    private boolean isDebuggable;
+    @JsonProperty("is_debugging")
+    private boolean isDebugging;
 
     private String project;
 

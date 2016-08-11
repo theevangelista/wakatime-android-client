@@ -105,7 +105,7 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         super.onAttach(context);
         if (!(context instanceof OnProgrammingFragmentInteractionListener)) {
             throw new RuntimeException(context.toString()
-                    + " must implement OnProgrammingFragmentInteractionListener");
+                + " must implement OnProgrammingFragmentInteractionListener");
         }
     }
 
@@ -114,8 +114,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey(LIST_STATE)) {
             this.rotationCache = JsonParser.read(savedInstanceState.getString(LIST_STATE),
-                    new TypeReference<Stats>() {
-                    });
+                new TypeReference<Stats>() {
+                });
             this.setData(this.rotationCache);
         }
         if (savedInstanceState != null && savedInstanceState.containsKey(TIME_STATE)) {
@@ -191,14 +191,28 @@ public class EnvironmentFragment extends Fragment implements ViewModel {
 
     @Override
     public void setTodayTime(String time) {
-        this.timeCache = time;
-        this.mTextViewTodayTime.setText(time);
+        String fmtTime = humanTime(time);
+        this.timeCache = fmtTime;
+        this.mTextViewTodayTime.setText(fmtTime);
+    }
+
+    private String humanTime(String time) {
+        String[] parts = time.split(":");
+        if (parts.length == 2) {
+            String hour = parts[0];
+            String min = parts[1];
+            return String.format("%s hours %s minutes", hour, min);
+        } else {
+            return time;
+        }
+
+
     }
 
     @Override
     public void notifyError(Throwable error) {
         Snackbar snackbar = Snackbar.make(mContainer,
-                R.string.could_not_fetch, Snackbar.LENGTH_LONG);
+            R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
             mEnvironmentPresenter.onInit();
