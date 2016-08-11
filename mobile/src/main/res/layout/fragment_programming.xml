@@ -54,6 +54,7 @@
 						android:layout_below="@id/title_today_time"
 						android:layout_gravity="center"
 						android:layout_marginTop="8dp"
+						android:text="@string/computing"
 						android:textSize="32sp"/>
 				</RelativeLayout>
 			</android.support.v7.widget.CardView>

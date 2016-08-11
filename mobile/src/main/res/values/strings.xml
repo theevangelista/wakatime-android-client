@@ -43,5 +43,6 @@
 	<string name="help">Help</string>
 	<string name="api_key_help">You can find your api key on <a href="https://wakatime.com/settings/account">Wakatime account settings</a></string>
 	<string name="title_today_time">Logged time today</string>
+	<string name="computing">Computing…</string>
 
 </resources>

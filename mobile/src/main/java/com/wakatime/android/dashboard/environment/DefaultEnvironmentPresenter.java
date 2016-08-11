@@ -60,6 +60,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
                 .subscribeOn(ioScheduler)
                 .map(Wrapper::getData)
                 .doOnError(viewModel::notifyError)
+                .doOnTerminate(() -> viewModel.hideLoader())
                 .subscribe(
                     data -> {
                         viewModel.setData(data);
@@ -83,7 +84,6 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
                 .map(DurationWrapper::getData)
                 .map(this::sumDurations)
                 .map(this::formatTime)
-                .doOnTerminate(() -> viewModel.hideLoader())
                 .onErrorReturn(error -> "Not available")
                 .subscribe(time -> viewModel.setTodayTime(time), error ->
                     Timber.e(error, "Error parsing time"));
