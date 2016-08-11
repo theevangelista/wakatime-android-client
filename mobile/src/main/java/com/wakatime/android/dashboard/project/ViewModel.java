@@ -14,4 +14,6 @@ interface ViewModel extends WithLoader, ErrorHandler {
     void setProjects(List<Project> projects);
 
     void setRotationCache(List<Project> projects);
+
+    void completeRefresh();
 }

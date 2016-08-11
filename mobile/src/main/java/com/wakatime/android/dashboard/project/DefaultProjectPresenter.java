@@ -13,6 +13,7 @@ import java.util.List;
 import io.realm.Realm;
 import rx.Scheduler;
 import rx.Subscription;
+import rx.functions.Action0;
 import timber.log.Timber;
 
 import static com.wakatime.android.util.Collections.copyIterator;
@@ -49,33 +50,7 @@ public class DefaultProjectPresenter implements ProjectPresenter {
     @Override
     public void onInit() {
         viewModel.showLoader();
-        if (watcher.isNetworkAvailable()) {
-            this.trackingSubscription = wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
-                    .subscribeOn(ioScheduler)
-                    .observeOn(uiScheduler)
-                    .doOnTerminate(() -> viewModel.hideLoader())
-                    .map(Wrapper::getData)
-                    .map(Stats::getProjects)
-                    .map(projects -> copyIterator(projects.iterator()))
-                    .doOnError(viewModel::notifyError)
-                    .subscribe(projects -> {
-                        viewModel.setProjects(projects);
-                        viewModel.setRotationCache(projects);
-
-                        realm.beginTransaction();
-                        realm.delete(Project.class);
-                        realm.commitTransaction();
-
-                        realm.beginTransaction();
-                        realm.insert(projects);
-                        realm.commitTransaction();
-                    }, error -> Timber.e("Error fetching projects", error));
-        } else {
-            viewModel.setProjects(fetchFromDatabase());
-            viewModel.hideLoader();
-        }
-
-
+        this.fetchData(() -> viewModel.hideLoader());
     }
 
     @Override
@@ -84,6 +59,11 @@ public class DefaultProjectPresenter implements ProjectPresenter {
                 !this.trackingSubscription.isUnsubscribed()) {
             this.trackingSubscription.unsubscribe();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        this.fetchData(() -> viewModel.completeRefresh());
     }
 
     @Override
@@ -101,4 +81,33 @@ public class DefaultProjectPresenter implements ProjectPresenter {
         Iterator<Project> name = realm.where(Project.class).findAllSorted("name").iterator();
         return copyIterator(name);
     }
+
+    private void fetchData(Action0 termination) {
+        if (watcher.isNetworkAvailable()) {
+            this.trackingSubscription = wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .doOnTerminate(termination)
+                .map(Wrapper::getData)
+                .map(Stats::getProjects)
+                .map(projects -> copyIterator(projects.iterator()))
+                .doOnError(viewModel::notifyError)
+                .subscribe(projects -> {
+                    viewModel.setProjects(projects);
+                    viewModel.setRotationCache(projects);
+
+                    realm.beginTransaction();
+                    realm.delete(Project.class);
+                    realm.commitTransaction();
+
+                    realm.beginTransaction();
+                    realm.insert(projects);
+                    realm.commitTransaction();
+                }, error -> Timber.e("Error fetching projects", error));
+        } else {
+            viewModel.setProjects(fetchFromDatabase());
+            termination.call();
+        }
+    }
+
 }

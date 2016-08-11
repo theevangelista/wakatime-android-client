@@ -11,4 +11,5 @@ public interface ProjectPresenter extends WithBinding<ViewModel> {
 
     void onFinish();
 
+    void onRefresh();
 }

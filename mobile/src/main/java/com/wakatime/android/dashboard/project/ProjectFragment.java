@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -51,21 +52,27 @@ import static android.support.v4.content.ContextCompat.getColor;
  *
  * @author Joao Pedro Evangelista
  */
-public class ProjectFragment extends Fragment implements ViewModel, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class ProjectFragment extends Fragment implements ViewModel,
+    SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY = "project-fragment";
 
     private static final String ROTATION_CACHE = "rotation-cache";
+
     @BindView(R.id.recycler_projects)
     RecyclerView mRecyclerProjects;
+
     @BindView(R.id.loader_projects)
     SpinKitView mLoaderProjects;
+
     @BindView(R.id.chart_projects)
     PieChart mChartProjects;
+
     @BindView(R.id.nested_projects)
     NestedScrollView mNestedProjects;
-    @BindView(R.id.container)
-    View mContainer;
+
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mRefreshLayout;
     @Inject
     ProjectPresenter mPresenter;
     private OnProjectFragmentInteractionListener mListener;
@@ -129,6 +136,10 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorDarkAccent);
+
         if (savedInstanceState == null || !savedInstanceState.containsKey(ROTATION_CACHE)) {
             mPresenter.onInit();
         }
@@ -193,6 +204,11 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     }
 
     @Override
+    public void completeRefresh() {
+        this.mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void hideLoader() {
         this.mLoaderProjects.setVisibility(View.GONE);
         this.mNestedProjects.setVisibility(View.VISIBLE);
@@ -249,7 +265,7 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
 
     @Override
     public void notifyError(Throwable error) {
-        Snackbar snackbar = Snackbar.make(mContainer,
+        Snackbar snackbar = Snackbar.make(mRefreshLayout,
                 R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
@@ -285,6 +301,11 @@ public class ProjectFragment extends Fragment implements ViewModel, SearchView.O
     public boolean onClose() {
         filter("");
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        this.mPresenter.onRefresh();
     }
 
     /**
