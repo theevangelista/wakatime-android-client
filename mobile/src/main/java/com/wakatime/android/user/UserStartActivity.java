@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -136,6 +137,7 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
         Tooltip.make(this, new Tooltip.Builder(101)
             .anchor(button, Tooltip.Gravity.LEFT)
             .closePolicy(new Tooltip.ClosePolicy()
+                .insidePolicy(true, true)
                 .outsidePolicy(true, false), 10000)
             .activateDelay(800)
             .showDelay(300)
@@ -146,6 +148,31 @@ public class UserStartActivity extends AppCompatActivity implements ViewModel {
             .withArrow(true)
             .withOverlay(true)
             .typeface(Typeface.createFromAsset(this.getAssets(), "fonts/Lato-Regular.ttf"))
+            .withCallback(new Tooltip.Callback() {
+                @Override
+                public void onTooltipClose(Tooltip.TooltipView tooltipView, boolean fromUser, boolean containsTouch) {
+                    if (fromUser && containsTouch) {
+                        Uri wakatimeAddress = Uri.parse("https://wakatime.com/settings/account");
+                        Intent webIntent = new Intent(Intent.ACTION_VIEW, wakatimeAddress);
+                        startActivity(webIntent);
+                    }
+                }
+
+                @Override
+                public void onTooltipFailed(Tooltip.TooltipView tooltipView) {
+
+                }
+
+                @Override
+                public void onTooltipShown(Tooltip.TooltipView tooltipView) {
+
+                }
+
+                @Override
+                public void onTooltipHidden(Tooltip.TooltipView tooltipView) {
+
+                }
+            })
             .build()
         ).show();
     }
