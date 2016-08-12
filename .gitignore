@@ -7,3 +7,8 @@
 .idea/**
 *.hprof
 *.apk
+tmp/
+*.INF
+*.jar
+buildSrc/build/
+buildSrc/tmp/
