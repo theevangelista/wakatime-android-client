@@ -53,13 +53,13 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
 
     @Override
-    public void onInit() {
+    public void onLastSevenDaysInitialization() {
         viewModel.showLoader();
         fetchData(() -> viewModel.hideLoader());
     }
 
     @Override
-    public void onFinish() {
+    public void onLastSevenDaysTermination() {
         if (this.tracker != null && !this.tracker.isUnsubscribed()) {
             this.tracker.unsubscribe();
         }
@@ -70,7 +70,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
     }
 
     @Override
-    public void onRefresh() {
+    public void onLastSevenDaysRefresh() {
         fetchData(() -> viewModel.completeRefresh());
     }
 

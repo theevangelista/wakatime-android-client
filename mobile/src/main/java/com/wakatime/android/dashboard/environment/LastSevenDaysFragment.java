@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  *
  * @author Joao Pedro Evangelista
  */
-public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
+public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
 
     public static final String KEY = "programming-fragment";
 
@@ -77,7 +77,7 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
 
     private Tracker mTracker;
 
-    public EnvironmentFragment() {
+    public LastSevenDaysFragment() {
         // Required empty public constructor
     }
 
@@ -85,10 +85,10 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment EnvironmentFragment.
+     * @return A new instance of fragment LastSevenDaysFragment.
      */
-    public static EnvironmentFragment newInstance() {
-        return new EnvironmentFragment();
+    public static LastSevenDaysFragment newInstance() {
+        return new LastSevenDaysFragment();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
         if (savedInstanceState == null ||
             !savedInstanceState.containsKey(LIST_STATE) ||
             !savedInstanceState.containsKey(TIME_STATE)) {
-            this.mEnvironmentPresenter.onInit();
+            this.mEnvironmentPresenter.onLastSevenDaysInitialization();
         }
 
     }
@@ -175,7 +175,7 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        this.mEnvironmentPresenter.onFinish();
+        this.mEnvironmentPresenter.onLastSevenDaysTermination();
         this.mEnvironmentPresenter.unbind();
     }
 
@@ -223,7 +223,7 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
             R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
-            mEnvironmentPresenter.onInit();
+            mEnvironmentPresenter.onLastSevenDaysInitialization();
             snackbar.dismiss();
         });
 
@@ -244,7 +244,7 @@ public class EnvironmentFragment extends AbstractStatsChartAwareFragment {
 
     @Override
     public void onRefresh() {
-        this.mEnvironmentPresenter.onRefresh();
+        this.mEnvironmentPresenter.onLastSevenDaysRefresh();
     }
 
     /**

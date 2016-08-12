@@ -19,7 +19,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.wakatime.android.AboutActivity;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
-import com.wakatime.android.dashboard.environment.EnvironmentFragment;
+import com.wakatime.android.dashboard.environment.LastSevenDaysFragment;
 import com.wakatime.android.dashboard.leaderboard.Leader;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
@@ -37,7 +37,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DashboardActivity extends AppCompatActivity
         implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
-        EnvironmentFragment.OnProgrammingFragmentInteractionListener,
+    LastSevenDaysFragment.OnProgrammingFragmentInteractionListener,
         ProjectFragment.OnProjectFragmentInteractionListener,
         LeaderboardFragment.OnLeaderListFragmentInteractionListener,
         SingleProjectFragment.OnSingleProjectInteractionListener {
@@ -125,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         if (programmingFragment != null && programmingFragment.isAdded()) {
             getSupportFragmentManager()
-                    .putFragment(outState, EnvironmentFragment.KEY, this.programmingFragment);
+                .putFragment(outState, LastSevenDaysFragment.KEY, this.programmingFragment);
         }
         if (projectFragment != null && projectFragment.isAdded()) {
             getSupportFragmentManager()
@@ -184,7 +184,7 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void changeToDefaultFragment() {
-        this.programmingFragment = EnvironmentFragment.newInstance();
+        this.programmingFragment = LastSevenDaysFragment.newInstance();
         changeFragment(this.programmingFragment);
     }
 
@@ -192,7 +192,7 @@ public class DashboardActivity extends AppCompatActivity
         if (bundle == null) return;
 
         this.programmingFragment = getSupportFragmentManager()
-                .getFragment(bundle, EnvironmentFragment.KEY);
+            .getFragment(bundle, LastSevenDaysFragment.KEY);
 
         this.projectFragment = getSupportFragmentManager()
                 .getFragment(bundle, ProjectFragment.KEY);

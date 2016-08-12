@@ -5,12 +5,6 @@ import com.wakatime.android.support.presenter.WithBinding;
 /**
  * @author Joao Pedro Evangelista
  */
-public interface EnvironmentPresenter extends WithBinding<ViewModel> {
-
-    void onInit();
-
-    void onFinish();
-
-    void onRefresh();
+public interface EnvironmentPresenter extends WithBinding<ViewModel>, LastSevenDaysViewModel {
 
 }
