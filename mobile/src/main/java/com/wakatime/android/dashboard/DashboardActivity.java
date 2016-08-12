@@ -20,6 +20,7 @@ import com.wakatime.android.AboutActivity;
 import com.wakatime.android.R;
 import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.environment.LastSevenDaysFragment;
+import com.wakatime.android.dashboard.environment.TabbedEnvironmentFragment;
 import com.wakatime.android.dashboard.leaderboard.Leader;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
@@ -36,11 +37,11 @@ import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DashboardActivity extends AppCompatActivity
-        implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
+    implements LogoutActionView, NavigationView.OnNavigationItemSelectedListener,
     LastSevenDaysFragment.OnProgrammingFragmentInteractionListener,
-        ProjectFragment.OnProjectFragmentInteractionListener,
-        LeaderboardFragment.OnLeaderListFragmentInteractionListener,
-        SingleProjectFragment.OnSingleProjectInteractionListener {
+    ProjectFragment.OnProjectFragmentInteractionListener,
+    LeaderboardFragment.OnLeaderListFragmentInteractionListener,
+    SingleProjectFragment.OnSingleProjectInteractionListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -62,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity
 
     private Tracker mTracker;
 
-    private Fragment programmingFragment;
+    private Fragment tabHostFragment;
 
     private Fragment projectFragment;
 
@@ -80,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         ((WakatimeApplication) this.getApplication()).useNetworkComponent()
-                .inject(this);
+            .inject(this);
 
         toolbar.setTitle(R.string.title_activity_dashboard);
         setSupportActionBar(toolbar);
@@ -88,7 +89,7 @@ public class DashboardActivity extends AppCompatActivity
         restoreFragments(savedInstanceState);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -123,18 +124,18 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (programmingFragment != null && programmingFragment.isAdded()) {
+        if (tabHostFragment != null && tabHostFragment.isAdded()) {
             getSupportFragmentManager()
-                .putFragment(outState, LastSevenDaysFragment.KEY, this.programmingFragment);
+                .putFragment(outState, TabbedEnvironmentFragment.KEY, this.tabHostFragment);
         }
         if (projectFragment != null && projectFragment.isAdded()) {
             getSupportFragmentManager()
-                    .putFragment(outState, ProjectFragment.KEY, this.projectFragment);
+                .putFragment(outState, ProjectFragment.KEY, this.projectFragment);
         }
 
         if (leaderboardFragment != null && leaderboardFragment.isAdded()) {
             getSupportFragmentManager()
-                    .putFragment(outState, LeaderboardFragment.KEY, this.leaderboardFragment);
+                .putFragment(outState, LeaderboardFragment.KEY, this.leaderboardFragment);
         }
     }
 
@@ -184,27 +185,27 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void changeToDefaultFragment() {
-        this.programmingFragment = LastSevenDaysFragment.newInstance();
-        changeFragment(this.programmingFragment);
+        this.tabHostFragment = TabbedEnvironmentFragment.newInstance();
+        changeFragment(this.tabHostFragment);
     }
 
     private void restoreFragments(Bundle bundle) {
         if (bundle == null) return;
 
-        this.programmingFragment = getSupportFragmentManager()
-            .getFragment(bundle, LastSevenDaysFragment.KEY);
+        this.tabHostFragment = getSupportFragmentManager()
+            .getFragment(bundle, TabbedEnvironmentFragment.KEY);
 
         this.projectFragment = getSupportFragmentManager()
-                .getFragment(bundle, ProjectFragment.KEY);
+            .getFragment(bundle, ProjectFragment.KEY);
 
         this.leaderboardFragment = getSupportFragmentManager()
-                .getFragment(bundle, LeaderboardFragment.KEY);
+            .getFragment(bundle, LeaderboardFragment.KEY);
     }
 
     private void changeFragment(Fragment fragment) {
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_dashboard, fragment)
-                .commit();
+            .replace(R.id.content_dashboard, fragment)
+            .commit();
     }
 
     @Override
@@ -219,16 +220,16 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Leader leader) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_dashboard, LeaderProfileFragment.newInstance(leader), leader.getUser().getName())
-                .addToBackStack(leader.getUser().getName())
-                .commit();
+            .replace(R.id.content_dashboard, LeaderProfileFragment.newInstance(leader), leader.getUser().getName())
+            .addToBackStack(leader.getUser().getName())
+            .commit();
     }
 
     @Override
     public void showProjectPage(Project project) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_dashboard, SingleProjectFragment.newInstance(project.getName()), project.getName())
-                .addToBackStack(project.getName())
-                .commit();
+            .replace(R.id.content_dashboard, SingleProjectFragment.newInstance(project.getName()), project.getName())
+            .addToBackStack(project.getName())
+            .commit();
     }
 }

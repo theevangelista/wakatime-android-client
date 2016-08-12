@@ -11,7 +11,7 @@ import com.wakatime.android.util.Charts;
 /**
  * @author Joao Pedro Evangelista
  */
-public abstract class AbstractStatsChartAwareFragment extends Fragment implements ViewModel,
+abstract class AbstractStatsChartAwareFragment extends Fragment implements ViewModel,
     SwipeRefreshLayout.OnRefreshListener {
 
     private Linguist mLinguist;
