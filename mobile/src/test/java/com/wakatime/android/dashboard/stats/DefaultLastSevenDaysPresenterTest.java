@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultEnvironmentPresenterTest {
+public class DefaultLastSevenDaysPresenterTest {
 
     @Before
     public void setUp() throws Exception {

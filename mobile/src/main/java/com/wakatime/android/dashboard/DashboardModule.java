@@ -1,8 +1,10 @@
 package com.wakatime.android.dashboard;
 
 import com.wakatime.android.api.WakatimeClient;
-import com.wakatime.android.dashboard.environment.DefaultEnvironmentPresenter;
-import com.wakatime.android.dashboard.environment.EnvironmentPresenter;
+import com.wakatime.android.dashboard.stats.DefaultLastSevenDaysPresenter;
+import com.wakatime.android.dashboard.stats.DefaultLastThirtyDaysPresenter;
+import com.wakatime.android.dashboard.stats.LastSevenDaysPresenter;
+import com.wakatime.android.dashboard.stats.LastThirtyDaysPresenter;
 import com.wakatime.android.dashboard.leaderboard.DefaultLeaderboardPresenter;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardPresenter;
 import com.wakatime.android.dashboard.project.DefaultProjectPresenter;
@@ -30,11 +32,11 @@ public class DashboardModule {
 
     @Provides
     @Singleton
-    EnvironmentPresenter programmingPresenter(Realm realm, WakatimeClient wakatimeClient,
-                                              @IOScheduler Scheduler ioScheduler,
-                                              @UIScheduler Scheduler uiScheduler,
-                                              NetworkConnectionWatcher watcher) {
-        return new DefaultEnvironmentPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+    LastSevenDaysPresenter programmingPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                                @IOScheduler Scheduler ioScheduler,
+                                                @UIScheduler Scheduler uiScheduler,
+                                                NetworkConnectionWatcher watcher) {
+        return new DefaultLastSevenDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides
@@ -62,5 +64,14 @@ public class DashboardModule {
                                                   @UIScheduler Scheduler uiScheduler,
                                                   NetworkConnectionWatcher watcher) {
         return new DefaultSingleProjectPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+    }
+
+    @Provides
+    @Singleton
+    LastThirtyDaysPresenter lastMonthPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                               @IOScheduler Scheduler ioScheduler,
+                                               @UIScheduler Scheduler uiScheduler,
+                                               NetworkConnectionWatcher watcher) {
+        return new DefaultLastThirtyDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 }

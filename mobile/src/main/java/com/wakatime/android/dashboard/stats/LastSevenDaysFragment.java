@@ -1,10 +1,9 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.wakatime.android.WakatimeApplication;
 import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.support.Linguist;
 import com.wakatime.android.support.JsonParser;
-import com.wakatime.android.util.Charts;
 
 import javax.inject.Inject;
 
@@ -35,14 +33,14 @@ import butterknife.ButterKnife;
  *
  * @author Joao Pedro Evangelista
  */
-public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRefreshLayout.OnRefreshListener {
+public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment
+    implements LastSevenDaysViewModel, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY = "programming-fragment";
 
     private static final String LIST_STATE = "list-state";
 
     private static final String TIME_STATE = "time-state";
-
 
     @BindView(R.id.text_view_logged_time)
     TextView mTextViewLoggedTime;
@@ -72,17 +70,15 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
     View mContainer;
 
     @Inject
-    EnvironmentPresenter mEnvironmentPresenter;
+    LastSevenDaysPresenter mLastSevenDaysPresenter;
 
     private Stats rotationCache;
 
     private String timeCache;
 
-    private Linguist linguist;
-
     private Tracker mTracker;
 
-    public EnvironmentFragment() {
+    public LastSevenDaysFragment() {
         // Required empty public constructor
     }
 
@@ -90,10 +86,10 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment EnvironmentFragment.
+     * @return A new instance of fragment LastSevenDaysFragment.
      */
-    public static EnvironmentFragment newInstance() {
-        return new EnvironmentFragment();
+    public static LastSevenDaysFragment newInstance() {
+        return new LastSevenDaysFragment();
     }
 
     @Override
@@ -133,24 +129,26 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_programming, container, false);
+        View view = inflater.inflate(R.layout.fragment_last_seven_days, container, false);
         ButterKnife.bind(this, view);
-        this.mEnvironmentPresenter.bind(this);
+        this.mLastSevenDaysPresenter.bind(this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.linguist = Linguist.init(getActivity());
+        setLinguist(Linguist.init(getActivity()));
+
         mSwipeContainer.setOnRefreshListener(this);
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorDarkAccent);
+
         // we don't have any data loaded, so lets do it nor the key,
         // cause we can have anything more on the bundle
         if (savedInstanceState == null ||
             !savedInstanceState.containsKey(LIST_STATE) ||
             !savedInstanceState.containsKey(TIME_STATE)) {
-            this.mEnvironmentPresenter.onInit();
+            this.mLastSevenDaysPresenter.onInit();
         }
 
     }
@@ -169,7 +167,6 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
         outState.putString(TIME_STATE, this.timeCache);
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -178,16 +175,16 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        this.mEnvironmentPresenter.onFinish();
-        this.mEnvironmentPresenter.unbind();
+        this.mLastSevenDaysPresenter.onFinish();
+        this.mLastSevenDaysPresenter.unbind();
     }
 
     @Override
     public void setData(Stats data) {
         this.mTextViewLoggedTime.setText(data.getHumanReadableTotal());
-        setEditorData(data);
-        setLanguageData(data);
-        setOSChart(data);
+        super.setEditorData(data, mChartEditors);
+        super.setLanguageData(data, mChartLanguages);
+        super.setOSChart(data, mChartOS);
     }
 
     @Override
@@ -216,8 +213,6 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
         } else {
             return time;
         }
-
-
     }
 
     @Override
@@ -226,32 +221,12 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
             R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
-            mEnvironmentPresenter.onInit();
+            mLastSevenDaysPresenter.onFinish();
             snackbar.dismiss();
         });
 
         snackbar.show();
     }
-
-    private void setLanguageData(Stats data) {
-        defaultPieChartConfig(mChartLanguages);
-        Charts.defaultLanguageChart(data.getLanguages(), mChartLanguages, linguist);
-    }
-
-    private void setOSChart(Stats data) {
-        defaultPieChartConfig(mChartOS);
-        Charts.defaultOSChart(data.getOperatingSystems(), mChartOS, linguist);
-    }
-
-    private void setEditorData(Stats data) {
-        defaultPieChartConfig(mChartEditors);
-        Charts.defaultEditorsChart(data.getEditors(), mChartEditors);
-    }
-
-    private void defaultPieChartConfig(PieChart chart) {
-        Charts.setDefaultPieChartConfig(chart);
-    }
-
 
     @Override
     public void hideLoader() {
@@ -267,7 +242,8 @@ public class EnvironmentFragment extends Fragment implements ViewModel, SwipeRef
 
     @Override
     public void onRefresh() {
-        this.mEnvironmentPresenter.onRefresh();
+        this.mTextViewTodayTime.setText(R.string.computing);
+        this.mLastSevenDaysPresenter.onRefresh();
     }
 
     /**

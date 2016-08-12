@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.dashboard.model.Duration;
@@ -23,7 +23,7 @@ import timber.log.Timber;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
+public class DefaultLastSevenDaysPresenter extends StatsPresenter implements LastSevenDaysPresenter {
 
     private final Realm realm;
 
@@ -35,15 +35,15 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private final NetworkConnectionWatcher watcher;
 
-    private ViewModel viewModel;
+    private LastSevenDaysViewModel viewModel;
 
     private Subscription tracker;
 
     private Subscription durationTracker;
 
-    public DefaultEnvironmentPresenter(Realm realm, WakatimeClient wakatimeClient,
-                                       Scheduler ioScheduler,
-                                       Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
+    public DefaultLastSevenDaysPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                         Scheduler ioScheduler,
+                                         Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.wakatimeClient = wakatimeClient;
         this.ioScheduler = ioScheduler;
@@ -60,13 +60,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     @Override
     public void onFinish() {
-        if (this.tracker != null && !this.tracker.isUnsubscribed()) {
-            this.tracker.unsubscribe();
-        }
-        if (this.durationTracker != null && !this.durationTracker.isUnsubscribed()) {
-            this.durationTracker.unsubscribe();
-        }
-
+        cancelSubscription(durationTracker, tracker);
     }
 
     @Override
@@ -76,7 +70,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
 
     @Override
-    public void bind(ViewModel viewModel) {
+    public void bind(LastSevenDaysViewModel viewModel) {
         this.viewModel = viewModel;
     }
 

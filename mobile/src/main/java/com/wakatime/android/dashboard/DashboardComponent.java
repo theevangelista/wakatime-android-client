@@ -1,6 +1,7 @@
 package com.wakatime.android.dashboard;
 
-import com.wakatime.android.dashboard.environment.EnvironmentFragment;
+import com.wakatime.android.dashboard.stats.LastThirtyDaysFragment;
+import com.wakatime.android.dashboard.stats.LastSevenDaysFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderProfileFragment;
 import com.wakatime.android.dashboard.leaderboard.LeaderboardFragment;
 import com.wakatime.android.dashboard.project.ProjectFragment;
@@ -17,7 +18,7 @@ import dagger.Component;
 @Component(modules = {DashboardModule.class})
 public interface DashboardComponent {
 
-    void inject(EnvironmentFragment environmentFragment);
+    void inject(LastSevenDaysFragment lastSevenDaysFragment);
 
     void inject(ProjectFragment projectFragment);
 
@@ -27,4 +28,5 @@ public interface DashboardComponent {
 
     void inject(SingleProjectFragment singleProjectFragment);
 
+    void inject(LastThirtyDaysFragment lastThirtyDaysFragment);
 }
