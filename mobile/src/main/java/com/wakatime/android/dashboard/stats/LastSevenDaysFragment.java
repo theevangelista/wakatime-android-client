@@ -129,7 +129,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_programming, container, false);
+        View view = inflater.inflate(R.layout.fragment_last_seven_days, container, false);
         ButterKnife.bind(this, view);
         this.mLastSevenDaysPresenter.bind(this);
         return view;
@@ -242,6 +242,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment
 
     @Override
     public void onRefresh() {
+        this.mTextViewTodayTime.setText(R.string.computing);
         this.mLastSevenDaysPresenter.onRefresh();
     }
 

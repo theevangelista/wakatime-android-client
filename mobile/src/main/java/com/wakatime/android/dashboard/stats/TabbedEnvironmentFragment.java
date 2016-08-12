@@ -67,7 +67,7 @@ public class TabbedEnvironmentFragment extends Fragment {
     private TabsAdapter getConfiguredAdapter() {
         TabsAdapter adapter = new TabsAdapter(this.getActivity(), getChildFragmentManager());
         adapter.add(R.string.last_seven_days, LastSevenDaysFragment.newInstance());
-        adapter.add(R.string.last_month, LastMonthFragment.newInstance());
+        adapter.add(R.string.last_thirty_days, LastThirtyDaysFragment.newInstance());
         return adapter;
     }
 }

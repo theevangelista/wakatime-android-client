@@ -16,7 +16,7 @@ import timber.log.Timber;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultLastMonthPresenter extends StatsPresenter implements LastMonthPresenter {
+public class DefaultLastThirtyDaysPresenter extends StatsPresenter implements LastThirtyDaysPresenter {
 
     private final Realm realm;
 
@@ -32,9 +32,9 @@ public class DefaultLastMonthPresenter extends StatsPresenter implements LastMon
 
     private Subscription sub;
 
-    public DefaultLastMonthPresenter(Realm realm, WakatimeClient wakatimeClient,
-                                     Scheduler ioScheduler, Scheduler uiScheduler,
-                                     NetworkConnectionWatcher watcher) {
+    public DefaultLastThirtyDaysPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                          Scheduler ioScheduler, Scheduler uiScheduler,
+                                          NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.wakatimeClient = wakatimeClient;
         this.ioScheduler = ioScheduler;
@@ -61,7 +61,7 @@ public class DefaultLastMonthPresenter extends StatsPresenter implements LastMon
 
 
     @Override
-    public void bind(LastMonthViewModel viewModel) {
+    public void bind(LastThirtyDaysViewModel viewModel) {
         this.viewModel = viewModel;
     }
 

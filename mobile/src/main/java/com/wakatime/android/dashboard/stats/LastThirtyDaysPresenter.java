@@ -6,7 +6,7 @@ import com.wakatime.android.support.presenter.WithBinding;
 /**
  * @author Joao Pedro Evangelista
  */
-public interface LastMonthPresenter extends
-    WithBinding<LastMonthViewModel>, LifecycleAware {
+public interface LastThirtyDaysPresenter extends
+    WithBinding<LastThirtyDaysViewModel>, LifecycleAware {
 
 }

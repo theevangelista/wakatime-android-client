@@ -25,8 +25,8 @@ import butterknife.ButterKnife;
 /**
  * @author Joao Pedro Evangelista
  */
-public class LastMonthFragment extends AbstractStatsChartAwareFragment
-    implements LastMonthViewModel, SwipeRefreshLayout.OnRefreshListener {
+public class LastThirtyDaysFragment extends AbstractStatsChartAwareFragment
+    implements LastThirtyDaysViewModel, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.loader_last_month)
     SpinKitView mLoaderLastMonth;
@@ -46,20 +46,20 @@ public class LastMonthFragment extends AbstractStatsChartAwareFragment
     @BindView(R.id.container_charts)
     RelativeLayout mContainerCharts;
 
-    @BindView(R.id.swipe_container)
+    @BindView(R.id.swipe_month_container)
     SwipeRefreshLayout mSwipeContainer;
 
     @Inject
-    LastMonthPresenter mPresenter;
+    LastThirtyDaysPresenter mPresenter;
 
     private Stats mRotationCache;
 
-    public LastMonthFragment() {
+    public LastThirtyDaysFragment() {
         // Required empty public constructor
     }
 
-    public static LastMonthFragment newInstance() {
-        return new LastMonthFragment();
+    public static LastThirtyDaysFragment newInstance() {
+        return new LastThirtyDaysFragment();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class LastMonthFragment extends AbstractStatsChartAwareFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_last_month, container, false);
+        View view = inflater.inflate(R.layout.fragment_last_thirty_days, container, false);
         ButterKnife.bind(this, view);
         mPresenter.bind(this);
         return view;
@@ -83,6 +83,7 @@ public class LastMonthFragment extends AbstractStatsChartAwareFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mSwipeContainer.setOnRefreshListener(this);
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorDarkAccent);
         mPresenter.onInit();
     }
