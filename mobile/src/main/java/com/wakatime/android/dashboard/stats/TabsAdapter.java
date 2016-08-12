@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

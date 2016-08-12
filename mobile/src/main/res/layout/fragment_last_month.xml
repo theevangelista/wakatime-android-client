@@ -5,7 +5,7 @@
 	android:id="@+id/swipe_container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.wakatime.android.dashboard.stats.LastSevenDaysFragment">
+	tools:context="com.wakatime.android.dashboard.stats.LastMonthFragment">
 
 	<ScrollView
 		android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
 			<com.github.ybq.android.spinkit.SpinKitView
 
-				android:id="@+id/loader_programming"
+				android:id="@+id/loader_last_month"
 				style="@style/SpinKitView.Large.DoubleBounce"
 				android:layout_width="wrap_content"
 				android:layout_height="@dimen/loader_size"
@@ -36,39 +36,9 @@
 				android:layout_height="wrap_content">
 
 				<android.support.v7.widget.CardView
-					android:id="@+id/card_today_time"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-					<RelativeLayout
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:padding="16dp">
-
-						<TextView
-							android:id="@+id/title_today_time"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:text="@string/title_today_time"/>
-
-						<TextView
-
-							android:id="@+id/text_view_today_time"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:layout_below="@id/title_today_time"
-							android:layout_gravity="center"
-							android:layout_marginTop="8dp"
-							android:text="@string/computing"
-							android:textSize="32sp"/>
-					</RelativeLayout>
-				</android.support.v7.widget.CardView>
-
-				<android.support.v7.widget.CardView
 					android:id="@+id/card_logged_time"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_below="@id/card_today_time"
 					android:layout_marginTop="16dp">
 
 					<RelativeLayout
@@ -80,7 +50,7 @@
 							android:id="@+id/title_logged_time"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:text="@string/title_logged_time"/>
+							android:text="@string/title_logged_time_last_month"/>
 
 						<TextView
 

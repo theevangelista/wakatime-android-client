@@ -1,7 +1,6 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.wakatime.android.dashboard.model.Stats;
@@ -11,8 +10,7 @@ import com.wakatime.android.util.Charts;
 /**
  * @author Joao Pedro Evangelista
  */
-abstract class AbstractStatsChartAwareFragment extends Fragment implements ViewModel,
-    SwipeRefreshLayout.OnRefreshListener {
+abstract class AbstractStatsChartAwareFragment extends Fragment {
 
     private Linguist mLinguist;
 

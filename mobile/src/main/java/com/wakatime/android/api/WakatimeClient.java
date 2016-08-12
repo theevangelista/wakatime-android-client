@@ -22,6 +22,10 @@ public interface WakatimeClient {
     @GET("users/current/stats/last_7_days")
     Observable<Wrapper<Stats>> fetchLastSevenDays(@Header("Authorization") String authorizationKey);
 
+    @GET("users/current/stats/last_30_days")
+    Observable<Wrapper<Stats>> fetchLastMonth(@Header("Authorization") String authorizationKey);
+
+
     @GET("users/current/stats/last_7_days")
     Observable<Wrapper<Stats>> fetchProjectLastSevenDays(
             @Header("Authorization") String authorizationKey,

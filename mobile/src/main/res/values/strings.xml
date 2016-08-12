@@ -45,5 +45,7 @@
 	<string name="title_today_time">Logged time today</string>
 	<string name="computing">Computing…</string>
 	<string name="last_seven_days">Seven Days</string>
+	<string name="last_month">Last Month</string>
+	<string name="title_logged_time_last_month">Logged time last month</string>
 
 </resources>

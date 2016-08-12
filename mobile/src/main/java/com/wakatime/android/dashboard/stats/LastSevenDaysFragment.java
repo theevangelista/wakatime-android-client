@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -33,7 +33,8 @@ import butterknife.ButterKnife;
  *
  * @author Joao Pedro Evangelista
  */
-public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
+public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment
+    implements LastSevenDaysViewModel, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY = "programming-fragment";
 
@@ -69,7 +70,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
     View mContainer;
 
     @Inject
-    EnvironmentPresenter mEnvironmentPresenter;
+    LastSevenDaysPresenter mLastSevenDaysPresenter;
 
     private Stats rotationCache;
 
@@ -130,7 +131,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_programming, container, false);
         ButterKnife.bind(this, view);
-        this.mEnvironmentPresenter.bind(this);
+        this.mLastSevenDaysPresenter.bind(this);
         return view;
     }
 
@@ -147,7 +148,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
         if (savedInstanceState == null ||
             !savedInstanceState.containsKey(LIST_STATE) ||
             !savedInstanceState.containsKey(TIME_STATE)) {
-            this.mEnvironmentPresenter.onLastSevenDaysInitialization();
+            this.mLastSevenDaysPresenter.onInit();
         }
 
     }
@@ -166,7 +167,6 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
         outState.putString(TIME_STATE, this.timeCache);
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -175,8 +175,8 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        this.mEnvironmentPresenter.onLastSevenDaysTermination();
-        this.mEnvironmentPresenter.unbind();
+        this.mLastSevenDaysPresenter.onFinish();
+        this.mLastSevenDaysPresenter.unbind();
     }
 
     @Override
@@ -213,8 +213,6 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
         } else {
             return time;
         }
-
-
     }
 
     @Override
@@ -223,7 +221,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
             R.string.could_not_fetch, Snackbar.LENGTH_LONG);
 
         snackbar.setAction(R.string.retry, view -> {
-            mEnvironmentPresenter.onLastSevenDaysInitialization();
+            mLastSevenDaysPresenter.onFinish();
             snackbar.dismiss();
         });
 
@@ -244,7 +242,7 @@ public class LastSevenDaysFragment extends AbstractStatsChartAwareFragment {
 
     @Override
     public void onRefresh() {
-        this.mEnvironmentPresenter.onLastSevenDaysRefresh();
+        this.mLastSevenDaysPresenter.onRefresh();
     }
 
     /**

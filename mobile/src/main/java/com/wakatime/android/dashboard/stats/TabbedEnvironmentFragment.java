@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 
 import android.os.Bundle;
@@ -67,6 +67,7 @@ public class TabbedEnvironmentFragment extends Fragment {
     private TabsAdapter getConfiguredAdapter() {
         TabsAdapter adapter = new TabsAdapter(this.getActivity(), getChildFragmentManager());
         adapter.add(R.string.last_seven_days, LastSevenDaysFragment.newInstance());
+        adapter.add(R.string.last_month, LastMonthFragment.newInstance());
         return adapter;
     }
 }

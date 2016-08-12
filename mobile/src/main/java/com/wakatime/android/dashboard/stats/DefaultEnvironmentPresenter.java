@@ -1,4 +1,4 @@
-package com.wakatime.android.dashboard.environment;
+package com.wakatime.android.dashboard.stats;
 
 import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.dashboard.model.Duration;
@@ -23,7 +23,7 @@ import timber.log.Timber;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
+public class DefaultEnvironmentPresenter extends StatsPresenter implements LastSevenDaysPresenter {
 
     private final Realm realm;
 
@@ -35,7 +35,7 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
     private final NetworkConnectionWatcher watcher;
 
-    private ViewModel viewModel;
+    private LastSevenDaysViewModel viewModel;
 
     private Subscription tracker;
 
@@ -53,30 +53,24 @@ public class DefaultEnvironmentPresenter implements EnvironmentPresenter {
 
 
     @Override
-    public void onLastSevenDaysInitialization() {
+    public void onInit() {
         viewModel.showLoader();
         fetchData(() -> viewModel.hideLoader());
     }
 
     @Override
-    public void onLastSevenDaysTermination() {
-        if (this.tracker != null && !this.tracker.isUnsubscribed()) {
-            this.tracker.unsubscribe();
-        }
-        if (this.durationTracker != null && !this.durationTracker.isUnsubscribed()) {
-            this.durationTracker.unsubscribe();
-        }
-
+    public void onFinish() {
+        cancelSubscription(durationTracker, tracker);
     }
 
     @Override
-    public void onLastSevenDaysRefresh() {
+    public void onRefresh() {
         fetchData(() -> viewModel.completeRefresh());
     }
 
 
     @Override
-    public void bind(ViewModel viewModel) {
+    public void bind(LastSevenDaysViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
