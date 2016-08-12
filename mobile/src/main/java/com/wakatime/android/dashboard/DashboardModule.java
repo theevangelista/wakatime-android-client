@@ -1,7 +1,7 @@
 package com.wakatime.android.dashboard;
 
 import com.wakatime.android.api.WakatimeClient;
-import com.wakatime.android.dashboard.stats.DefaultEnvironmentPresenter;
+import com.wakatime.android.dashboard.stats.DefaultLastSevenDaysPresenter;
 import com.wakatime.android.dashboard.stats.DefaultLastThirtyDaysPresenter;
 import com.wakatime.android.dashboard.stats.LastSevenDaysPresenter;
 import com.wakatime.android.dashboard.stats.LastThirtyDaysPresenter;
@@ -36,7 +36,7 @@ public class DashboardModule {
                                                 @IOScheduler Scheduler ioScheduler,
                                                 @UIScheduler Scheduler uiScheduler,
                                                 NetworkConnectionWatcher watcher) {
-        return new DefaultEnvironmentPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+        return new DefaultLastSevenDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
     }
 
     @Provides

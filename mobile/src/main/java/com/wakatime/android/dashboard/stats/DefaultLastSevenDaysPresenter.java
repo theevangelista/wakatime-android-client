@@ -23,7 +23,7 @@ import timber.log.Timber;
 /**
  * @author Joao Pedro Evangelista
  */
-public class DefaultEnvironmentPresenter extends StatsPresenter implements LastSevenDaysPresenter {
+public class DefaultLastSevenDaysPresenter extends StatsPresenter implements LastSevenDaysPresenter {
 
     private final Realm realm;
 
@@ -41,9 +41,9 @@ public class DefaultEnvironmentPresenter extends StatsPresenter implements LastS
 
     private Subscription durationTracker;
 
-    public DefaultEnvironmentPresenter(Realm realm, WakatimeClient wakatimeClient,
-                                       Scheduler ioScheduler,
-                                       Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
+    public DefaultLastSevenDaysPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                         Scheduler ioScheduler,
+                                         Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
         this.realm = realm;
         this.wakatimeClient = wakatimeClient;
         this.ioScheduler = ioScheduler;
