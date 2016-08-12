@@ -1,45 +1,45 @@
 <resources>
-    <string name="app_name">Tick</string>
-    <string name="start_set_api_key">Set API Key and continue</string>
-    <string name="api_key">API key</string>
-    <string name="errors_key_out_of_bounds">Key is not in the required size</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+	<string name="app_name">Tick</string>
+	<string name="start_set_api_key">Set API Key and continue</string>
+	<string name="api_key">API key</string>
+	<string name="errors_key_out_of_bounds">Key is not in the required size</string>
+	<string name="title_activity_dashboard">Dashboard</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="welcome">Welcome to Tick, please insert your Wakatime API Key into the field below to continue.</string>
-    <string name="api">https://wakatime.com/api/v1/</string>
-    <string name="title_logged_time">Logged time in last 7 days</string>
-    <string name="title_editors">Editors</string>
-    <string name="title_languages">Languages</string>
-    <string name="languages">Languages</string>
-    <string name="title_os">O. System</string>
-    <string name="drawer_environment">Environment</string>
-    <string name="drawer_projects">Projects</string>
-    <string name="user_fetch_error">There was an error fetching your data</string>
-    <string name="profile">profile</string>
+	<string name="action_settings">Settings</string>
+	<string name="welcome">Welcome to Tick, please insert your Wakatime API Key into the field below to continue.</string>
+	<string name="api">https://wakatime.com/api/v1/</string>
+	<string name="title_logged_time">Logged time in last 7 days</string>
+	<string name="title_editors">Editors</string>
+	<string name="title_languages">Languages</string>
+	<string name="languages">Languages</string>
+	<string name="title_os">O. System</string>
+	<string name="drawer_environment">Environment</string>
+	<string name="drawer_projects">Projects</string>
+	<string name="user_fetch_error">There was an error fetching your data</string>
+	<string name="profile">profile</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_view_credits_wakatime">Powered by  <a href="https://wakatime.com">Wakatime</a></string>
-    <string name="text_view_credits_icon">Icon by <a href="https://freepik.com">Freepik</a></string>
-    <string name="title_projects">Projects</string>
-    <string name="logout">Logout</string>
-    <string name="drawer_leaderboard">Leaderboard</string>
-    <string name="badge">badge</string>
-    <string name="values_in_minutes">Values in minutes</string>
-    <string name="about">About</string>
-    <string name="version">Version %s</string>
-    <string name="unknown_version">Unknown Version</string>
-    <string name="licenses">Licenses</string>
-    <string name="os_license">Open Source Licenses</string>
-    <string name="could_not_fetch">Could not fetch data</string>
-    <string name="retry">Retry</string>
-    <string name="action_search">Search</string>
-    <string name="avg_daily">Daily Average</string>
-    <string name="total_time">Total</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="text_view_credits_wakatime">Powered by  <a href="https://wakatime.com">Wakatime</a></string>
+	<string name="text_view_credits_icon">Icon by <a href="https://freepik.com">Freepik</a></string>
+	<string name="title_projects">Projects</string>
+	<string name="logout">Logout</string>
+	<string name="drawer_leaderboard">Leaderboard</string>
+	<string name="badge">badge</string>
+	<string name="values_in_minutes">Values in minutes</string>
+	<string name="about">About</string>
+	<string name="version">Version %s</string>
+	<string name="unknown_version">Unknown Version</string>
+	<string name="licenses">Licenses</string>
+	<string name="os_license">Open Source Licenses</string>
+	<string name="could_not_fetch">Could not fetch data</string>
+	<string name="retry">Retry</string>
+	<string name="action_search">Search</string>
+	<string name="avg_daily">Daily Average</string>
+	<string name="total_time">Total</string>
 	<string name="help">Help</string>
 	<string name="api_key_help">You can find your api key on <a href="https://wakatime.com/settings/account">Wakatime account settings</a></string>
 	<string name="title_today_time">Logged time today</string>
