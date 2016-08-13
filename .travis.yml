@@ -26,4 +26,4 @@ before_script:
   - 'chmod +x add-licenses.sh && sh add-licenses.sh'
   - 'chmod +x gradlew'
 script:
-  - './gradlew test' # Run unit tests
+  - 'echo y | ./gradlew test' # Run unit tests
