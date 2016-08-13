@@ -46,12 +46,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient okHttpClient(Cache cache) {
+    OkHttpClient okHttpClient(Cache cache, NetworkConnectionWatcher watcher) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS) // api is slow when getting today's durations
             .cache(cache)
+            .addInterceptor(new CacheUpgraderInterceptor(watcher))
             .addInterceptor(new HttpLoggingInterceptor()
-                .setLevel(HttpLoggingInterceptor.Level.BODY));
+                .setLevel(HttpLoggingInterceptor.Level.HEADERS));
         if (BuildConfig.DEBUG) {
             builder.addNetworkInterceptor(new StethoInterceptor());
         }
