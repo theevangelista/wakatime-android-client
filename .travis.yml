@@ -24,5 +24,3 @@ cache:
 before_script:
   - 'chmod +x add-licenses.sh && sh add-licenses.sh'
   - 'chmod +x gradlew'
-script:
-  - 'echo y | ./gradlew test' # Run unit tests
