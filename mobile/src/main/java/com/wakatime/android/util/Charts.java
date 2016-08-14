@@ -97,7 +97,11 @@ public final class Charts {
 
     public static PieChart defaultEditorsChart(List<Editor> editors, PieChart chart) {
         chart.setCenterText(chart.getContext().getString(R.string.title_editors));
-        List<PieEntry> dataSet = new ArrayList<>(editors.size());
+        int size = 0;
+        if (editors != null) {
+            size = editors.size();
+        }
+        List<PieEntry> dataSet = new ArrayList<>(size);
         //noinspection Convert2streamapi
         for (Editor editor : editors) {
             dataSet.add(new PieEntry(editor.getPercent(), editor.getName()));

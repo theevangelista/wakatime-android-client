@@ -32,9 +32,9 @@ public class DashboardModule {
 
     @Provides
     @Singleton
-    LastSevenDaysPresenter programmingPresenter(Realm realm, WakatimeClient wakatimeClient,
-                                                @IOScheduler Scheduler ioScheduler,
-                                                @UIScheduler Scheduler uiScheduler) {
+    LastSevenDaysPresenter lastSevenDaysPresenter(Realm realm, WakatimeClient wakatimeClient,
+                                                  @IOScheduler Scheduler ioScheduler,
+                                                  @UIScheduler Scheduler uiScheduler) {
         return new DefaultLastSevenDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler);
     }
 
