@@ -34,9 +34,8 @@ public class DashboardModule {
     @Singleton
     LastSevenDaysPresenter programmingPresenter(Realm realm, WakatimeClient wakatimeClient,
                                                 @IOScheduler Scheduler ioScheduler,
-                                                @UIScheduler Scheduler uiScheduler,
-                                                NetworkConnectionWatcher watcher) {
-        return new DefaultLastSevenDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+                                                @UIScheduler Scheduler uiScheduler) {
+        return new DefaultLastSevenDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler);
     }
 
     @Provides
@@ -52,26 +51,23 @@ public class DashboardModule {
     @Singleton
     LeaderboardPresenter leaderboardPresenter(Realm realm, WakatimeClient wakatimeClient,
                                               @IOScheduler Scheduler ioScheduler,
-                                              @UIScheduler Scheduler uiScheduler,
-                                              NetworkConnectionWatcher watcher) {
-        return new DefaultLeaderboardPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+                                              @UIScheduler Scheduler uiScheduler) {
+        return new DefaultLeaderboardPresenter(realm, wakatimeClient, ioScheduler, uiScheduler);
     }
 
     @Provides
     @Singleton
     SingleProjectPresenter singleProjectPresenter(Realm realm, WakatimeClient wakatimeClient,
                                                   @IOScheduler Scheduler ioScheduler,
-                                                  @UIScheduler Scheduler uiScheduler,
-                                                  NetworkConnectionWatcher watcher) {
-        return new DefaultSingleProjectPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+                                                  @UIScheduler Scheduler uiScheduler) {
+        return new DefaultSingleProjectPresenter(realm, wakatimeClient, ioScheduler, uiScheduler);
     }
 
     @Provides
     @Singleton
     LastThirtyDaysPresenter lastMonthPresenter(Realm realm, WakatimeClient wakatimeClient,
                                                @IOScheduler Scheduler ioScheduler,
-                                               @UIScheduler Scheduler uiScheduler,
-                                               NetworkConnectionWatcher watcher) {
-        return new DefaultLastThirtyDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler, watcher);
+                                               @UIScheduler Scheduler uiScheduler) {
+        return new DefaultLastThirtyDaysPresenter(realm, wakatimeClient, ioScheduler, uiScheduler);
     }
 }

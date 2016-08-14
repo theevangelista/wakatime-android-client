@@ -3,9 +3,7 @@ package com.wakatime.android.dashboard.stats;
 import com.wakatime.android.api.WakatimeClient;
 import com.wakatime.android.dashboard.model.Duration;
 import com.wakatime.android.dashboard.model.DurationWrapper;
-import com.wakatime.android.dashboard.model.Stats;
 import com.wakatime.android.dashboard.model.Wrapper;
-import com.wakatime.android.support.NetworkConnectionWatcher;
 import com.wakatime.android.support.net.HeaderFormatter;
 
 import org.threeten.bp.LocalDate;
@@ -33,8 +31,6 @@ public class DefaultLastSevenDaysPresenter extends StatsPresenter implements Las
 
     private final Scheduler ioScheduler;
 
-    private final NetworkConnectionWatcher watcher;
-
     private LastSevenDaysViewModel viewModel;
 
     private Subscription tracker;
@@ -43,12 +39,11 @@ public class DefaultLastSevenDaysPresenter extends StatsPresenter implements Las
 
     public DefaultLastSevenDaysPresenter(Realm realm, WakatimeClient wakatimeClient,
                                          Scheduler ioScheduler,
-                                         Scheduler uiScheduler, NetworkConnectionWatcher watcher) {
+                                         Scheduler uiScheduler) {
         this.realm = realm;
         this.wakatimeClient = wakatimeClient;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
-        this.watcher = watcher;
     }
 
 
@@ -79,10 +74,6 @@ public class DefaultLastSevenDaysPresenter extends StatsPresenter implements Las
         this.viewModel = null;
     }
 
-    private Stats fetchFromDatabase() {
-        return realm.where(Stats.class).findFirst();
-    }
-
     private long sumDurations(List<Duration> durations) {
         long time = 0;
         for (Duration duration : durations) {
@@ -97,44 +88,29 @@ public class DefaultLastSevenDaysPresenter extends StatsPresenter implements Las
     }
 
     private void fetchData(Action0 termination) {
-        if (watcher.isNetworkAvailable()) {
-            this.tracker = this.wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
-                .observeOn(uiScheduler)
-                .subscribeOn(ioScheduler)
-                .map(Wrapper::getData)
-                .doOnError(viewModel::notifyError)
-                .doOnTerminate(termination)
-                .subscribe(
-                    data -> {
-                        viewModel.setData(data);
-                        viewModel.setRotationCache(data);
+        this.tracker = this.wakatimeClient.fetchLastSevenDays(HeaderFormatter.get(realm))
+            .observeOn(uiScheduler)
+            .subscribeOn(ioScheduler)
+            .map(Wrapper::getData)
+            .doOnError(viewModel::notifyError)
+            .doOnTerminate(termination)
+            .subscribe(
+                data -> {
+                    viewModel.setData(data);
+                    viewModel.setRotationCache(data);
+                }, throwable -> Timber.e(throwable, "Error while fetching data")
+            );
 
-                        realm.beginTransaction();
-                        realm.delete(Stats.class);
-                        realm.commitTransaction();
-
-                        realm.beginTransaction();
-                        realm.insert(data);
-                        realm.commitTransaction();
-
-                    }, throwable -> Timber.e(throwable, "Error while fetching data")
-                );
-
-            this.durationTracker = this.wakatimeClient.fetchDurations(HeaderFormatter.get(realm),
-                LocalDate.now().format(DateTimeFormatter.ISO_DATE))
-                .observeOn(uiScheduler)
-                .subscribeOn(ioScheduler)
-                .map(DurationWrapper::getData)
-                .map(this::sumDurations)
-                .map(this::formatTime)
-                .doOnError(err -> Timber.w(err, "Error during processing durations"))
-                .onErrorReturn(error -> "Not available")
-                .subscribe(time -> viewModel.setTodayTime(time), error ->
-                    Timber.w(error, "Error parsing time"));
-        } else {
-            viewModel.setData(fetchFromDatabase());
-            termination.call();
-        }
-
+        this.durationTracker = this.wakatimeClient.fetchDurations(HeaderFormatter.get(realm),
+            LocalDate.now().format(DateTimeFormatter.ISO_DATE))
+            .observeOn(uiScheduler)
+            .subscribeOn(ioScheduler)
+            .map(DurationWrapper::getData)
+            .map(this::sumDurations)
+            .map(this::formatTime)
+            .doOnError(err -> Timber.w(err, "Error during processing durations"))
+            .onErrorReturn(error -> "Not available")
+            .subscribe(time -> viewModel.setTodayTime(time), error ->
+                Timber.w(error, "Error parsing time"));
     }
 }
