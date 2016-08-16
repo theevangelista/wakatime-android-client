@@ -14,13 +14,20 @@ import static java.lang.String.format;
 public class HeaderFormatter {
 
     public static String get(Realm realm) {
-        String key = realm.where(Key.class).findFirst().getKey();
-        byte[] encoded = Base64.encode(key.getBytes(), Base64.DEFAULT);
-        String strEncoded = new String(encoded);
-        return strEncoded.replaceAll("\\r|\\t|\\n", "");
+        Key first = realm.where(Key.class).findFirst();
+        if (first != null) {
+            String key = first.getKey();
+            byte[] encoded = Base64.encode(key.getBytes(), Base64.DEFAULT);
+            String strEncoded = new String(encoded);
+            String s = strEncoded.replaceAll("\\r|\\t|\\n", "");
+            return toHeader(s);
+        } else {
+            return "";
+        }
+
     }
 
-    public static String toHeader(String encoded) {
+    private static String toHeader(String encoded) {
         return format("Basic %s", encoded);
     }
 }

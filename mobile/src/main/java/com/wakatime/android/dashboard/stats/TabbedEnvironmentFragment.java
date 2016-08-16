@@ -4,12 +4,14 @@ package com.wakatime.android.dashboard.stats;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.wakatime.android.R;
 
@@ -22,10 +24,13 @@ import butterknife.ButterKnife;
 public class TabbedEnvironmentFragment extends Fragment {
 
     public static final String KEY = "tabbed-env-fragment";
-    @BindView(R.id.tabs)
+
     TabLayout mTabs;
+
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
+    private AppBarLayout appBarLayout;
+    private View mTabHost;
 
 
     public TabbedEnvironmentFragment() {
@@ -53,8 +58,16 @@ public class TabbedEnvironmentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tabbed_environment, container, false);
         ButterKnife.bind(this, view);
+        injectTabHostIntoAppBarLayout(inflater);
         setupTabHost();
         return view;
+    }
+
+    private void injectTabHostIntoAppBarLayout(LayoutInflater inflater) {
+        appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);
+        mTabHost = inflater.inflate(R.layout.tab_host, appBarLayout, false);
+        appBarLayout.addView(mTabHost);
+        mTabs = (TabLayout) getActivity().findViewById(R.id.tabs);
     }
 
     private void setupTabHost() {
@@ -69,5 +82,11 @@ public class TabbedEnvironmentFragment extends Fragment {
         adapter.add(R.string.last_seven_days, LastSevenDaysFragment.newInstance());
         adapter.add(R.string.last_thirty_days, LastThirtyDaysFragment.newInstance());
         return adapter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        appBarLayout.removeView(mTabHost);
     }
 }
