@@ -45,6 +45,7 @@ public final class Charts {
         chart.setRotationAngle(0);
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
+        chart.setMaxHighlightDistance(400f);
         chart.setCenterTextTypeface(Typeface.createFromAsset(chart.getContext().getAssets(), "fonts/Lato-Regular.ttf"));
         chart.setEntryLabelTypeface(Typeface.createFromAsset(chart.getContext().getAssets(), "fonts/Lato-Regular.ttf"));
         chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);

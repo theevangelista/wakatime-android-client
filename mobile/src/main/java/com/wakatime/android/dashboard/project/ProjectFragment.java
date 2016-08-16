@@ -239,7 +239,6 @@ public class ProjectFragment extends Fragment implements ViewModel,
         this.mChartProjects.setCenterTextTypeface(lato);
         this.mChartProjects.setCenterTextColor(getColor(getActivity(), R.color.colorSecondaryText));
         this.mChartProjects.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-
         enableNestingScrollForAP21();
 
         List<PieEntry> entries = new ArrayList<>(chardData.size());
@@ -247,6 +246,7 @@ public class ProjectFragment extends Fragment implements ViewModel,
             entries.add(new PieEntry(project.getPercent(), project.getName()));
         }
         PieDataSet pieDataSet = new PieDataSet(entries, getString(R.string.title_projects));
+        pieDataSet.setHighlightEnabled(true);
         pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setValueTextSize(14f);
         pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
