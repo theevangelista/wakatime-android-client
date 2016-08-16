@@ -25,13 +25,14 @@ public class TabbedEnvironmentFragment extends Fragment {
 
     public static final String KEY = "tabbed-env-fragment";
 
-    TabLayout mTabs;
+    private TabLayout mTabs;
+
+    private AppBarLayout appBarLayout;
+
+    private View mTabHost;
 
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
-    private AppBarLayout appBarLayout;
-    private View mTabHost;
-
 
     public TabbedEnvironmentFragment() {
         // Required empty public constructor
