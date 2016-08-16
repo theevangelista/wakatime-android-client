@@ -19,7 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragments composed with tabs to organize periodic data into child fragments
+ *
+ * @author João Pedro Evangelista
  */
 public class TabbedEnvironmentFragment extends Fragment {
 
